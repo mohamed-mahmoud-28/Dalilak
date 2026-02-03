@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Profile Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+
+    <link rel="stylesheet" href="./Style file/UserSeting.css">
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Floating Settings Button -->
+    <button class="floating-settings-btn" onclick="toggleSettingsSidebar()" title="Settings">
+        <span class="material-symbols-outlined text-3xl">settings</span>
+    </button>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Settings Sidebar -->
+    <div class="settings-sidebar" id="settingsSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-bold" data-en="Settings" data-ar="الإعدادات">Settings</h2>
+                <button onclick="closeSettingsSidebar()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2">
+                <a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl"
+                    href="UserSeting.html">
+                    <span class="material-symbols-outlined text-xl">person</span>
+                    <span class="text-sm font-semibold" data-en="Profile Settings"
+                        data-ar="إعدادات الملف الشخصي">Profile Settings</span>
+                </a>
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="UserSecutity.html">
+                    <span class="material-symbols-outlined text-xl">security</span>
+                    <span class="text-sm font-semibold" data-en="Security & Privacy" data-ar="الأمان والخصوصية">Security
+                        & Privacy</span>
+                </a>
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="PaymentMethods.html">
+                    <span class="material-symbols-outlined text-xl">payments</span>
+                    <span class="text-sm font-semibold" data-en="Payment Methods" data-ar="طرق الدفع">Payment
+                        Methods</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="profile-settings.html" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="#"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح الإعدادات...' : 'Opening settings...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="#"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح سجل الرحلات...' : 'Opening trip history...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح المساعدة والدعم...' : 'Opening help & support...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="#" onclick="handleLogout()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-20 py-6 md:py-8 relative">
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2 fade-in-up" style="animation-delay: 0.1s;">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Settings"
+                        data-ar="الإعدادات">Settings</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Profile Settings"
+                        data-ar="إعدادات الملف الشخصي">Profile Settings</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Profile Settings" data-ar="إعدادات الملف الشخصي">Profile Settings</h1>
+                        <p class="text-[#4c6c9a] flex items-center gap-2 mt-1">
+                            <span class="material-symbols-outlined text-lg">person</span>
+                            <span data-en="Manage your personal information and preferences"
+                                data-ar="إدارة معلوماتك الشخصية وتفضيلاتك">Manage your personal information and
+                                preferences</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Picture Section -->
+            <div class="fade-in-scale" style="animation-delay: 0.2s;">
+                <div class="card">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                        <div class="relative group">
+                            <img id="profileImage"
+                                src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                alt="Profile" class="size-32 rounded-full border-4 border-primary/20 object-cover">
+                            <label for="profileImageInput"
+                                class="absolute bottom-0 right-0 bg-primary text-white p-2.5 rounded-full shadow-lg border-2 border-white dark:border-slate-900 cursor-pointer hover:bg-primary/90 transition-all">
+                                <span class="material-symbols-outlined text-lg">photo_camera</span>
+                            </label>
+                            <input type="file" id="profileImageInput" accept="image/*" class="hidden"
+                                onchange="handleImageUpload(event)">
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h2 class="text-2xl font-bold text-[#0d131b] dark:text-white" data-en="Ahmed Hassan"
+                                data-ar="أحمد حسن">Ahmed Hassan</h2>
+                            <p class="text-[#4c6c9a] mt-1">ahmed@example.com</p>
+                            <div class="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
+                                <span
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-primary/20 text-primary">
+                                    <span class="material-symbols-outlined text-sm mr-1">verified</span>
+                                    <span data-en="Verified Account" data-ar="حساب موثق">Verified Account</span>
+                                </span>
+                                <span
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-100 dark:bg-green-900/30 text-green-600">
+                                    <span class="material-symbols-outlined text-sm mr-1">workspace_premium</span>
+                                    <span data-en="Premium Member" data-ar="عضو مميز">Premium Member</span>
+                                </span>
+                            </div>
+                            <p class="text-sm text-[#4c6c9a] mt-2" data-en="Member since October 2023"
+                                data-ar="عضو منذ أكتوبر 2023">Member since October 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="fade-in-up" style="animation-delay: 0.3s;">
+                <div class="card">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Personal Information"
+                            data-ar="المعلومات الشخصية">Personal Information</h3>
+                        <span class="text-xs text-[#4c6c9a]" data-en="Last updated: 2 days ago"
+                            data-ar="آخر تحديث: منذ يومين">Last updated: 2 days ago</span>
+                    </div>
+
+                    <form id="personalInfoForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="First Name"
+                                    data-ar="الاسم الأول">First Name</label>
+                                <input type="text" id="firstName"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="Ahmed" required>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Last Name"
+                                    data-ar="اسم العائلة">Last Name</label>
+                                <input type="text" id="lastName"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="Hassan" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Email Address"
+                                    data-ar="البريد الإلكتروني">Email Address</label>
+                                <input type="email" id="email"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="ahmed@example.com" required>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Phone Number"
+                                    data-ar="رقم الهاتف">Phone Number</label>
+                                <input type="tel" id="phone"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="+20 123 456 7890" required>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Date of Birth"
+                                data-ar="تاريخ الميلاد">Date of Birth</label>
+                            <input type="date" id="birthdate"
+                                class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                value="1995-05-15" required>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Gender"
+                                data-ar="الجنس">Gender</label>
+                            <select id="gender"
+                                class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                                <option value="male" data-en="Male" data-ar="ذكر">Male</option>
+                                <option value="female" data-en="Female" data-ar="أنثى">Female</option>
+                                <option value="other" data-en="Other" data-ar="آخر">Other</option>
+                                <option value="prefer-not-to-say" data-en="Prefer not to say"
+                                    data-ar="أفضل عدم الإفصاح">Prefer not to say</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-4">
+                            <button type="button" onclick="resetPersonalInfo()"
+                                class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                            </button>
+                            <button type="submit"
+                                class="px-6 py-3 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                                <span data-en="Save Changes" data-ar="حفظ التغييرات">Save Changes</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Address Information -->
+            <div class="fade-in-up" style="animation-delay: 0.4s;">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#0d131b] dark:text-white mb-6" data-en="Address Information"
+                        data-ar="معلومات العنوان">Address Information</h3>
+
+                    <form id="addressForm" class="space-y-4">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Street Address"
+                                data-ar="عنوان الشارع">Street Address</label>
+                            <input type="text" id="street"
+                                class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                value="123 Tahrir Square" required>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="City"
+                                    data-ar="المدينة">City</label>
+                                <input type="text" id="city"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="Cairo" required>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Postal Code"
+                                    data-ar="الرمز البريدي">Postal Code</label>
+                                <input type="text" id="postalCode"
+                                    class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    value="11511" required>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Country"
+                                data-ar="الدولة">Country</label>
+                            <select id="country"
+                                class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                                <option value="egypt">Egypt</option>
+                                <option value="saudi">Saudi Arabia</option>
+                                <option value="uae">United Arab Emirates</option>
+                                <option value="jordan">Jordan</option>
+                                <option value="lebanon">Lebanon</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-4">
+                            <button type="button" onclick="resetAddress()"
+                                class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                            </button>
+                            <button type="submit"
+                                class="px-6 py-3 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                                <span data-en="Save Address" data-ar="حفظ العنوان">Save Address</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Travel Preferences -->
+            <div class="fade-in-up" style="animation-delay: 0.5s;">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#0d131b] dark:text-white mb-6" data-en="Travel Preferences"
+                        data-ar="تفضيلات السفر">Travel Preferences</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">flight</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Preferred Travel Class"
+                                        data-ar="درجة السفر المفضلة">Preferred Travel Class</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Choose your default flight class"
+                                        data-ar="اختر درجة الطيران الافتراضية">Choose your default flight class</p>
+                                </div>
+                            </div>
+                            <select id="travelClass" onchange="saveTravelPreference('travelClass', this.value)"
+                                class="px-4 py-2 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all">
+                                <option value="economy">Economy</option>
+                                <option value="business" selected>Business</option>
+                                <option value="first">First Class</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">hotel</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Accommodation Type"
+                                        data-ar="نوع الإقامة">Accommodation Type</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Your preferred lodging type"
+                                        data-ar="نوع الإقامة المفضل لديك">Your preferred lodging type</p>
+                                </div>
+                            </div>
+                            <select id="accommodationType"
+                                onchange="saveTravelPreference('accommodationType', this.value)"
+                                class="px-4 py-2 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all">
+                                <option value="hotel" selected>Hotel</option>
+                                <option value="resort">Resort</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="hostel">Hostel</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">restaurant</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Dietary Preferences"
+                                        data-ar="التفضيلات الغذائية">Dietary Preferences</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Any special dietary requirements"
+                                        data-ar="أي متطلبات غذائية خاصة">Any special dietary requirements</p>
+                                </div>
+                            </div>
+                            <select id="dietaryPreference"
+                                onchange="saveTravelPreference('dietaryPreference', this.value)"
+                                class="px-4 py-2 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all">
+                                <option value="none" selected>No Preference</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="halal">Halal</option>
+                                <option value="kosher">Kosher</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Actions -->
+            <div class="fade-in-up" style="animation-delay: 0.6s;">
+                <div class="card border-l-4 border-l-red-500">
+                    <h3 class="text-xl font-bold text-[#0d131b] dark:text-white mb-6" data-en="Account Actions"
+                        data-ar="إجراءات الحساب">Account Actions</h3>
+
+                    <div class="space-y-4">
+                        <div
+                            class="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-200 dark:border-amber-800">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-amber-600 text-3xl">lock_reset</span>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Change Password"
+                                        data-ar="تغيير كلمة المرور">Change Password</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Update your account password"
+                                        data-ar="تحديث كلمة مرور حسابك">Update your account password</p>
+                                </div>
+                            </div>
+                            <button onclick="openChangePasswordModal()"
+                                class="px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-bold hover:bg-amber-700 transition-all">
+                                <span data-en="Change" data-ar="تغيير">Change</span>
+                            </button>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-200 dark:border-red-800">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-red-600 text-3xl">delete_forever</span>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Delete Account"
+                                        data-ar="حذف الحساب">Delete Account</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Permanently delete your account and data"
+                                        data-ar="حذف حسابك وبياناتك بشكل دائم">Permanently delete your account and data
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="openDeleteAccountModal()"
+                                class="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all">
+                                <span data-en="Delete" data-ar="حذف">Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- AI Tips Sidebar (Desktop) -->
+        <aside class="hidden xl:block w-80 flex-shrink-0">
+            <div class="sticky top-24 fade-in-scale" style="animation-delay: 0.7s;">
+                <div class="bg-primary/5 dark:bg-slate-900 rounded-xl p-6 border border-primary/20">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+                        <h4 class="font-bold text-lg" data-en="AI Travel Tips" data-ar="نصائح السفر الذكية">AI Travel
+                            Tips</h4>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Tip 1 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-primary">
+                            <p class="text-xs font-bold text-primary mb-2" data-en="PROFILE TIP"
+                                data-ar="نصيحة للملف الشخصي">PROFILE TIP</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Complete your profile to get personalized travel recommendations!"
+                                data-ar="أكمل ملفك الشخصي للحصول على توصيات سفر مخصصة!">Complete your profile to get
+                                personalized travel recommendations!</p>
+                        </div>
+
+                        <!-- Tip 2 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-green-500">
+                            <p class="text-xs font-bold text-green-600 mb-2" data-en="SECURITY" data-ar="الأمان">
+                                SECURITY</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Enable two-factor authentication for better account security."
+                                data-ar="فعّل المصادقة الثنائية لأمان أفضل للحساب.">Enable two-factor authentication for
+                                better account security.</p>
+                            <button
+                                onclick="showToast(currentLanguage === 'ar' ? 'فتح إعدادات الأمان...' : 'Opening security settings...', 'success')"
+                                class="mt-3 text-xs font-bold text-green-600 hover:underline" data-en="Go to Security"
+                                data-ar="انتقل للأمان">Go to Security</button>
+                        </div>
+
+                        <!-- Tip 3 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-blue-500">
+                            <p class="text-xs font-bold text-blue-600 mb-2" data-en="TRAVEL STATS"
+                                data-ar="إحصائيات السفر">TRAVEL STATS</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="You've visited 12 destinations this year! Keep exploring."
+                                data-ar="لقد زرت 12 وجهة هذا العام! استمر في الاستكشاف.">You've visited <span
+                                    class="font-bold">12 destinations</span> this year! Keep exploring.</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-6 p-4 rounded-lg bg-gradient-to-br from-primary to-indigo-600 text-white text-center">
+                        <p class="text-xs font-bold mb-1" data-en="YOUR TRAVEL SCORE" data-ar="درجة سفرك">YOUR TRAVEL
+                            SCORE</p>
+                        <p class="text-3xl font-black">98/100</p>
+                        <p class="text-xs opacity-90 mt-1" data-en="Excellent traveler profile!"
+                            data-ar="ملف مسافر ممتاز!">Excellent traveler profile!</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Change Password"
+                    data-ar="تغيير كلمة المرور">Change Password</h3>
+                <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="changePasswordForm" class="space-y-4">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Current Password"
+                        data-ar="كلمة المرور الحالية">Current Password</label>
+                    <input type="password" id="currentPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="New Password"
+                        data-ar="كلمة المرور الجديدة">New Password</label>
+                    <input type="password" id="newPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Confirm New Password"
+                        data-ar="تأكيد كلمة المرور الجديدة">Confirm New Password</label>
+                    <input type="password" id="confirmPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeChangePasswordModal()"
+                        class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                        <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-3 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                        <span data-en="Change Password" data-ar="تغيير كلمة المرور">Change Password</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-red-600" data-en="Delete Account" data-ar="حذف الحساب">Delete Account
+                </h3>
+                <button onclick="closeDeleteAccountModal()" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 mb-4">
+                    <p class="text-sm text-red-600 font-semibold" data-en="Warning: This action cannot be undone!"
+                        data-ar="تحذير: لا يمكن التراجع عن هذا الإجراء!">Warning: This action cannot be undone!</p>
+                </div>
+                <p class="text-sm text-[#4c6c9a] mb-4" data-en="Deleting your account will permanently remove:"
+                    data-ar="سيؤدي حذف حسابك إلى إزالة ما يلي نهائياً:">Deleting your account will permanently remove:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-sm text-[#4c6c9a] mb-4">
+                    <li data-en="All your personal information" data-ar="جميع معلوماتك الشخصية">All your personal
+                        information</li>
+                    <li data-en="Trip history and bookings" data-ar="سجل الرحلات والحجوزات">Trip history and bookings
+                    </li>
+                    <li data-en="Saved preferences and favorites" data-ar="التفضيلات والمفضلات المحفوظة">Saved
+                        preferences and favorites</li>
+                    <li data-en="Points and rewards" data-ar="النقاط والمكافآت">Points and rewards</li>
+                </ul>
+            </div>
+
+            <form id="deleteAccountForm" class="space-y-4">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Type 'DELETE' to confirm"
+                        data-ar="اكتب 'DELETE' للتأكيد">Type 'DELETE' to confirm</label>
+                    <input type="text" id="deleteConfirmation"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-red-500 transition-all"
+                        required>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeDeleteAccountModal()"
+                        class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                        <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-3 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all">
+                        <span data-en="Delete My Account" data-ar="حذف حسابي">Delete My Account</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm"
+                        data-en="Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys."
+                        data-ar="رفيقك المثالي لاستكشاف عجائب مصر. خطط، حدد ميزانيتك، واختبر رحلات لا تُنسى.">
+                        Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience
+                        unforgettable journeys.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Quick Links"
+                        data-ar="روابط سريعة">Quick Links</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="About Us" data-ar="من نحن">About Us</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="How It Works" data-ar="كيف يعمل">How It Works</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Travel Tips" data-ar="نصائح السفر">Travel Tips</a>
+                    </nav>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Explore" data-ar="استكشف">
+                        Explore</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Historical Sites" data-ar="المواقع التاريخية">Historical Sites</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Natural Wonders" data-ar="العجائب الطبيعية">Natural Wonders</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Shopping" data-ar="التسوق">Shopping</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Contact Us"
+                        data-ar="اتصل بنا">Contact Us</h3>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Cairo, Egypt"
+                                data-ar="القاهرة، مصر">Cairo, Egypt</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm">info@dalilak.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./Script/UserSeting.js"></script>
+
+</body>
+
+</html>ِ

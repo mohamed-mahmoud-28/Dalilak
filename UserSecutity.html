@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Security & Privacy</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* ============= BASE STYLES ============= */
+body {
+    font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+    font-weight: 600;
+}
+
+p,
+li,
+span,
+a {
+    font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+}
+
+[dir="rtl"] {
+    font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] body {
+    margin: 0;
+    padding: 0;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.fill-current {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* ============= MOBILE MENU STYLES ============= */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    transition: right 0.3s ease-in-out, left 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.dark .mobile-menu {
+    background: #1e293b;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+[dir="rtl"] .mobile-menu {
+    right: auto;
+    left: -100%;
+    margin: 0;
+    padding: 0;
+}
+
+[dir="rtl"] .mobile-menu.active {
+    left: 0;
+    right: auto;
+}
+
+/* للموبايل - ملء كامل الشاشة */
+@media (max-width: 640px) {
+    .mobile-menu {
+        max-width: 70%;
+        width: 70%;
+    }
+    
+    [dir="rtl"] .mobile-menu {
+        max-width: 70%;
+        width: 70%;
+    }
+}
+
+/* ============= SETTINGS SIDEBAR ============= */
+.settings-sidebar {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 280px;
+    height: 100vh;
+    background: white;
+    transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+}
+
+.dark .settings-sidebar {
+    background: #1e293b;
+}
+
+.settings-sidebar.active {
+    left: 0;
+}
+
+[dir="rtl"] .settings-sidebar {
+    left: auto;
+    right: -320px;
+}
+
+[dir="rtl"] .settings-sidebar.active {
+    right: 0;
+    left: auto;
+}
+
+/* إخفاء Settings Sidebar في الشاشات الكبيرة حتى يتم الضغط عليه */
+@media (min-width: 1024px) {
+    .settings-sidebar {
+        left: -320px;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    .settings-sidebar.active {
+        left: 0;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    [dir="rtl"] .settings-sidebar {
+        right: -320px;
+        left: auto;
+    }
+    
+    [dir="rtl"] .settings-sidebar.active {
+        right: 0;
+        left: auto;
+    }
+}
+
+.sidebar-item {
+    transition: all 0.3s ease;
+    color: #4c6c9a;
+}
+
+.sidebar-item:hover {
+    background: #f6f7f8;
+    color: #136dec;
+}
+
+.dark .sidebar-item:hover {
+    background: #0f172a;
+}
+
+.sidebar-item.active {
+    background: rgba(19, 109, 236, 0.1);
+    color: #136dec;
+    font-weight: 700;
+}
+
+/* ============= FLOATING SETTINGS BUTTON ============= */
+.floating-settings-btn {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 998;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #136dec 0%, #0f5ac7 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 24px rgba(19, 109, 236, 0.4);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 3px solid white;
+}
+
+.dark .floating-settings-btn {
+    border-color: #1e293b;
+}
+
+.floating-settings-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 12px 32px rgba(19, 109, 236, 0.6);
+}
+
+.floating-settings-btn:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+[dir="rtl"] .floating-settings-btn {
+    right: auto;
+    left: 20px;
+}
+
+@media (max-width: 768px) {
+    .floating-settings-btn {
+        width: 50px;
+        height: 50px;
+        top: 90px;
+        right: 15px;
+    }
+
+    [dir="rtl"] .floating-settings-btn {
+        right: auto;
+        left: 15px;
+    }
+}
+
+/* ============= SIDEBAR OVERLAY ============= */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 999;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============= DROPDOWN MENU ============= */
+.dropdown-menu {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============= TOAST NOTIFICATIONS ============= */
+.toast {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(400px);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 9999;
+    min-width: 280px;
+}
+
+[dir="rtl"] .toast {
+    right: auto;
+    left: 20px;
+    transform: translateX(-400px);
+}
+
+.dark .toast {
+    background: #1e293b;
+    color: white;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.success {
+    border-left: 4px solid #10b981;
+}
+
+[dir="rtl"] .toast.success {
+    border-left: none;
+    border-right: 4px solid #10b981;
+}
+
+.toast.error {
+    border-left: 4px solid #ef4444;
+}
+
+[dir="rtl"] .toast.error {
+    border-left: none;
+    border-right: 4px solid #ef4444;
+}
+
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast.success .toast-icon {
+    background: #d1fae5;
+    color: #10b981;
+}
+
+.toast.error .toast-icon {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* ============= CARD STYLES ============= */
+.card {
+    background: white;
+    border: 1px solid #e7ecf3;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.dark .card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ============= TOGGLE SWITCH ============= */
+.toggle-switch {
+    position: relative;
+    width: 56px;
+    height: 28px;
+    background: #cbd5e1;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-switch.active {
+    background: #136dec;
+}
+
+.toggle-switch-handle {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.active .toggle-switch-handle {
+    transform: translateX(28px);
+}
+
+/* ============= ANIMATIONS ============= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.fade-in-scale {
+    animation: fadeInScale 0.5s ease-out;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+/* ============= HAMBURGER BUTTON ANIMATION ============= */
+.hamburger {
+    width: 24px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: currentColor;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.hamburger span:nth-child(1) {
+    top: 0px;
+}
+
+.hamburger span:nth-child(2) {
+    top: 8px;
+}
+
+.hamburger span:nth-child(3) {
+    top: 16px;
+}
+
+.hamburger.active span:nth-child(1) {
+    top: 8px;
+    transform: rotate(135deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+
+.hamburger.active span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-135deg);
+}
+
+/* ============= MODAL STYLES ============= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dark .modal-content {
+    background: #1e293b;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+/* ============= SCROLLBAR ============= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #136dec;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0f5ac7;
+}
+
+/* ============= INPUT FOCUS STYLES ============= */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #136dec;
+    box-shadow: 0 0 0 3px rgba(19, 109, 236, 0.1);
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem;
+    }
+
+    .toast {
+        right: 10px;
+        min-width: 260px;
+    }
+
+    [dir="rtl"] .toast {
+        left: 10px;
+        right: auto;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+    }
+}
+
+/* ============= PROFILE IMAGE HOVER EFFECT ============= */
+.relative.group:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* ============= BUTTON HOVER EFFECTS ============= */
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ============= LINK HOVER EFFECT ============= */
+a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* ============= NAV LINK ACTIVE STATE ============= */
+.nav-link.active {
+    color: #136dec;
+    font-weight: 700;
+}
+
+/* ============= MENU ITEM HOVER ============= */
+.menu-item {
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: translateX(4px);
+}
+
+[dir="rtl"] .menu-item:hover {
+    transform: translateX(-4px);
+}
+
+/* ============= FORM VALIDATION STYLES ============= */
+input:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: #10b981;
+}
+
+/* ============= LOADING SPINNER ============= */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    border: 3px solid rgba(19, 109, 236, 0.1);
+    border-radius: 50%;
+    border-top-color: #136dec;
+    width: 24px;
+    height: 24px;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ============= BADGE PULSE ANIMATION ============= */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============= SMOOTH SCROLL ============= */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ============= SELECTION COLOR ============= */
+::selection {
+    background: rgba(19, 109, 236, 0.2);
+    color: inherit;
+}
+
+/* ============= FOCUS VISIBLE ============= */
+*:focus-visible {
+    outline: 2px solid #136dec;
+    outline-offset: 2px;
+}
+
+/* ============= DISABLED STATES ============= */
+button:disabled,
+input:disabled,
+select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============= PRINT STYLES ============= */
+@media print {
+    .no-print,
+    header,
+    footer,
+    .sidebar-overlay,
+    .mobile-menu,
+    .settings-sidebar,
+    button {
+        display: none !important;
+    }
+}
+
+/* ============= PREFERENCE CARDS ============= */
+.preference-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.preference-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============= GRADIENT TEXT ============= */
+.gradient-text {
+    background: linear-gradient(135deg, #136dec 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============= SKELETON LOADING ============= */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+.dark .skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 1000px 100%;
+}
+
+/* ============= CUSTOM CHECKBOX/RADIO ============= */
+input[type="checkbox"],
+input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e7ecf3;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: #136dec;
+    border-color: #136dec;
+}
+
+input[type="checkbox"]:checked::before {
+    content: '✓';
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+/* ============= TOOLTIP ============= */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background: #1e293b;
+    color: white;
+    font-size: 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-bottom: 8px;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #1e293b;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============= PROGRESS BAR ============= */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e7ecf3;
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.dark .progress-bar {
+    background: #334155;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #136dec, #3b82f6);
+    border-radius: 99px;
+    transition: width 1s ease;
+}
+
+/* ============= BREADCRUMB HOVER ============= */
+nav a:hover {
+    color: #136dec;
+}
+
+/* ============= SMOOTH TRANSITIONS ============= */
+* {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Floating Settings Button -->
+    <button class="floating-settings-btn" onclick="toggleSettingsSidebar()" title="Settings">
+        <span class="material-symbols-outlined text-3xl">settings</span>
+    </button>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Settings Sidebar -->
+    <div class="settings-sidebar" id="settingsSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-bold" data-en="Settings" data-ar="الإعدادات">Settings</h2>
+                <button onclick="closeSettingsSidebar()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2">
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="UserSeting.html">
+                    <span class="material-symbols-outlined text-xl">person</span>
+                    <span class="text-sm font-semibold" data-en="Profile Settings"
+                        data-ar="إعدادات الملف الشخصي">Profile Settings</span>
+                </a>
+                <a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl"
+                    href="security-settings.html">
+                    <span class="material-symbols-outlined text-xl">security</span>
+                    <span class="text-sm font-semibold" data-en="Security & Privacy" data-ar="الأمان والخصوصية">Security
+                        & Privacy</span>
+                </a>
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="PaymentMethods.html">
+                    <span class="material-symbols-outlined text-xl">payments</span>
+                    <span class="text-sm font-semibold" data-en="Payment Methods" data-ar="طرق الدفع">Payment
+                        Methods</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="Budget.html" onclick="closeProfile();"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح سجل الرحلات...' : 'Opening trip history...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح المساعدة والدعم...' : 'Opening help & support...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="handleLogout()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-20 py-6 md:py-8 relative">
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2 fade-in-up" style="animation-delay: 0.1s;">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Settings"
+                        data-ar="الإعدادات">Settings</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Security & Privacy"
+                        data-ar="الأمان والخصوصية">Security & Privacy</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Security & Privacy" data-ar="الأمان والخصوصية">Security & Privacy</h1>
+                        <p class="text-[#4c6c9a] flex items-center gap-2 mt-1">
+                            <span class="material-symbols-outlined text-lg">shield</span>
+                            <span data-en="Keep your account safe and control your privacy"
+                                data-ar="حافظ على أمان حسابك وتحكم في خصوصيتك">Keep your account safe and control your
+                                privacy</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password & Authentication -->
+            <div class="fade-in-scale" style="animation-delay: 0.2s;">
+                <div class="card border-l-4 border-l-green-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-12 bg-green-500/10 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-green-600 text-2xl">lock</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Password & Authentication"
+                            data-ar="كلمة المرور والمصادقة">Password & Authentication</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Change Password -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-primary text-2xl">vpn_key</span>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Password"
+                                        data-ar="كلمة المرور">Password</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Last changed 30 days ago"
+                                        data-ar="آخر تغيير منذ 30 يوماً">Last changed 30 days ago</p>
+                                </div>
+                            </div>
+                            <button onclick="openChangePasswordModal()"
+                                class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                                <span data-en="Change" data-ar="تغيير">Change</span>
+                            </button>
+                        </div>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white"
+                                        data-en="Two-Factor Authentication" data-ar="المصادقة الثنائية">Two-Factor
+                                        Authentication</p>
+                                    <p class="text-sm text-[#4c6c9a]"
+                                        data-en="Add an extra layer of security to your account"
+                                        data-ar="أضف طبقة إضافية من الأمان لحسابك">Add an extra layer of security to
+                                        your account</p>
+                                    <span
+                                        class="inline-block mt-2 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 text-xs font-bold rounded"
+                                        data-en="Enabled" data-ar="مفعّل">Enabled</span>
+                                </div>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggle2FA(this)">
+                                <div class="toggle-switch-handle"></div>
+                            </div>
+                        </div>
+
+                        <!-- Biometric Authentication -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">fingerprint</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Biometric Login"
+                                        data-ar="تسجيل الدخول البيومتري">Biometric Login</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Use fingerprint or face recognition"
+                                        data-ar="استخدم بصمة الإصبع أو التعرف على الوجه">Use fingerprint or face
+                                        recognition</p>
+                                </div>
+                            </div>
+                            <div class="toggle-switch" onclick="toggleBiometric(this)">
+                                <div class="toggle-switch-handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Controls -->
+            <div class="fade-in-up" style="animation-delay: 0.3s;">
+                <div class="card border-l-4 border-l-blue-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-blue-600 text-2xl">privacy_tip</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Privacy Controls"
+                            data-ar="ضوابط الخصوصية">Privacy Controls</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Profile Visibility -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">visibility</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Profile Visibility"
+                                        data-ar="ظهور الملف الشخصي">Profile Visibility</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Control who can see your profile"
+                                        data-ar="تحكم في من يمكنه رؤية ملفك الشخصي">Control who can see your profile</p>
+                                </div>
+                            </div>
+                            <select
+                                class="px-4 py-2 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-semibold"
+                                onchange="updatePrivacySetting('profileVisibility', this.value)">
+                                <option value="public" data-en="Public" data-ar="عام">Public</option>
+                                <option value="friends" data-en="Friends Only" data-ar="الأصدقاء فقط">Friends Only
+                                </option>
+                                <option value="private" data-en="Private" data-ar="خاص">Private</option>
+                            </select>
+                        </div>
+
+                        <!-- Activity Status -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">circle</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Show Activity Status"
+                                        data-ar="إظهار حالة النشاط">Show Activity Status</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Let others see when you're online"
+                                        data-ar="دع الآخرين يرون عندما تكون متصلاً">Let others see when you're online
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleActivityStatus(this)">
+                                <div class="toggle-switch-handle"></div>
+                            </div>
+                        </div>
+
+                        <!-- Location Sharing -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">location_on</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Location Sharing"
+                                        data-ar="مشاركة الموقع">Location Sharing</p>
+                                    <p class="text-sm text-[#4c6c9a]"
+                                        data-en="Share your location for better recommendations"
+                                        data-ar="شارك موقعك للحصول على توصيات أفضل">Share your location for better
+                                        recommendations</p>
+                                </div>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleLocationSharing(this)">
+                                <div class="toggle-switch-handle"></div>
+                            </div>
+                        </div>
+
+                        <!-- Data Collection -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">analytics</span>
+                                <div class="flex-1">
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Analytics & Tracking"
+                                        data-ar="التحليلات والتتبع">Analytics & Tracking</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Help us improve by sharing usage data"
+                                        data-ar="ساعدنا في التحسين من خلال مشاركة بيانات الاستخدام">Help us improve by
+                                        sharing usage data</p>
+                                </div>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleAnalytics(this)">
+                                <div class="toggle-switch-handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Sessions -->
+            <div class="fade-in-up" style="animation-delay: 0.4s;">
+                <div class="card border-l-4 border-l-purple-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-purple-600 text-2xl">devices</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Active Sessions"
+                            data-ar="الجلسات النشطة">Active Sessions</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Current Session -->
+                        <div
+                            class="p-4 bg-green-50 dark:bg-green-900/10 rounded-lg border border-green-200 dark:border-green-800">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-green-600 text-2xl">computer</span>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <p class="font-bold text-[#0d131b] dark:text-white">Windows - Chrome</p>
+                                            <span class="px-2 py-0.5 bg-green-600 text-white text-xs font-bold rounded"
+                                                data-en="Current" data-ar="الحالية">Current</span>
+                                        </div>
+                                        <p class="text-sm text-[#4c6c9a] mt-1">Cairo, Egypt • Last active: Now</p>
+                                        <p class="text-xs text-[#4c6c9a] mt-1">IP: 156.xxx.xxx.123</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Session 1 -->
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">smartphone</span>
+                                    <div>
+                                        <p class="font-bold text-[#0d131b] dark:text-white">iPhone - Safari</p>
+                                        <p class="text-sm text-[#4c6c9a] mt-1">Cairo, Egypt • Last active: 2 hours ago
+                                        </p>
+                                        <p class="text-xs text-[#4c6c9a] mt-1">IP: 156.xxx.xxx.89</p>
+                                    </div>
+                                </div>
+                                <button onclick="revokeSession('mobile')"
+                                    class="px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition-all">
+                                    <span data-en="Revoke" data-ar="إلغاء">Revoke</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Other Session 2 -->
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">tablet</span>
+                                    <div>
+                                        <p class="font-bold text-[#0d131b] dark:text-white">iPad - Safari</p>
+                                        <p class="text-sm text-[#4c6c9a] mt-1">Alexandria, Egypt • Last active: 1 day
+                                            ago</p>
+                                        <p class="text-xs text-[#4c6c9a] mt-1">IP: 156.xxx.xxx.201</p>
+                                    </div>
+                                </div>
+                                <button onclick="revokeSession('tablet')"
+                                    class="px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition-all">
+                                    <span data-en="Revoke" data-ar="إلغاء">Revoke</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="revokeAllSessions()"
+                        class="mt-4 w-full px-4 py-3 rounded-lg border-2 border-red-600 text-red-600 text-sm font-bold hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+                        <span data-en="Revoke All Other Sessions" data-ar="إلغاء جميع الجلسات الأخرى">Revoke All Other
+                            Sessions</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data & Privacy -->
+            <div class="fade-in-up" style="animation-delay: 0.5s;">
+                <div class="card border-l-4 border-l-amber-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-12 bg-amber-500/10 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-amber-600 text-2xl">folder</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Your Data"
+                            data-ar="بياناتك">Your Data</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Download Data -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-primary text-2xl">download</span>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Download Your Data"
+                                        data-ar="تنزيل بياناتك">Download Your Data</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Get a copy of all your data"
+                                        data-ar="احصل على نسخة من جميع بياناتك">Get a copy of all your data</p>
+                                </div>
+                            </div>
+                            <button onclick="requestDataDownload()"
+                                class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                                <span data-en="Request" data-ar="طلب">Request</span>
+                            </button>
+                        </div>
+
+                        <!-- Delete Account -->
+                        <div
+                            class="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-200 dark:border-red-800">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-red-600 text-2xl">delete_forever</span>
+                                <div>
+                                    <p class="font-bold text-[#0d131b] dark:text-white" data-en="Delete Account"
+                                        data-ar="حذف الحساب">Delete Account</p>
+                                    <p class="text-sm text-[#4c6c9a]" data-en="Permanently delete your account and data"
+                                        data-ar="حذف حسابك وبياناتك بشكل دائم">Permanently delete your account and data
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="openDeleteAccountModal()"
+                                class="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all">
+                                <span data-en="Delete" data-ar="حذف">Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Security Tips Sidebar (Desktop) -->
+        <aside class="hidden xl:block w-80 flex-shrink-0">
+            <div class="sticky top-24 fade-in-scale" style="animation-delay: 0.6s;">
+                <div class="bg-primary/5 dark:bg-slate-900 rounded-xl p-6 border border-primary/20">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">shield</span>
+                        <h4 class="font-bold text-lg" data-en="Security Tips" data-ar="نصائح الأمان">Security Tips</h4>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Tip 1 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-green-500">
+                            <p class="text-xs font-bold text-green-600 mb-2" data-en="STRONG PASSWORD"
+                                data-ar="كلمة مرور قوية">STRONG PASSWORD</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Use at least 12 characters with a mix of letters, numbers, and symbols."
+                                data-ar="استخدم 12 حرفاً على الأقل مع مزيج من الأحرف والأرقام والرموز.">Use at least 12
+                                characters with a mix of letters, numbers, and symbols.</p>
+                        </div>
+
+                        <!-- Tip 2 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-blue-500">
+                            <p class="text-xs font-bold text-blue-600 mb-2" data-en="2FA ENABLED"
+                                data-ar="المصادقة الثنائية مفعلة">
+                                2FA ENABLED</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Great! Two-factor authentication is protecting your account."
+                                data-ar="رائع! المصادقة الثنائية تحمي حسابك.">Great! Two-factor authentication is
+                                protecting your account.</p>
+                        </div>
+
+                        <!-- Tip 3 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-amber-500">
+                            <p class="text-xs font-bold text-amber-600 mb-2" data-en="REVIEW SESSIONS"
+                                data-ar="راجع الجلسات">REVIEW SESSIONS</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Regularly check your active sessions and revoke any unfamiliar devices."
+                                data-ar="راجع جلساتك النشطة بانتظام وألغِ أي أجهزة غير مألوفة.">Regularly check your
+                                active sessions and revoke any unfamiliar devices.</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-6 p-4 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 text-white text-center">
+                        <p class="text-xs font-bold mb-1" data-en="SECURITY SCORE" data-ar="درجة الأمان">SECURITY SCORE
+                        </p>
+                        <p class="text-3xl font-black">92/100</p>
+                        <p class="text-xs opacity-90 mt-1" data-en="Your account is well protected!"
+                            data-ar="حسابك محمي جيداً!">Your account is well protected!</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Change Password"
+                    data-ar="تغيير كلمة المرور">Change Password</h3>
+                <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="changePasswordForm" class="space-y-4">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Current Password"
+                        data-ar="كلمة المرور الحالية">Current Password</label>
+                    <input type="password" id="currentPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="New Password"
+                        data-ar="كلمة المرور الجديدة">New Password</label>
+                    <input type="password" id="newPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Confirm New Password"
+                        data-ar="تأكيد كلمة المرور الجديدة">Confirm New Password</label>
+                    <input type="password" id="confirmPassword"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary transition-all"
+                        required>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeChangePasswordModal()"
+                        class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                        <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-3 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                        <span data-en="Change Password" data-ar="تغيير كلمة المرور">Change Password</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-red-600" data-en="Delete Account" data-ar="حذف الحساب">Delete Account
+                </h3>
+                <button onclick="closeDeleteAccountModal()" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 mb-4">
+                    <p class="text-sm text-red-600 font-semibold" data-en="Warning: This action cannot be undone!"
+                        data-ar="تحذير: لا يمكن التراجع عن هذا الإجراء!">Warning: This action cannot be undone!</p>
+                </div>
+                <p class="text-sm text-[#4c6c9a] mb-4" data-en="Deleting your account will permanently remove:"
+                    data-ar="سيؤدي حذف حسابك إلى إزالة ما يلي نهائياً:">Deleting your account will permanently remove:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-sm text-[#4c6c9a] mb-4">
+                    <li data-en="All your personal information" data-ar="جميع معلوماتك الشخصية">All your personal
+                        information</li>
+                    <li data-en="Trip history and bookings" data-ar="سجل الرحلات والحجوزات">Trip history and bookings
+                    </li>
+                    <li data-en="Saved preferences and favorites" data-ar="التفضيلات والمفضلات المحفوظة">Saved
+                        preferences and favorites</li>
+                    <li data-en="Points and rewards" data-ar="النقاط والمكافآت">Points and rewards</li>
+                </ul>
+            </div>
+
+            <form id="deleteAccountForm" class="space-y-4">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold text-[#0d131b] dark:text-white" data-en="Type 'DELETE' to confirm"
+                        data-ar="اكتب 'DELETE' للتأكيد">Type 'DELETE' to confirm</label>
+                    <input type="text" id="deleteConfirmation"
+                        class="px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-red-500 transition-all"
+                        required>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeDeleteAccountModal()"
+                        class="px-6 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                        <span data-en="Cancel" data-ar="إلغاء">Cancel</span>
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-3 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all">
+                        <span data-en="Delete My Account" data-ar="حذف حسابي">Delete My Account</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm"
+                        data-en="Your ultimate travel companion for exploring Egypt's wonders."
+                        data-ar="رفيقك المثالي لاستكشاف عجائب مصر.">
+                        Your ultimate travel companion for exploring Egypt's wonders.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Quick Links"
+                        data-ar="روابط سريعة">Quick Links</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="About Us" data-ar="من نحن">About Us</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Terms of Service" data-ar="شروط الخدمة">Terms of Service</a>
+                    </nav>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Support" data-ar="الدعم">
+                        Support</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Help Center" data-ar="مركز المساعدة">Help Center</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Contact Us" data-ar="اتصل بنا">Contact Us</a>
+                        <a href="#"
+                            class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                            data-en="Security" data-ar="الأمان">Security</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Contact Us"
+                        data-ar="اتصل بنا">Contact Us</h3>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Cairo, Egypt"
+                                data-ar="القاهرة، مصر">Cairo, Egypt</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm">security@dalilak.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================================================
+           GLOBAL SHARED STORAGE
+        ========================================================= */
+        const STORAGE = {
+            LANGUAGE: 'dalilak_language',
+            THEME: 'dalilak_theme',
+            SECURITY_SETTINGS: 'dalilak_security_settings'
+        };
+
+        // =============================================
+        // SECURITY SETTINGS
+        // =============================================
+        const securitySettings = {
+            twoFactorAuth: true,
+            biometric: false,
+            profileVisibility: 'public',
+            activityStatus: true,
+            locationSharing: true,
+            analytics: true
+        };
+
+        // =============================================
+        // STATE MANAGEMENT
+        // =============================================
+        let currentLanguage = 'en';
+        let currentTheme = 'light';
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSettings();
+            loadSecuritySettings();
+            updateAllTranslations();
+            setupFormHandlers();
+        });
+
+        // =============================================
+        // SETTINGS MANAGEMENT
+        // =============================================
+        function loadSettings() {
+            const savedLang = localStorage.getItem(STORAGE.LANGUAGE) || 'en';
+            const savedTheme = localStorage.getItem(STORAGE.THEME) || 'light';
+
+            currentLanguage = savedLang;
+            currentTheme = savedTheme;
+
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+        }
+
+        function saveSettings() {
+            localStorage.setItem(STORAGE.LANGUAGE, currentLanguage);
+            localStorage.setItem(STORAGE.THEME, currentTheme);
+        }
+
+        function loadSecuritySettings() {
+            const saved = localStorage.getItem(STORAGE.SECURITY_SETTINGS);
+            if (saved) {
+                const data = JSON.parse(saved);
+                Object.assign(securitySettings, data);
+            }
+        }
+
+        function saveSecuritySettings() {
+            localStorage.setItem(STORAGE.SECURITY_SETTINGS, JSON.stringify(securitySettings));
+        }
+
+        // =============================================
+        // FORM HANDLERS
+        // =============================================
+        function setupFormHandlers() {
+            // Change Password Form
+            document.getElementById('changePasswordForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword !== confirmPassword) {
+                    const message = currentLanguage === 'ar'
+                        ? 'كلمات المرور الجديدة غير متطابقة!'
+                        : 'New passwords do not match!';
+                    showToast(message, 'error');
+                    return;
+                }
+
+                if (newPassword.length < 8) {
+                    const message = currentLanguage === 'ar'
+                        ? 'كلمة المرور يجب أن تكون 8 أحرف على الأقل!'
+                        : 'Password must be at least 8 characters!';
+                    showToast(message, 'error');
+                    return;
+                }
+
+                closeChangePasswordModal();
+
+                const message = currentLanguage === 'ar'
+                    ? 'تم تغيير كلمة المرور بنجاح!'
+                    : 'Password changed successfully!';
+                showToast(message, 'success');
+
+                document.getElementById('changePasswordForm').reset();
+            });
+
+            // Delete Account Form
+            document.getElementById('deleteAccountForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const confirmation = document.getElementById('deleteConfirmation').value;
+
+                if (confirmation !== 'DELETE') {
+                    const message = currentLanguage === 'ar'
+                        ? 'يرجى كتابة DELETE للتأكيد!'
+                        : 'Please type DELETE to confirm!';
+                    showToast(message, 'error');
+                    return;
+                }
+
+                closeDeleteAccountModal();
+
+                const message = currentLanguage === 'ar'
+                    ? 'تم جدولة حذف الحساب. سيتم حذف حسابك خلال 30 يوماً.'
+                    : 'Account deletion scheduled. Your account will be deleted in 30 days.';
+                showToast(message, 'success');
+
+                document.getElementById('deleteAccountForm').reset();
+            });
+        }
+
+        // =============================================
+        // TOGGLE FUNCTIONS
+        // =============================================
+        function toggle2FA(element) {
+            element.classList.toggle('active');
+            securitySettings.twoFactorAuth = element.classList.contains('active');
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? (securitySettings.twoFactorAuth ? 'تم تفعيل المصادقة الثنائية' : 'تم تعطيل المصادقة الثنائية')
+                : (securitySettings.twoFactorAuth ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled');
+            showToast(message, 'success');
+        }
+
+        function toggleBiometric(element) {
+            element.classList.toggle('active');
+            securitySettings.biometric = element.classList.contains('active');
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? (securitySettings.biometric ? 'تم تفعيل تسجيل الدخول البيومتري' : 'تم تعطيل تسجيل الدخول البيومتري')
+                : (securitySettings.biometric ? 'Biometric login enabled' : 'Biometric login disabled');
+            showToast(message, 'success');
+        }
+
+        function toggleActivityStatus(element) {
+            element.classList.toggle('active');
+            securitySettings.activityStatus = element.classList.contains('active');
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? (securitySettings.activityStatus ? 'حالة النشاط مرئية' : 'حالة النشاط مخفية')
+                : (securitySettings.activityStatus ? 'Activity status visible' : 'Activity status hidden');
+            showToast(message, 'success');
+        }
+
+        function toggleLocationSharing(element) {
+            element.classList.toggle('active');
+            securitySettings.locationSharing = element.classList.contains('active');
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? (securitySettings.locationSharing ? 'تم تفعيل مشاركة الموقع' : 'تم تعطيل مشاركة الموقع')
+                : (securitySettings.locationSharing ? 'Location sharing enabled' : 'Location sharing disabled');
+            showToast(message, 'success');
+        }
+
+        function toggleAnalytics(element) {
+            element.classList.toggle('active');
+            securitySettings.analytics = element.classList.contains('active');
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? (securitySettings.analytics ? 'تم تفعيل التحليلات' : 'تم تعطيل التحليلات')
+                : (securitySettings.analytics ? 'Analytics enabled' : 'Analytics disabled');
+            showToast(message, 'success');
+        }
+
+        function updatePrivacySetting(key, value) {
+            securitySettings[key] = value;
+            saveSecuritySettings();
+
+            const message = currentLanguage === 'ar'
+                ? 'تم تحديث إعدادات الخصوصية'
+                : 'Privacy settings updated';
+            showToast(message, 'success');
+        }
+
+        // =============================================
+        // SESSION MANAGEMENT
+        // =============================================
+        function revokeSession(device) {
+            const confirmMessage = currentLanguage === 'ar'
+                ? `هل أنت متأكد أنك تريد إلغاء جلسة ${device}؟`
+                : `Are you sure you want to revoke ${device} session?`;
+
+            if (confirm(confirmMessage)) {
+                const message = currentLanguage === 'ar'
+                    ? 'تم إلغاء الجلسة بنجاح'
+                    : 'Session revoked successfully';
+                showToast(message, 'success');
+            }
+        }
+
+        function revokeAllSessions() {
+            const confirmMessage = currentLanguage === 'ar'
+                ? 'هل أنت متأكد أنك تريد إلغاء جميع الجلسات الأخرى؟'
+                : 'Are you sure you want to revoke all other sessions?';
+
+            if (confirm(confirmMessage)) {
+                const message = currentLanguage === 'ar'
+                    ? 'تم إلغاء جميع الجلسات الأخرى بنجاح'
+                    : 'All other sessions revoked successfully';
+                showToast(message, 'success');
+            }
+        }
+
+        function requestDataDownload() {
+            const message = currentLanguage === 'ar'
+                ? 'سيتم إرسال نسخة من بياناتك إلى بريدك الإلكتروني خلال 24 ساعة'
+                : 'A copy of your data will be sent to your email within 24 hours';
+            showToast(message, 'success');
+        }
+
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icon = type === 'success' ? 'check_circle' : 'cancel';
+
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <span class="material-symbols-outlined text-lg">${icon}</span>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold text-sm">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 400);
+            }, 3000);
+        }
+
+        // =============================================
+        // THEME TOGGLE
+        // =============================================
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.classList.toggle('dark');
+            saveSettings();
+
+        }
+
+        // =============================================
+        // LANGUAGE TOGGLE
+        // =============================================
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            updateAllTranslations();
+            saveSettings();
+
+        }
+
+        function updateAllTranslations() {
+            document.querySelectorAll('[data-en], [data-ar]').forEach(el => {
+                const key = currentLanguage === 'ar' ? 'data-ar' : 'data-en';
+                if (el.hasAttribute(key)) {
+                    if (el.tagName === 'INPUT' && el.type === 'submit') {
+                        el.value = el.getAttribute(key);
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = el.getAttribute(key);
+                    } else {
+                        el.textContent = el.getAttribute(key);
+                    }
+                }
+            });
+        }
+
+        // =============================================
+        // MENU & SIDEBAR FUNCTIONS
+        // =============================================
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+            const settingsSidebar = document.getElementById('settingsSidebar');
+
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            if (settingsSidebar.classList.contains('active')) {
+                settingsSidebar.classList.remove('active');
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        function toggleSettingsSidebar() {
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            settingsSidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        }
+
+        function closeSettingsSidebar() {
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            settingsSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function closeSidebar() {
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            overlay.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            settingsSidebar.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+
+        function closeProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.remove('active');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            const profileBtn = document.getElementById('profileBtn');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (profileBtn && profileDropdown && !profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('active');
+            }
+        });
+
+        // =============================================
+        // MODAL FUNCTIONS
+        // =============================================
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        function openDeleteAccountModal() {
+            document.getElementById('deleteAccountModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteAccountModal() {
+            document.getElementById('deleteAccountModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('deleteAccountForm').reset();
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function (event) {
+            const changePasswordModal = document.getElementById('changePasswordModal');
+            const deleteAccountModal = document.getElementById('deleteAccountModal');
+
+            if (event.target === changePasswordModal) {
+                closeChangePasswordModal();
+            }
+
+            if (event.target === deleteAccountModal) {
+                closeDeleteAccountModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeChangePasswordModal();
+                closeDeleteAccountModal();
+            }
+        });
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        function handleLogout() {
+            closeProfile();
+
+            const confirmMessage = currentLanguage === 'ar'
+                ? 'هل أنت متأكد أنك تريد تسجيل الخروج؟'
+                : 'Are you sure you want to logout?';
+
+            if (confirm(confirmMessage)) {
+                const message = currentLanguage === 'ar'
+                    ? 'جاري تسجيل الخروج...'
+                    : 'Logging out...';
+                showToast(message, 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        }
+
+        // =============================================
+        // STORAGE LISTENER
+        // =============================================
+        window.addEventListener('storage', function (event) {
+            if (event.key === STORAGE.LANGUAGE) {
+                currentLanguage = event.newValue || 'en';
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                updateAllTranslations();
+            }
+
+            if (event.key === STORAGE.THEME) {
+                currentTheme = event.newValue || 'light';
+                document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

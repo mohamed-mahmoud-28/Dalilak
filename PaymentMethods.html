@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Secure Payment Checkout</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* ============= BASE STYLES ============= */
+        body {
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            font-weight: 600;
+        }
+
+        p,
+        li,
+        span,
+        a {
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        [dir="rtl"] body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.fill-current {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* ============= MOBILE MENU STYLES ============= */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 320px;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s ease-in-out, left 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dark .mobile-menu {
+            background: #1e293b;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        [dir="rtl"] .mobile-menu {
+            right: auto;
+            left: -100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        [dir="rtl"] .mobile-menu.active {
+            left: 0;
+            right: auto;
+        }
+
+        /* للموبايل - ملء كامل الشاشة */
+        @media (max-width: 640px) {
+            .mobile-menu {
+                max-width: 70%;
+                width: 70%;
+            }
+
+            [dir="rtl"] .mobile-menu {
+                max-width: 70%;
+                width: 70%;
+            }
+        }
+
+        /* ============= SETTINGS SIDEBAR ============= */
+        .settings-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .settings-sidebar {
+            background: #1e293b;
+        }
+
+        .settings-sidebar.active {
+            left: 0;
+        }
+
+        [dir="rtl"] .settings-sidebar {
+            left: auto;
+            right: -320px;
+        }
+
+        [dir="rtl"] .settings-sidebar.active {
+            right: 0;
+            left: auto;
+        }
+
+        /* إخفاء Settings Sidebar في الشاشات الكبيرة حتى يتم الضغط عليه */
+        @media (min-width: 1024px) {
+            .settings-sidebar {
+                left: -320px;
+                box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+            }
+
+            .settings-sidebar.active {
+                left: 0;
+                box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+            }
+
+            [dir="rtl"] .settings-sidebar {
+                right: -320px;
+                left: auto;
+            }
+
+            [dir="rtl"] .settings-sidebar.active {
+                right: 0;
+                left: auto;
+            }
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            color: #4c6c9a;
+        }
+
+        .sidebar-item:hover {
+            background: #f6f7f8;
+            color: #136dec;
+        }
+
+        .dark .sidebar-item:hover {
+            background: #0f172a;
+        }
+
+        .sidebar-item.active {
+            background: rgba(19, 109, 236, 0.1);
+            color: #136dec;
+            font-weight: 700;
+        }
+
+        /* ============= FLOATING SETTINGS BUTTON ============= */
+        .floating-settings-btn {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 998;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #136dec 0%, #0f5ac7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 8px 24px rgba(19, 109, 236, 0.4);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 3px solid white;
+        }
+
+        .dark .floating-settings-btn {
+            border-color: #1e293b;
+        }
+
+        .floating-settings-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 12px 32px rgba(19, 109, 236, 0.6);
+        }
+
+        .floating-settings-btn:active {
+            transform: scale(0.95) rotate(90deg);
+        }
+
+        [dir="rtl"] .floating-settings-btn {
+            right: auto;
+            left: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .floating-settings-btn {
+                width: 50px;
+                height: 50px;
+                top: 90px;
+                right: 15px;
+            }
+
+            [dir="rtl"] .floating-settings-btn {
+                right: auto;
+                left: 15px;
+            }
+        }
+
+        /* ============= SIDEBAR OVERLAY ============= */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ============= DROPDOWN MENU ============= */
+        .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============= TOAST NOTIFICATIONS ============= */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 9999;
+            min-width: 280px;
+        }
+
+        [dir="rtl"] .toast {
+            right: auto;
+            left: 20px;
+            transform: translateX(-400px);
+        }
+
+        .dark .toast {
+            background: #1e293b;
+            color: white;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        [dir="rtl"] .toast.success {
+            border-left: none;
+            border-right: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        [dir="rtl"] .toast.error {
+            border-left: none;
+            border-right: 4px solid #ef4444;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast.success .toast-icon {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .toast.error .toast-icon {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        /* ============= CARD STYLES ============= */
+        .card {
+            background: white;
+            border: 1px solid #e7ecf3;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .dark .card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ============= TOGGLE SWITCH ============= */
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 28px;
+            background: #cbd5e1;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #136dec;
+        }
+
+        .toggle-switch-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-switch-handle {
+            transform: translateX(28px);
+        }
+
+        /* ============= ANIMATIONS ============= */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .fade-in-scale {
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        /* ============= HAMBURGER BUTTON ANIMATION ============= */
+        .hamburger {
+            width: 24px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: currentColor;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 8px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 16px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            top: 8px;
+            transform: rotate(135deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            top: 8px;
+            transform: rotate(-135deg);
+        }
+
+        /* ============= PAYMENT METHOD TABS ============= */
+        .payment-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-tab.active {
+            background: white;
+            color: #0d131b;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark .payment-tab.active {
+            background: #334155;
+            color: white;
+        }
+
+        /* ============= PAYMENT CONTENT ============= */
+        .payment-content {
+            display: none;
+        }
+
+        .payment-content.active {
+            display: block;
+        }
+
+        /* ============= MODAL STYLES ============= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark .modal-content {
+            background: #1e293b;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* ============= SCROLLBAR ============= */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #136dec;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0f5ac7;
+        }
+
+        /* ============= INPUT FOCUS STYLES ============= */
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #136dec;
+            box-shadow: 0 0 0 3px rgba(19, 109, 236, 0.1);
+        }
+
+        /* ============= RESPONSIVE ============= */
+        @media (max-width: 768px) {
+            .card {
+                padding: 1rem;
+            }
+
+            .toast {
+                right: 10px;
+                min-width: 260px;
+            }
+
+            [dir="rtl"] .toast {
+                left: 10px;
+                right: auto;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ============= PROFILE IMAGE HOVER EFFECT ============= */
+        .relative.group:hover img {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        /* ============= BUTTON HOVER EFFECTS ============= */
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* ============= LINK HOVER EFFECT ============= */
+        a {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        /* ============= NAV LINK ACTIVE STATE ============= */
+        .nav-link.active {
+            color: #136dec;
+            font-weight: 700;
+        }
+
+        /* ============= MENU ITEM HOVER ============= */
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateX(4px);
+        }
+
+        [dir="rtl"] .menu-item:hover {
+            transform: translateX(-4px);
+        }
+
+        /* ============= FORM VALIDATION STYLES ============= */
+        input:invalid:not(:placeholder-shown) {
+            border-color: #ef4444;
+        }
+
+        input:valid:not(:placeholder-shown) {
+            border-color: #10b981;
+        }
+
+        /* ============= LOADING SPINNER ============= */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            border: 3px solid rgba(19, 109, 236, 0.1);
+            border-radius: 50%;
+            border-top-color: #136dec;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ============= BADGE PULSE ANIMATION ============= */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* ============= SMOOTH SCROLL ============= */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ============= SELECTION COLOR ============= */
+        ::selection {
+            background: rgba(19, 109, 236, 0.2);
+            color: inherit;
+        }
+
+        /* ============= FOCUS VISIBLE ============= */
+        *:focus-visible {
+            outline: 2px solid #136dec;
+            outline-offset: 2px;
+        }
+
+        /* ============= DISABLED STATES ============= */
+        button:disabled,
+        input:disabled,
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ============= PRINT STYLES ============= */
+        @media print {
+
+            .no-print,
+            header,
+            footer,
+            .sidebar-overlay,
+            .mobile-menu,
+            .settings-sidebar,
+            button {
+                display: none !important;
+            }
+        }
+
+        /* ============= PREFERENCE CARDS ============= */
+        .preference-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .preference-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============= GRADIENT TEXT ============= */
+        .gradient-text {
+            background: linear-gradient(135deg, #136dec 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============= SKELETON LOADING ============= */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        .dark .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 1000px 100%;
+        }
+
+        /* ============= CUSTOM CHECKBOX/RADIO ============= */
+        input[type="checkbox"],
+        input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e7ecf3;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="radio"] {
+            border-radius: 50%;
+        }
+
+        input[type="checkbox"]:checked,
+        input[type="radio"]:checked {
+            background-color: #136dec;
+            border-color: #136dec;
+        }
+
+        input[type="checkbox"]:checked::before {
+            content: '✓';
+            display: block;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            margin: 4px;
+        }
+
+        /* ============= TOOLTIP ============= */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: #1e293b;
+            color: white;
+            font-size: 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .tooltip:hover::before,
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ============= PROGRESS BAR ============= */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e7ecf3;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .dark .progress-bar {
+            background: #334155;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #136dec, #3b82f6);
+            border-radius: 99px;
+            transition: width 1s ease;
+        }
+
+        /* ============= BREADCRUMB HOVER ============= */
+        nav a:hover {
+            color: #136dec;
+        }
+
+        /* ============= SMOOTH TRANSITIONS ============= */
+        * {
+            transition-property: background-color, border-color, color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Floating Settings Button -->
+    <button class="floating-settings-btn" onclick="toggleSettingsSidebar()" title="Settings">
+        <span class="material-symbols-outlined text-3xl">settings</span>
+    </button>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Settings Sidebar -->
+    <div class="settings-sidebar" id="settingsSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-bold" data-en="Settings" data-ar="الإعدادات">Settings</h2>
+                <button onclick="closeSettingsSidebar()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2">
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="UserSeting.html">
+                    <span class="material-symbols-outlined text-xl">person</span>
+                    <span class="text-sm font-semibold" data-en="Profile Settings"
+                        data-ar="إعدادات الملف الشخصي">Profile Settings</span>
+                </a>
+                <a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl" href="UserSecutity.html">
+                    <span class="material-symbols-outlined text-xl">security</span>
+                    <span class="text-sm font-semibold" data-en="Security & Privacy" data-ar="الأمان والخصوصية">Security
+                        & Privacy</span>
+                </a>
+                <a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl" href="PaymentMethods.html">
+                    <span class="material-symbols-outlined text-xl">payments</span>
+                    <span class="text-sm font-semibold" data-en="Payment Methods" data-ar="طرق الدفع">Payment
+                        Methods</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="Budget.html" onclick="closeProfile();"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح سجل الرحلات...' : 'Opening trip history...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#"
+                                onclick="closeProfile(); showToast(currentLanguage === 'ar' ? 'فتح المساعدة والدعم...' : 'Opening help & support...', 'success')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="handleLogout()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-20 py-6 md:py-8 relative">
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2 fade-in-up" style="animation-delay: 0.1s;">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Subscription"
+                        data-ar="الاشتراك">Subscription</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Checkout" data-ar="الدفع">Checkout</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Secure Payment Checkout" data-ar="الدفع الآمن">Secure Payment Checkout</h1>
+                        <p class="text-[#4c6c9a] flex items-center gap-2 mt-1">
+                            <span class="material-symbols-outlined text-lg">lock</span>
+                            <span data-en="Complete your subscription to unlock premium travel features"
+                                data-ar="أكمل اشتراكك لفتح ميزات السفر المميزة">Complete your subscription to unlock
+                                premium travel features</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left Column: Plan Summary -->
+                <div class="lg:col-span-5 flex flex-col gap-6 fade-in-scale" style="animation-delay: 0.2s;">
+                    <div class="card border-l-4 border-l-primary overflow-hidden">
+                        <div
+                            class="h-48 bg-gradient-to-br from-primary/20 via-blue-500/10 to-purple-500/20 flex items-center justify-center mb-6 -mx-6 -mt-6">
+                            <div class="text-center">
+                                <span class="material-symbols-outlined text-primary text-6xl">travel_explore</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="text-primary text-xs font-bold tracking-widest uppercase mb-2"
+                                data-en="SELECTED PLAN" data-ar="الباقة المختارة">SELECTED PLAN</p>
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-[#0d131b] dark:text-white text-xl font-bold"
+                                        data-en="Yearly Subscription" data-ar="اشتراك سنوي">Yearly Subscription</h3>
+                                    <p class="text-[#4c6c9a] text-lg font-medium">
+                                        <span data-en="$99.00" data-ar="99.00$">$99.00</span>
+                                        <span class="text-sm" data-en="/ year" data-ar="/ سنة">/ year</span>
+                                    </p>
+                                </div>
+                                <button
+                                    onclick="showToast(currentLanguage === 'ar' ? 'فتح صفحة الباقات...' : 'Opening plans page...', 'success')"
+                                    class="text-primary text-sm font-semibold hover:bg-primary/10 px-3 py-1 rounded-lg transition-colors"
+                                    data-en="Change" data-ar="تغيير">Change</button>
+                            </div>
+
+                            <hr class="border-slate-200 dark:border-slate-700 my-4" />
+
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-[#4c6c9a] text-sm">
+                                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                    <span data-en="Unlimited travel itineraries"
+                                        data-ar="مسارات سفر غير محدودة">Unlimited travel itineraries</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-[#4c6c9a] text-sm">
+                                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                    <span data-en="24/7 Personal AI Assistant"
+                                        data-ar="مساعد AI شخصي على مدار الساعة">24/7 Personal AI Assistant</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-[#4c6c9a] text-sm">
+                                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                    <span data-en="Offline vector maps" data-ar="خرائط متصلة بالإنترنت">Online vector
+                                        maps</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-[#4c6c9a] text-sm">
+                                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                                    <span data-en="Exclusive airport lounge discounts"
+                                        data-ar="خصومات حصرية على صالات المطار">Exclusive airport lounge
+                                        discounts</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="card">
+                        <label class="block text-sm font-semibold text-[#0d131b] dark:text-white mb-3"
+                            data-en="Promo Code" data-ar="كود الخصم">Promo Code</label>
+                        <div class="flex gap-2">
+                            <input id="promoCodeInput"
+                                class="flex-1 px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-2 focus:ring-primary transition-all"
+                                placeholder="Enter code" type="text" />
+                            <button onclick="applyPromoCode()"
+                                class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-[#0d131b] dark:text-white rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                                data-en="Apply" data-ar="تطبيق">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Payment Form -->
+                <div class="lg:col-span-7 fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="card">
+                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold mb-6" data-en="Payment Details"
+                            data-ar="تفاصيل الدفع">Payment Details</h2>
+
+                        <!-- Payment Method Tabs -->
+                        <div class="flex gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 mb-8">
+                            <button onclick="switchPaymentMethod('credit-card')"
+                                class="payment-tab active flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all"
+                                data-method="credit-card">
+                                <span class="material-symbols-outlined text-lg">credit_card</span>
+                                <span data-en="Credit Card" data-ar="بطاقة ائتمان">Credit Card</span>
+                            </button>
+                            <button onclick="switchPaymentMethod('paypal')"
+                                class="payment-tab flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold text-[#4c6c9a] transition-all"
+                                data-method="paypal">
+                                <span class="material-symbols-outlined text-lg">account_balance_wallet</span>
+                                <span data-en="PayPal" data-ar="باي بال">PayPal</span>
+                            </button>
+                            <button onclick="switchPaymentMethod('apple-pay')"
+                                class="payment-tab flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold text-[#4c6c9a] transition-all"
+                                data-method="apple-pay">
+                                <span class="material-symbols-outlined text-lg">phone_iphone</span>
+                                <span data-en="Apple Pay" data-ar="أبل باي">Apple Pay</span>
+                            </button>
+                        </div>
+
+                        <!-- Credit Card Form -->
+                        <div id="credit-card-content" class="payment-content active">
+                            <form id="creditCardForm" class="space-y-6" onsubmit="handlePayment(event, 'credit-card')">
+                                <div>
+                                    <label class="block text-sm font-semibold text-[#0d131b] dark:text-white mb-2"
+                                        data-en="Cardholder Name" data-ar="اسم حامل البطاقة">Cardholder Name</label>
+                                    <input
+                                        class="w-full px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-2 focus:ring-primary transition-all"
+                                        placeholder="Ahmed Hassan" type="text" required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-[#0d131b] dark:text-white mb-2"
+                                        data-en="Card Number" data-ar="رقم البطاقة">Card Number</label>
+                                    <div class="relative">
+                                        <input
+                                            class="w-full px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-2 focus:ring-primary transition-all pr-12"
+                                            placeholder="0000 0000 0000 0000" type="text" maxlength="19" required />
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">payments</span>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-[#0d131b] dark:text-white mb-2"
+                                            data-en="Expiry Date" data-ar="تاريخ الانتهاء">Expiry Date</label>
+                                        <input id="expDate"
+                                            class="w-full px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-2 focus:ring-primary transition-all"
+                                            placeholder="MM / YY" type="text" maxlength="7" required />
+
+
+
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-[#0d131b] dark:text-white mb-2"
+                                            data-en="CVV" data-ar="CVV">CVV</label>
+                                        <div class="relative">
+                                            <input
+                                                class="w-full px-4 py-3 rounded-lg border border-[#e7ecf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-2 focus:ring-primary transition-all pr-10"
+                                                placeholder="123" type="password" maxlength="3" required />
+                                            <span
+                                                class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-help text-sm"
+                                                title="3-digit code on back of card">help</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-primary hover:bg-[#0b82d9] text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 mt-6">
+                                    <span class="material-symbols-outlined">lock</span>
+                                    <span data-en="Pay & Activate Plan" data-ar="الدفع وتفعيل الباقة">Pay & Activate
+                                        Plan</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- PayPal Content -->
+                        <div id="paypal-content" class="payment-content">
+                            <form id="paypalForm" class="space-y-6" onsubmit="handlePayment(event, 'paypal')">
+                                <div class="text-center py-8">
+                                    <div
+                                        class="inline-flex items-center justify-center w-24 h-24 bg-blue-100 dark:bg-blue-900/20 rounded-full mb-4">
+                                        <span
+                                            class="material-symbols-outlined text-blue-600 text-5xl">account_balance_wallet</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-[#0d131b] dark:text-white mb-2"
+                                        data-en="Pay with PayPal" data-ar="الدفع عبر PayPal">Pay with PayPal</h3>
+                                    <p class="text-[#4c6c9a] text-sm mb-6"
+                                        data-en="You will be redirected to PayPal to complete your payment securely"
+                                        data-ar="سيتم إعادة توجيهك إلى PayPal لإكمال الدفع بشكل آمن">
+                                        You will be redirected to PayPal to complete your payment securely
+                                    </p>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-[#0070ba] hover:bg-[#005a94] text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                                    <span data-en="Continue to PayPal" data-ar="المتابعة إلى PayPal">Continue to
+                                        PayPal</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Apple Pay Content -->
+                        <div id="apple-pay-content" class="payment-content">
+                            <form id="applePayForm" class="space-y-6" onsubmit="handlePayment(event, 'apple-pay')">
+                                <div class="text-center py-8">
+                                    <div
+                                        class="inline-flex items-center justify-center w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-full mb-4">
+                                        <span
+                                            class="material-symbols-outlined text-slate-700 dark:text-white text-5xl">phone_iphone</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-[#0d131b] dark:text-white mb-2"
+                                        data-en="Pay with Apple Pay" data-ar="الدفع عبر Apple Pay">Pay with Apple Pay
+                                    </h3>
+                                    <p class="text-[#4c6c9a] text-sm mb-6"
+                                        data-en="Quick and secure payment using your Apple device"
+                                        data-ar="دفع سريع وآمن باستخدام جهاز Apple الخاص بك">
+                                        Quick and secure payment using your Apple device
+                                    </p>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-black hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined">phone_iphone</span>
+                                    <span data-en="Pay with Apple Pay" data-ar="الدفع عبر Apple Pay">Pay with Apple
+                                        Pay</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Security Badges -->
+                        <div class="mt-8 flex flex-col items-center gap-4">
+                            <div class="flex items-center gap-2 text-[#4c6c9a] text-xs font-medium">
+                                <span class="material-symbols-outlined text-sm">verified_user</span>
+                                <span data-en="Secure 256-bit SSL Encrypted Payment"
+                                    data-ar="دفع مشفر بتقنية SSL 256 بت">Secure 256-bit SSL Encrypted Payment</span>
+                            </div>
+                            <div class="flex gap-6 opacity-60 grayscale hover:grayscale-0 transition-all">
+                                <div
+                                    class="h-6 w-10 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-[10px] font-bold">
+                                    VISA</div>
+                                <div
+                                    class="h-6 w-10 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-[10px] font-bold">
+                                    MC</div>
+                                <div
+                                    class="h-6 w-10 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-[10px] font-bold">
+                                    AMEX</div>
+                                <div
+                                    class="h-6 w-10 bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-[10px] font-bold">
+                                    STRIPE</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Security Sidebar (Desktop) -->
+        <aside class="hidden xl:block w-80 flex-shrink-0">
+            <div class="sticky top-24 fade-in-scale" style="animation-delay: 0.4s;">
+                <div class="bg-primary/5 dark:bg-slate-900 rounded-xl p-6 border border-primary/20">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
+                        <h4 class="font-bold text-lg" data-en="Why Choose Dalilak?" data-ar="لماذا تختار دليلك؟">Why
+                            Choose Dalilak?</h4>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Feature 1 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-green-500">
+                            <p class="text-xs font-bold text-green-600 mb-2" data-en="SECURE PAYMENT" data-ar="دفع آمن">
+                                SECURE PAYMENT</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Your payment information is encrypted and secure with industry-standard SSL technology."
+                                data-ar="معلومات الدفع الخاصة بك مشفرة وآمنة بتقنية SSL القياسية في الصناعة.">
+                                Your payment information is encrypted and secure with industry-standard SSL technology.
+                            </p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-blue-500">
+                            <p class="text-xs font-bold text-blue-600 mb-2" data-en="MONEY-BACK GUARANTEE"
+                                data-ar="ضمان استرداد المال">
+                                MONEY-BACK GUARANTEE</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Not satisfied? Get a full refund within 30 days, no questions asked."
+                                data-ar="غير راضٍ؟ احصل على استرداد كامل خلال 30 يوماً، بدون أسئلة.">
+                                Not satisfied? Get a full refund within 30 days, no questions asked.
+                            </p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border-l-4 border-purple-500">
+                            <p class="text-xs font-bold text-purple-600 mb-2" data-en="24/7 SUPPORT"
+                                data-ar="دعم على مدار الساعة">24/7 SUPPORT</p>
+                            <p class="text-sm leading-relaxed"
+                                data-en="Our support team is available around the clock to help you with any questions."
+                                data-ar="فريق الدعم لدينا متاح على مدار الساعة لمساعدتك في أي أسئلة.">
+                                Our support team is available around the clock to help you with any questions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 rounded-lg bg-gradient-to-br from-primary to-blue-600 text-white text-center">
+                        <p class="text-xs font-bold mb-1" data-en="TRUSTED BY" data-ar="موثوق به من قبل">TRUSTED BY</p>
+                        <p class="text-3xl font-black">50,000+</p>
+                        <p class="text-xs opacity-90 mt-1" data-en="Happy Travelers" data-ar="مسافر سعيد">Happy
+                            Travelers</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="text-center py-8">
+                <p class="text-[#4c6c9a] text-sm mb-4">
+                    <span data-en="By completing this purchase, you agree to Dalilak's"
+                        data-ar="بإتمام هذا الشراء، فإنك توافق على">By completing this purchase, you agree to
+                        Dalilak's</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Terms of Service"
+                        data-ar="شروط الخدمة">Terms of Service</a>
+                    <span data-en="and" data-ar="و">and</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Privacy Policy"
+                        data-ar="سياسة الخصوصية">Privacy Policy</a>.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                    </a>
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">mail</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================================================
+           GLOBAL SHARED STORAGE
+        ========================================================= */
+        const STORAGE = {
+            LANGUAGE: 'dalilak_language',
+            THEME: 'dalilak_theme',
+            PAYMENT_METHOD: 'dalilak_payment_method'
+        };
+
+        // =============================================
+        // STATE MANAGEMENT
+        // =============================================
+        let currentLanguage = 'en';
+        let currentTheme = 'light';
+        let currentPaymentMethod = 'credit-card';
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSettings();
+            updateAllTranslations();
+            loadPaymentMethod();
+        });
+
+        // =============================================
+        // SETTINGS MANAGEMENT
+        // =============================================
+        function loadSettings() {
+            const savedLang = localStorage.getItem(STORAGE.LANGUAGE) || 'en';
+            const savedTheme = localStorage.getItem(STORAGE.THEME) || 'light';
+
+            currentLanguage = savedLang;
+            currentTheme = savedTheme;
+
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+        }
+
+        function saveSettings() {
+            localStorage.setItem(STORAGE.LANGUAGE, currentLanguage);
+            localStorage.setItem(STORAGE.THEME, currentTheme);
+        }
+
+        function loadPaymentMethod() {
+            const saved = localStorage.getItem(STORAGE.PAYMENT_METHOD);
+            if (saved) {
+                currentPaymentMethod = saved;
+                switchPaymentMethod(saved);
+            }
+        }
+
+        function savePaymentMethod() {
+            localStorage.setItem(STORAGE.PAYMENT_METHOD, currentPaymentMethod);
+        }
+
+        // =============================================
+        // PAYMENT METHOD SWITCHING
+        // =============================================
+        function switchPaymentMethod(method) {
+            currentPaymentMethod = method;
+            savePaymentMethod();
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('text-[#4c6c9a]');
+            });
+
+            // Remove active class from all content
+            document.querySelectorAll('.payment-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active class to selected tab
+            const selectedTab = document.querySelector(`[data-method="${method}"]`);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                selectedTab.classList.remove('text-[#4c6c9a]');
+            }
+
+            // Show selected content
+            const selectedContent = document.getElementById(`${method}-content`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+        }
+
+        // =============================================
+        // PAYMENT HANDLING
+        // =============================================
+        function handlePayment(event, method) {
+            event.preventDefault();
+
+            const messages = {
+                'credit-card': {
+                    en: 'Processing payment... Please wait.',
+                    ar: 'جاري معالجة الدفع... يرجى الانتظار.'
+                },
+                'paypal': {
+                    en: 'Redirecting to PayPal...',
+                    ar: 'جاري التوجيه إلى PayPal...'
+                },
+                'apple-pay': {
+                    en: 'Processing Apple Pay...',
+                    ar: 'جاري معالجة Apple Pay...'
+                }
+            };
+
+            const message = currentLanguage === 'ar' ? messages[method].ar : messages[method].en;
+            showToast(message, 'success');
+
+            setTimeout(() => {
+                const successMessage = currentLanguage === 'ar'
+                    ? 'تم الدفع بنجاح! جاري تفعيل اشتراكك...'
+                    : 'Payment successful! Activating your subscription...';
+                showToast(successMessage, 'success');
+            }, 2000);
+        }
+
+        // =============================================
+        // PROMO CODE
+        // =============================================
+        function applyPromoCode() {
+            const code = document.getElementById('promoCodeInput').value.trim();
+
+            if (!code) {
+                const message = currentLanguage === 'ar'
+                    ? 'يرجى إدخال كود خصم'
+                    : 'Please enter a promo code';
+                showToast(message, 'error');
+                return;
+            }
+
+            // Simulate promo code validation
+            const validCodes = ['TRAVEL20', 'SAVE10', 'DALILAK15'];
+
+            if (validCodes.includes(code.toUpperCase())) {
+                const message = currentLanguage === 'ar'
+                    ? 'تم تطبيق كود الخصم بنجاح!'
+                    : 'Promo code applied successfully!';
+                showToast(message, 'success');
+                document.getElementById('promoCodeInput').value = '';
+            } else {
+                const message = currentLanguage === 'ar'
+                    ? 'كود الخصم غير صالح'
+                    : 'Invalid promo code';
+                showToast(message, 'error');
+            }
+        }
+
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icon = type === 'success' ? 'check_circle' : 'cancel';
+
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <span class="material-symbols-outlined text-lg">${icon}</span>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold text-sm">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 400);
+            }, 3000);
+        }
+
+        // =============================================
+        // THEME TOGGLE
+        // =============================================
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.classList.toggle('dark');
+            saveSettings();
+        }
+
+        // =============================================
+        // LANGUAGE TOGGLE
+        // =============================================
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            updateAllTranslations();
+            saveSettings();
+        }
+
+        function updateAllTranslations() {
+            document.querySelectorAll('[data-en], [data-ar]').forEach(el => {
+                const key = currentLanguage === 'ar' ? 'data-ar' : 'data-en';
+                if (el.hasAttribute(key)) {
+                    if (el.tagName === 'INPUT' && el.type === 'submit') {
+                        el.value = el.getAttribute(key);
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = el.getAttribute(key);
+                    } else {
+                        el.textContent = el.getAttribute(key);
+                    }
+                }
+            });
+        }
+
+        // =============================================
+        // MENU & SIDEBAR FUNCTIONS
+        // =============================================
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+            const settingsSidebar = document.getElementById('settingsSidebar');
+
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            if (settingsSidebar.classList.contains('active')) {
+                settingsSidebar.classList.remove('active');
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        function toggleSettingsSidebar() {
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            settingsSidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        }
+
+        function closeSettingsSidebar() {
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            settingsSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function closeSidebar() {
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const settingsSidebar = document.getElementById('settingsSidebar');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            overlay.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            settingsSidebar.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+
+        function closeProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.remove('active');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            const profileBtn = document.getElementById('profileBtn');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (profileBtn && profileDropdown && !profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('active');
+            }
+        });
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        function handleLogout() {
+            closeProfile();
+
+            const confirmMessage = currentLanguage === 'ar'
+                ? 'هل أنت متأكد أنك تريد تسجيل الخروج؟'
+                : 'Are you sure you want to logout?';
+
+            if (confirm(confirmMessage)) {
+                const message = currentLanguage === 'ar'
+                    ? 'جاري تسجيل الخروج...'
+                    : 'Logging out...';
+                showToast(message, 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        }
+
+        // =============================================
+        // STORAGE LISTENER
+        // =============================================
+        window.addEventListener('storage', function (event) {
+            if (event.key === STORAGE.LANGUAGE) {
+                currentLanguage = event.newValue || 'en';
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                updateAllTranslations();
+            }
+
+            if (event.key === STORAGE.THEME) {
+                currentTheme = event.newValue || 'light';
+                document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            }
+        });
+
+
+
+
+        const input = document.getElementById("expDate");
+
+        input.addEventListener("input", function () {
+            let value = input.value.replace(/\D/g, "");
+
+            // جزء الشهر
+            if (value.length >= 1) {
+                let month = value.slice(0, 2);
+
+                // لو أول رقم أكبر من 1 يبقى نحطه 0 قبله (زي 9 → 09)
+                if (month.length === 1 && parseInt(month) > 1) {
+                    month = "0" + month;
+                }
+
+                // تحقق من الشهر
+                if (month.length === 2) {
+                    let m = parseInt(month);
+                    if (m < 1) month = "01";
+                    if (m > 12) month = "12";
+                }
+
+                value = month + value.slice(2);
+            }
+
+            // تركيب الشكل النهائي
+            if (value.length > 2) {
+                value = value.slice(0, 2) + " / " + value.slice(2, 4);
+            }
+
+            input.value = value;
+        });
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,810 @@
+/* ============= BASE STYLES ============= */
+body {
+  font-family: "Cairo", "Poppins", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", "Cairo", sans-serif;
+  font-weight: 600;
+}
+
+p,
+li,
+span,
+a {
+  font-family: "Cairo", "Poppins", sans-serif;
+}
+
+[dir="rtl"] {
+  font-family: "Cairo", sans-serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.material-symbols-outlined.fill-current {
+  font-variation-settings: "FILL" 1;
+}
+
+/* ============= MOBILE MENU STYLES ============= */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.dark .mobile-menu {
+  background: #1e293b;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+/* RTL Support for Mobile Menu */
+[dir="rtl"] .mobile-menu {
+  right: auto;
+  left: -100%;
+  transition: left 0.3s ease-in-out;
+}
+
+[dir="rtl"] .mobile-menu.active {
+  left: 0;
+  right: auto;
+}
+
+/* ============= SIDEBAR OVERLAY ============= */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 999;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============= MOBILE SIDEBAR (FILTERS) ============= */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 320px;
+  max-width: 85vw;
+  height: 100vh;
+  background: white;
+  transition: right 0.3s ease-in-out;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.dark .mobile-sidebar {
+  background: #1e293b;
+}
+
+.mobile-sidebar.active {
+  right: 0;
+}
+
+/* RTL Support for Mobile Sidebar */
+[dir="rtl"] .mobile-sidebar {
+  right: auto;
+  left: -100%;
+  transition: left 0.3s ease-in-out;
+}
+
+[dir="rtl"] .mobile-sidebar.active {
+  left: 0;
+  right: auto;
+}
+
+/* ============= DROPDOWN MENUS ============= */
+.dropdown-menu {
+  display: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============= SORT DROPDOWN ============= */
+.sort-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-in-out;
+}
+
+.dark .sort-dropdown {
+  background: #1e293b;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sort-dropdown.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RTL Support for Sort Dropdown */
+[dir="rtl"] .sort-dropdown {
+  right: auto;
+  left: 0;
+}
+
+/* ============= SEARCH BAR EXPANDABLE ============= */
+.search-container {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.search-container.collapsed {
+  width: 40px;
+}
+
+.search-container.expanded {
+  width: 320px;
+}
+
+.search-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7ecf3;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.dark .search-btn {
+  background: #1e293b;
+}
+
+.search-container.expanded .search-btn {
+  background: transparent;
+  cursor: default;
+}
+
+.search-input-wrapper {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.search-container.expanded .search-input-wrapper {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============= TOAST NOTIFICATIONS ============= */
+.toast {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(400px);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 9999;
+  min-width: 280px;
+}
+
+.dark .toast {
+  background: #1e293b;
+  color: white;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+/* RTL Support for Toast */
+[dir="rtl"] .toast {
+  right: auto;
+  left: 20px;
+  transform: translateX(-400px);
+}
+
+[dir="rtl"] .toast.show {
+  transform: translateX(0);
+}
+
+.toast.success {
+  border-left: 4px solid #10b981;
+}
+
+.toast.error {
+  border-left: 4px solid #ef4444;
+}
+
+/* RTL Toast Borders */
+[dir="rtl"] .toast.success {
+  border-left: none;
+  border-right: 4px solid #10b981;
+}
+
+[dir="rtl"] .toast.error {
+  border-left: none;
+  border-right: 4px solid #ef4444;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast.success .toast-icon {
+  background: #d1fae5;
+  color: #10b981;
+}
+
+.toast.error .toast-icon {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+/* ============= CARD STYLES ============= */
+.card {
+  background: white;
+  border: 1px solid #e7ecf3;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.dark .card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ============= PROGRESS BAR ============= */
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background-color: #e7ecf3;
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dark .progress-bar {
+  background-color: #334155;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #136dec, #3b82f6);
+  border-radius: 99px;
+  transition: width 1s ease;
+}
+
+/* ============= CIRCULAR PROGRESS ============= */
+.progress-circle {
+  transition: stroke-dashoffset 1.5s ease;
+}
+
+/* ============= ANIMATIONS ============= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+/* Stagger animation for grid items */
+.attraction-card {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.attraction-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.attraction-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.attraction-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.attraction-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.attraction-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.attraction-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.attraction-card:nth-child(n + 7) {
+  animation-delay: 0.7s;
+}
+
+@keyframes successPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.success-pulse {
+  animation: successPulse 0.6s ease-in-out;
+}
+
+/* ============= HAMBURGER BUTTON - محسّن للعربي والإنجليزي ============= */
+.hamburger {
+  width: 24px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 3px;
+  opacity: 1;
+  transform: rotate(0deg);
+  transition: all 0.25s ease-in-out;
+  position: relative;
+}
+
+.hamburger span:nth-child(1) {
+  margin-bottom: 5px;
+}
+
+.hamburger span:nth-child(2) {
+  margin-bottom: 5px;
+}
+
+.hamburger span:nth-child(3) {
+  margin-bottom: 0;
+}
+
+/* Active state - unified for both LTR and RTL */
+.hamburger.active {
+  gap: 0;
+}
+
+.hamburger.active span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* RTL specific adjustments */
+[dir="rtl"] .hamburger.active span:nth-child(2) {
+  transform: translateX(60px);
+}
+
+/* ============= TRANSACTION CARD ============= */
+.transaction-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dark .transaction-card {
+  background: #0f172a;
+}
+
+.transaction-card:hover {
+  background: #e7ecf3;
+  transform: translateX(-4px);
+}
+
+.dark .transaction-card:hover {
+  background: #1e293b;
+}
+
+/* RTL Support for Transaction Card */
+[dir="rtl"] .transaction-card:hover {
+  transform: translateX(4px);
+}
+
+/* ============= CATEGORY BADGE ============= */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.category-food {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.dark .category-food {
+  background: #78350f;
+  color: #fef3c7;
+}
+
+.category-transport {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.dark .category-transport {
+  background: #1e3a8a;
+  color: #dbeafe;
+}
+
+.category-lodging {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.dark .category-lodging {
+  background: #3730a3;
+  color: #e0e7ff;
+}
+
+.category-shopping {
+  background: #fce7f3;
+  color: #831843;
+}
+
+.dark .category-shopping {
+  background: #831843;
+  color: #fce7f3;
+}
+
+/* ============= STATUS BADGE ============= */
+.status-completed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #059669;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #d97706;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.status-completed .status-dot {
+  background: #10b981;
+}
+
+.status-pending .status-dot {
+  background: #f59e0b;
+}
+
+/* ============= MAP MODAL ============= */
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.map-modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 80vh;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.dark .map-container {
+  background: #1e293b;
+}
+
+.map-modal.active .map-container {
+  transform: scale(1);
+}
+
+.map-header {
+  padding: 20px;
+  border-bottom: 1px solid #e7ecf3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+}
+
+.dark .map-header {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+#map {
+  flex: 1;
+  width: 100%;
+}
+
+.map-info-card {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 1rem;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 100;
+}
+
+.dark .map-info-card {
+  background: #1e293b;
+}
+
+.map-info-card.active {
+  display: block;
+  animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom Map Marker Icon */
+.custom-marker {
+  width: 40px;
+  height: 40px;
+  background: #136dec;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(19, 109, 236, 0.4);
+}
+
+.custom-marker::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* ============= RESPONSIVE DESIGN ============= */
+@media (max-width: 768px) {
+  .map-container {
+    height: 90vh;
+    border-radius: 0;
+  }
+
+  .map-info-card {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+  
+  .toast {
+    right: 10px;
+    min-width: 260px;
+  }
+
+  [dir="rtl"] .toast {
+    right: auto;
+    left: 10px;
+  }
+}
+
+/* ============= SCROLLBAR STYLING ============= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #136dec;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0f5ac7;
+}

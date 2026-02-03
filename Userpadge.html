@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - User Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts - Arabic & English Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "primary-dark": "#0d5ac9",
+                        "accent-gold": "#D4AF37",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                        "card-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Cairo", "sans-serif"],
+                        "arabic": ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="./Style file/Userpade.css">
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-200">
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="p-6">
+            <!-- Logo in Sidebar -->
+            <div class="flex items-center gap-3 mb-8">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="flex items-center gap-3">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                </div>
+            </a>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="space-y-2">
+                <a href="Explore.html" class="sidebar-menu-item" onclick="closeSidebar(); ">
+                    <span class="material-symbols-outlined">explore</span>
+                    <span data-en="Explore" data-ar="استكشف">Explore</span>
+                </a>
+                <a href="Userpadge.html" class="sidebar-menu-item" onclick="closeSidebar()">
+                    <span class="material-symbols-outlined">luggage</span>
+                    <span data-en="Trips" data-ar="رحلاتي">Trips</span>
+                </a>
+                <a href="Budget.html" class="sidebar-menu-item" onclick="closeSidebar(); ">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                    <span data-en="Budget" data-ar="الميزانية">Budget</span>
+                </a>
+                <a href="#transport" class="sidebar-menu-item" onclick="closeSidebar(); ">
+                    <span class="material-symbols-outlined">directions_car</span>
+                    <span data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a href="#favorites" class="sidebar-menu-item" onclick="closeSidebar(); ">
+                    <span class="material-symbols-outlined">favorite</span>
+                    <span data-en="Favorites" data-ar="المفضلة">Favorites</span>
+                </a>
+            </nav>
+
+            <!-- Profile Button -->
+            <button class="sidebar-profile-btn w-full mt-8 mx-[-8px]" onclick="closeSidebar(); window.location.href='Userpadge.html'">
+                <span class="material-symbols-outlined">person</span>
+                <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+            </button>
+
+            <!-- Footer in Sidebar -->
+            <div class="text-center mt-12 text-slate-400 text-sm">
+                <p data-en="© 2026 Dalilak. Explore Egypt" data-ar="© 2026 Dalilak. استكشف مصر">© 2026 Dalilak. Explore Egypt</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Enhanced Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between gap-6">
+
+            <!-- Left: Logo -->
+            <div class="flex items-center gap-2 shrink-0">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="flex items-center gap-3">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                </div>
+            </a>
+            </div>
+
+
+
+            <!-- Center: Main Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a href="Explore.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a href="Userpadge.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                     data-en="Trips" data-ar="رحلاتي">
+                    Trips
+                </a>
+                <a href="Budget.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                     data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                     data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-3">
+
+                <!-- Notifications -->
+                <div class="relative hidden md:block">
+                    <button id="notificationBtn" onclick="toggleNotifications()"
+                        class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 text-[#0d131b] dark:text-white hover:text-primary transition-all flex items-center justify-center relative">
+                        <span class="material-symbols-outlined text-xl">notifications</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center pulse-ring"></span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div id="notificationDropdown"
+                        class="dropdown-menu absolute right-0 mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                            <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline" data-en="Mark all as read"
+                                data-ar="تعليم الكل كمقروء">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">flight</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Trip to Cairo confirmed!"
+                                            data-ar="رحلة إلى القاهرة مؤكدة!">
+                                            Trip to Cairo confirmed!
+                                        </p>
+                                        <p class="text-xs text-slate-500"
+                                            data-en="Your booking is ready. Check details."
+                                            data-ar="حجزك جاهز. تحقق من التفاصيل.">
+                                            Your booking is ready. Check details.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="2 hours ago"
+                                            data-ar="منذ ساعتين">
+                                            2 hours ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-xl">local_offer</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Special offer: 20% off hotels"
+                                            data-ar="عرض خاص: خصم 20% على الفنادق">
+                                            Special offer: 20% off hotels
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Limited time deal in Luxor"
+                                            data-ar="عرض لفترة محدودة في الأقصر">
+                                            Limited time deal in Luxor
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="1 day ago"
+                                            data-ar="منذ يوم">
+                                            1 day ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Budget updated successfully"
+                                            data-ar="تم تحديث الميزانية بنجاح">
+                                            Budget updated successfully
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Your trip budget has been saved."
+                                            data-ar="تم حفظ ميزانية رحلتك.">
+                                            Your trip budget has been saved.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="3 days ago"
+                                            data-ar="منذ 3 أيام">
+                                            3 days ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3 text-center border-t border-slate-200 dark:border-slate-700">
+                            <a href="#" class="text-xs text-primary font-semibold hover:underline"
+                                data-en="View all notifications" data-ar="عرض كل الإشعارات">
+                                View all notifications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Dropdown -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute right-0 mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">
+                                        Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="Userpadge.html" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">
+                                    My Profile
+                                </span>
+                            </a>
+                            <a href="UserSeting.html" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">
+                                    Settings
+                                </span>
+                            </a>
+                            <a href="Budget.html" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">
+                                    Trip History
+                                </span>
+                            </a>
+                            <a href="#" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support" data-ar="المساعدة والدعم">
+                                    Help & Support
+                                </span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="closeProfile()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">
+                                    Logout
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 dark:hover:bg-white/10 text-primary dark:text-white text-sm font-semibold transition-all flex items-center justify-center"
+                        title="تغيير اللغة / Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 dark:hover:bg-white/10 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="تغيير المظهر / Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-[#0d131b] dark:text-white " id="hamburgerBtn" onclick="toggleSidebar()">
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-6 lg:py-8">
+
+        <!-- Welcome Heading -->
+        <div class="slide-up stagger-1 flex flex-col lg:flex-row lg:justify-between lg:items-end gap-4 mb-8">
+            <div class="flex flex-col gap-2">
+                <p class="text-slate-900 dark:text-white text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight font-display"
+                    data-en="Welcome Ahmed to Cairo" data-ar="أهلاً وسهلاً بك يا أحمد في القاهرة!">
+                    Welcome Ahmed to Cairo
+                </p>
+                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg lg:text-xl font-medium leading-normal"
+                    data-en="Manage your trips, bookings, and daily budget."
+                    data-ar="إدارة رحلاتك وحجوزاتك وميزانيتك اليومية.">
+                    Manage your trips, bookings, and daily budget.
+                </p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="addExpense()"
+                    class="btn-ripple flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-primary/30 hover:bg-primary-dark transition-all hover:scale-105">
+                    <span class="material-symbols-outlined text-xl">add_circle</span>
+                    <span data-en="Add Expense" data-ar="إضافة مصروف">Add Expense</span>
+                </button>
+                <button onclick="bookGuide()"
+                    class="btn-ripple flex items-center justify-center gap-2 bg-white dark:bg-card-dark border-2 border-primary text-primary px-6 py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all hover:scale-105 shadow-md">
+                    <span class="material-symbols-outlined text-xl">person_pin</span>
+                    <span data-en="Book Guide" data-ar="حجز دليل سياحي">Book Guide</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+
+            <!-- Left Column: Financial & Weather -->
+            <div class="lg:col-span-4 flex flex-col gap-4 lg:gap-6">
+
+                <!-- Budget Tracker Card -->
+                <div class="fade-in-scale stagger-2 bg-white dark:bg-card-dark rounded-2xl p-5 lg:p-6 border border-slate-200 dark:border-slate-800 shadow-lg hover-lift"
+                    id="budget">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-black text-lg lg:text-xl text-slate-900 dark:text-white font-display"
+                            data-en="Daily Budget Tracker" data-ar="تتبع الميزانية اليومية">
+                            Daily Budget Tracker
+                        </h3>
+                        <span class="material-symbols-outlined text-primary text-3xl">account_balance_wallet</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mb-6">
+                        <div
+                            class="flex-1 min-w-[140px] flex flex-col gap-2 rounded-xl p-4 lg:p-5 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 border border-red-200 dark:border-red-800">
+                            <p class="text-slate-600 dark:text-slate-400 text-xs font-bold uppercase tracking-wider"
+                                data-en="Spent" data-ar="تم الإنفاق">
+                                Spent
+                            </p>
+                            <p class="text-slate-900 dark:text-white text-2xl lg:text-3xl font-black font-display">2,400
+                                EGP</p>
+                            <p class="text-green-600 dark:text-green-400 text-xs font-bold flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">trending_up</span>
+                                <span data-en="15% vs yesterday" data-ar="15% أكثر من الأمس">15% vs yesterday</span>
+                            </p>
+                        </div>
+
+                        <div
+                            class="flex-1 min-w-[140px] flex flex-col gap-2 rounded-xl p-4 lg:p-5 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-800/20 border-2 border-primary">
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider" data-en="Remaining"
+                                data-ar="متبقي">
+                                Remaining
+                            </p>
+                            <p class="text-primary text-2xl lg:text-3xl font-black font-display">7,600 EGP</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-xs font-bold"
+                                data-en="of EGP 10,000 daily limit" data-ar="من 10,000 جنيه الحد اليومي">
+                                of EGP 10,000 daily limit
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <div class="flex gap-6 justify-between items-center">
+                            <p class="text-slate-900 dark:text-slate-300 text-sm font-bold" data-en="Budget Usage"
+                                data-ar="استخدام الميزانية">
+                                Budget Usage
+                            </p>
+                            <p class="text-primary text-base font-black">24%</p>
+                        </div>
+                        <div class="rounded-full bg-slate-200 dark:bg-slate-700 h-3 overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-primary to-primary-dark rounded-full transition-all duration-1000 shadow-lg"
+                                style="width: 24%; animation: progressGrow 1.5s ease-out;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Widget -->
+                <div
+                    class="fade-in-scale stagger-3 bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 dark:from-blue-600 dark:via-indigo-600 dark:to-purple-600 rounded-2xl p-5 lg:p-6 shadow-xl overflow-hidden relative text-white">
+                    <div class="absolute top-0 left-0 p-6 opacity-20">
+                        <span class="material-symbols-outlined text-7xl lg:text-8xl">wb_sunny</span>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-white/90 text-sm font-bold mb-1" data-en="Weather in Cairo"
+                            data-ar="الطقس في القاهرة">
+                            Weather in Cairo
+                        </p>
+                        <h3 class="text-5xl lg:text-6xl font-black font-display mt-2 mb-1">32°C</h3>
+                        <p class="text-white font-bold text-lg mb-6" data-en="Sunny & Clear ☀️" data-ar="مشمس وصافي ☀️">
+                            Sunny & Clear ☀️
+                        </p>
+
+                        <div class="flex gap-4 border-t border-white/30 pt-4">
+                            <div class="flex flex-col items-center flex-1">
+                                <p class="text-[10px] text-white/80 uppercase font-bold">1 PM</p>
+                                <span class="material-symbols-outlined text-2xl my-2">wb_sunny</span>
+                                <p class="text-sm font-black">34°</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <p class="text-[10px] text-white/80 uppercase font-bold">4 PM</p>
+                                <span class="material-symbols-outlined text-2xl my-2">wb_sunny</span>
+                                <p class="text-sm font-black">31°</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <p class="text-[10px] text-white/80 uppercase font-bold">7 PM</p>
+                                <span class="material-symbols-outlined text-2xl my-2">wb_twilight</span>
+                                <p class="text-sm font-black">28°</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column: Today's Plan -->
+            <div class="lg:col-span-5 flex flex-col gap-4 lg:gap-6" id="trips">
+                <div
+                    class="fade-in-scale stagger-4 bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg flex-1 hover-lift">
+                    <div
+                        class="flex items-center justify-between p-5 lg:p-6 border-b border-slate-200 dark:border-slate-800">
+                        <h2 class="text-slate-900 dark:text-white text-xl lg:text-2xl font-black tracking-tight font-display"
+                            data-en="Today's Plan 📋" data-ar="خطة اليوم 📋">
+                            Today's Plan 📋
+                        </h2>
+                        <button onclick="editPlan()"
+                            class="text-primary text-sm font-bold flex items-center gap-1 hover:underline hover:scale-105 transition-transform">
+                            <span data-en="Edit" data-ar="تعديل">Edit</span>
+                            <span class="material-symbols-outlined text-base">edit</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 lg:p-6 relative">
+                        <!-- Vertical Line -->
+                        <div
+                            class="absolute left-9 top-10 bottom-10 w-1 bg-gradient-to-b from-green-500 via-primary to-slate-200 dark:to-slate-800 rounded-full">
+                        </div>
+
+                        <div class="space-y-6 lg:space-y-8">
+                            <!-- Plan Item 1 (Done) -->
+                            <div class="flex gap-4 relative">
+                                <div
+                                    class="bg-green-500 text-white rounded-full size-7 flex items-center justify-center relative z-10 shrink-0 mt-1 shadow-lg">
+                                    <span class="material-symbols-outlined text-base">check</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start flex-wrap gap-2">
+                                        <h4 class="font-bold text-slate-900 dark:text-white line-through opacity-50"
+                                            data-en="Breakfast at Fetirty" data-ar="فطور في فطيرتي">
+                                            Breakfast at Fetirty
+                                        </h4>
+                                        <span
+                                            class="text-xs font-bold text-slate-600 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">8:30
+                                            AM</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1"
+                                        data-en="Traditional Egyptian breakfast on the Nile."
+                                        data-ar="فطور مصري تقليدي على كورنيش النيل.">
+                                        Traditional Egyptian breakfast on the Nile.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Plan Item 2 (Active) -->
+                            <div class="flex gap-4 relative">
+                                <div
+                                    class="bg-primary text-white rounded-full size-7 flex items-center justify-center relative z-10 shrink-0 mt-1 ring-4 ring-primary/20 shadow-lg">
+                                    <div class="size-2.5 rounded-full bg-white animate-pulse"></div>
+                                </div>
+                                <div
+                                    class="flex-1 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 lg:p-5 rounded-xl border-2 border-primary shadow-md">
+                                    <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
+                                        <h4 class="font-black text-slate-900 dark:text-white text-base lg:text-lg"
+                                            data-en="Visit Pyramids 🏛️" data-ar="زيارة الأهرامات 🏛️">
+                                            Visit Pyramids 🏛️
+                                        </h4>
+                                        <span
+                                            class="text-xs font-black text-white bg-primary px-3 py-1.5 rounded-lg shadow-sm"
+                                            data-en="ONGOING" data-ar="جارٍ الآن">
+                                            ONGOING
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 mb-3"
+                                        data-en="Scheduled tour inside Pyramids and Sphinx."
+                                        data-ar="جولة داخل الأهرامات وأبو الهول المجدولة.">
+                                        Scheduled tour inside Pyramids and Sphinx.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="getTickets()"
+                                            class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-dark transition-all shadow-md">
+                                            <span data-en="Get Tickets" data-ar="احصل على تذاكر">Get Tickets</span>
+                                        </button>
+                                        <button onclick="viewDetails()"
+                                            class="bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                                            <span data-en="View Details" data-ar="عرض التفاصيل">View Details</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plan Item 3 (Upcoming) -->
+                            <div class="flex gap-4 relative">
+                                <div
+                                    class="bg-white dark:bg-card-dark border-2 border-slate-200 dark:border-slate-700 rounded-full size-7 flex items-center justify-center relative z-10 shrink-0 mt-1">
+                                    <div class="size-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start flex-wrap gap-2">
+                                        <h4 class="font-bold text-slate-900 dark:text-white"
+                                            data-en="Lunch at Khan El Khalili 🍽️" data-ar="غداء في خان الخليلي 🍽️">
+                                            Lunch at Khan El Khalili 🍽️
+                                        </h4>
+                                        <span
+                                            class="text-xs font-bold text-slate-600 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">1:30
+                                            PM</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1"
+                                        data-en="Explore traditional restaurants in old market."
+                                        data-ar="استكشاف المطاعم التقليدية في السوق القديم.">
+                                        Explore traditional restaurants in old market.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Plan Item 4 (Upcoming) -->
+                            <div class="flex gap-4 relative">
+                                <div
+                                    class="bg-white dark:bg-card-dark border-2 border-slate-200 dark:border-slate-700 rounded-full size-7 flex items-center justify-center relative z-10 shrink-0 mt-1">
+                                    <div class="size-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start flex-wrap gap-2">
+                                        <h4 class="font-bold text-slate-900 dark:text-white" data-en="Nile Cruise 🚤"
+                                            data-ar="رحلة نيلية 🚤">
+                                            Nile Cruise 🚤
+                                        </h4>
+                                        <span
+                                            class="text-xs font-bold text-slate-600 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">4:00
+                                            PM</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1"
+                                        data-en="Boat trip on the Nile with dinner."
+                                        data-ar="رحلة بالمركب على النيل مع عشاء.">
+                                        Boat trip on the Nile with dinner.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Plan Item 5 (Upcoming) -->
+                            <div class="flex gap-4 relative">
+                                <div
+                                    class="bg-white dark:bg-card-dark border-2 border-slate-200 dark:border-slate-700 rounded-full size-7 flex items-center justify-center relative z-10 shrink-0 mt-1">
+                                    <div class="size-3 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start flex-wrap gap-2">
+                                        <h4 class="font-bold text-slate-900 dark:text-white"
+                                            data-en="Sound & Light Show 🎭" data-ar="عرض الصوت والضوء 🎭">
+                                            Sound & Light Show 🎭
+                                        </h4>
+                                        <span
+                                            class="text-xs font-bold text-slate-600 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">8:00
+                                            PM</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1"
+                                        data-en="Sound and Light show at the Pyramids."
+                                        data-ar="عرض الصوت والضوء عند الأهرامات.">
+                                        Sound and Light show at the Pyramids.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Map & Attractions -->
+            <div class="lg:col-span-3 flex flex-col gap-4 lg:gap-6">
+
+                <!-- Live Map Card -->
+                <div class="fade-in-scale stagger-5 bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg overflow-hidden flex flex-col hover-lift"
+                    id="explore">
+                    <div class="h-64 lg:h-72 relative" id="map-container">
+                        <div id="map"></div>
+                    </div>
+
+                    <div class="p-4 lg:p-5" id="favorites">
+                        <h4 class="font-black text-base text-slate-900 dark:text-white mb-4 font-display"
+                            data-en="Nearby Places 📍" data-ar="الأماكن القريبة 📍">
+                            Nearby Places 📍
+                        </h4>
+                        <div class="space-y-3">
+                            <div onclick="focusOnMap(30.0444, 31.2357)"
+                                class="flex items-center gap-3 group cursor-pointer p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <div class="size-12 lg:size-14 rounded-xl bg-cover bg-center shrink-0 group-hover:ring-2 ring-primary transition-all shadow-md"
+                                    style="background-image: url('https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=400');">
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <p class="text-xs lg:text-sm font-bold truncate" data-en="Cairo Tower 🗼"
+                                        data-ar="برج القاهرة 🗼">
+                                        Cairo Tower 🗼
+                                    </p>
+                                    <p class="text-[10px] lg:text-xs text-slate-600 dark:text-slate-400"
+                                        data-en="0.6 km away" data-ar="0.6 كم بعيداً">
+                                        0.6 km away
+                                    </p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">arrow_forward_ios</span>
+                            </div>
+
+                            <div onclick="focusOnMap(30.0131, 31.2089)"
+                                class="flex items-center gap-3 group cursor-pointer p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <div class="size-12 lg:size-14 rounded-xl bg-cover bg-center shrink-0 group-hover:ring-2 ring-primary transition-all shadow-md"
+                                    style="background-image: url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=400');">
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <p class="text-xs lg:text-sm font-bold truncate" data-en="Egyptian Museum 🏛️"
+                                        data-ar="المتحف المصري 🏛️">
+                                        Egyptian Museum 🏛️
+                                    </p>
+                                    <p class="text-[10px] lg:text-xs text-slate-600 dark:text-slate-400"
+                                        data-en="1.2 km away" data-ar="1.2 كم بعيداً">
+                                        1.2 km away
+                                    </p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">arrow_forward_ios</span>
+                            </div>
+
+                            <div onclick="focusOnMap(29.9792, 31.1342)"
+                                class="flex items-center gap-3 group cursor-pointer p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <div class="size-12 lg:size-14 rounded-xl bg-cover bg-center shrink-0 group-hover:ring-2 ring-primary transition-all shadow-md"
+                                    style="background-image: url('https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=400');">
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <p class="text-xs lg:text-sm font-bold truncate" data-en="Giza Pyramids 🏛️"
+                                        data-ar="أهرامات الجيزة 🏛️">
+                                        Giza Pyramids 🏛️
+                                    </p>
+                                    <p class="text-[10px] lg:text-xs text-slate-600 dark:text-slate-400"
+                                        data-en="15.3 km away" data-ar="15.3 كم بعيداً">
+                                        15.3 km away
+                                    </p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">arrow_forward_ios</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transportation Card -->
+                <div class="fade-in-scale stagger-6 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl p-5 lg:p-6 shadow-xl relative overflow-hidden hover-lift"
+                    id="transport">
+                    <span
+                        class="material-symbols-outlined absolute -bottom-6 -right-6 text-8xl lg:text-9xl opacity-10 rotate-12">directions_car</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="material-symbols-outlined text-2xl">local_taxi</span>
+                            <h5 class="font-black text-sm lg:text-base uppercase tracking-wider"
+                                data-en="Transport Tip 🚕" data-ar="نصيحة مواصلات 🚕">
+                                Transport Tip 🚕
+                            </h5>
+                        </div>
+                        <p class="text-sm font-bold leading-relaxed"
+                            data-en="Best time to visit Pyramids is early morning to avoid crowds and heat. Book Uber or Careem taxi in advance!"
+                            data-ar="أفضل وقت لزيارة الأهرامات هو الصباح الباكر لتجنب الزحام والحرارة. احجز تاكسي أوبر أو كريم مسبقاً!">
+                            Best time to visit Pyramids is early morning to avoid crowds and heat. Book Uber or Careem taxi in advance!
+                        </p>
+                        <button onclick="bookTransport()"
+                            class="mt-4 bg-white text-blue-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-50 transition-all shadow-md">
+                            <span data-en="Book Transport Now" data-ar="احجز مواصلات الآن">Book Transport Now</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="mt-12 lg:mt-16 py-8 lg:py-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark">
+        <div
+            class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="flex items-center gap-3">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                </div>
+            </a>
+            </div>
+
+            <div
+                class="flex flex-wrap justify-center gap-4 lg:gap-8 text-slate-600 dark:text-slate-400 text-sm font-medium">
+                <a class="hover:text-primary transition-colors" href="#" data-en="Help Center" data-ar="مركز المساعدة">
+                    Help Center
+                </a>
+                <a class="hover:text-primary transition-colors" href="#" data-en="Terms of Service"
+                    data-ar="شروط الخدمة">
+                    Terms of Service
+                </a>
+                <a class="hover:text-primary transition-colors" href="#" data-en="Privacy Policy"
+                    data-ar="سياسة الخصوصية">
+                    Privacy Policy
+                </a>
+                <a class="hover:text-primary transition-colors" href="#" data-en="Contact Us" data-ar="اتصل بنا">
+                    Contact Us
+                </a>
+            </div>
+
+            <div class="text-slate-600 dark:text-slate-400 text-sm font-medium text-center">
+                <p data-en="© 2026 Dalilak. Explore Egypt 🇪🇬" data-ar="© 2026 Dalilak. استكشف مصر 🇪🇬">
+                    © 2026 Dalilak. Explore Egypt 🇪🇬
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./Script/Userpadge.js"></script>
+</body>
+
+</html>

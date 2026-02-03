@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Budget Tracker & Analytics</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="./Style file/Budget.css">
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl bg-primary/5 dark:bg-primary/10"
+                    href="budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold text-primary" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link active text-sm font-semibold text-primary cursor-pointer"
+                    href="budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Expandable Search (Desktop) -->
+                
+
+                <!-- Notifications (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="notificationBtn" onclick="toggleNotifications()"
+                        class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 text-[#0d131b] dark:text-white transition-all flex items-center justify-center relative">
+                        <span class="material-symbols-outlined text-xl">notifications</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <div id="notificationDropdown"
+                        class="dropdown-menu absolute left-auto right-[-75px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
+                                <p class="text-sm font-semibold" data-en="Budget Alert: Food category exceeded!"
+                                    data-ar="تنبيه الميزانية: تجاوز فئة الطعام!">Budget Alert: Food category exceeded!</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="You've spent 115% of your daily food budget"
+                                    data-ar="لقد أنفقت 115٪ من ميزانية الطعام اليومية">You've spent 115% of your daily food budget</p>
+                            </div>
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
+                                <p class="text-sm font-semibold" data-en="New transaction added"
+                                    data-ar="تمت إضافة معاملة جديدة">New transaction added</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="450 EGP - Al Mahara Dinner"
+                                    data-ar="450 جنيه - عشاء المحارة">450 EGP - Al Mahara Dinner</p>
+                            </div>
+                            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                <p class="text-sm font-semibold" data-en="Budget update successful"
+                                    data-ar="تم تحديث الميزانية بنجاح">Budget update successful</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="Your budget plan has been saved"
+                                    data-ar="تم حفظ خطة ميزانيتك">Your budget plan has been saved</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="Userpadge.html" onclick="closeProfile(); alert('Opening profile')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="UserSeting.html" onclick="closeProfile(); alert('Opening settings')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html" onclick="closeProfile(); alert('Opening trip history')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#" onclick="closeProfile(); alert('Opening help & support')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="closeProfile(); alert('Logging out')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="xl:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-10 py-6 md:py-8 relative">
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Budget Tracker"
+                        data-ar="تتبع الميزانية">Budget Tracker</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Budget Tracker & Analytics" data-ar="تتبع الميزانية والتحليلات">Budget Tracker & Analytics</h1>
+                        <p class="text-[#4c6c9a] flex items-center gap-2 mt-1">
+                            <span class="material-symbols-outlined text-lg">location_on</span>
+                            <span data-en="Trip to Dubai - Oct 2023"
+                                data-ar="رحلة إلى دبي - أكتوبر 2023">Trip to Dubai - Oct 2023</span>
+                        </p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="downloadReport()"
+                            class="flex items-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-all">
+                            <span class="material-symbols-outlined text-lg">download</span>
+                            <span data-en="Download Report" data-ar="تحميل التقرير">Download Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="card">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="TOTAL BUDGET" data-ar="إجمالي الميزانية">TOTAL BUDGET</p>
+                                <h3 class="text-[#0d131b] dark:text-white text-3xl font-extrabold">$5,000.00</h3>
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-3xl">account_balance_wallet</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;" data-width="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="card">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="SPENT SO FAR" data-ar="المصروف حتى الآن">SPENT SO FAR</p>
+                                <h3 class="text-[#0d131b] dark:text-white text-3xl font-extrabold">$2,450.00</h3>
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-3xl">payments</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 49%;" data-width="49"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="card border-l-4 border-l-primary">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="REMAINING BALANCE" data-ar="الرصيد المتبقي">REMAINING BALANCE</p>
+                                <h3 class="text-primary text-3xl font-extrabold">$2,550.00</h3>
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-3xl">savings</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-green-500 font-bold flex items-center">
+                                <span class="material-symbols-outlined text-sm">trending_up</span> 12%
+                            </span>
+                            <span class="text-[#4c6c9a]" data-en="vs last week" data-ar="مقارنة بالأسبوع الماضي">vs last week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Health & Category Breakdown -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Budget Health -->
+                <div class="fade-in-scale" style="animation-delay: 0.4s;">
+                    <div class="card">
+                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold mb-6" data-en="Budget Health" data-ar="صحة الميزانية">Budget Health</h2>
+                        <div class="flex flex-col items-center py-6">
+                            <!-- Circular Progress -->
+                            <div class="relative w-40 h-40 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" 
+                                            class="text-[#e7ecf3] dark:text-slate-800" stroke-width="12"/>
+                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" 
+                                            class="text-primary progress-circle" stroke-width="12"
+                                            stroke-dasharray="440" stroke-dashoffset="220"
+                                            stroke-linecap="round"/>
+                                </svg>
+                                <div class="absolute text-center">
+                                    <p class="text-3xl font-black text-[#0d131b] dark:text-white">49%</p>
+                                    <p class="text-xs font-bold text-[#4c6c9a] uppercase" data-en="Utilized" data-ar="مستخدم">Utilized</p>
+                                </div>
+                            </div>
+                            <p class="mt-6 text-center text-sm text-[#4c6c9a]" data-en="You are on track to stay within your budget for this trip." data-ar="أنت على المسار الصحيح للبقاء ضمن ميزانيتك لهذه الرحلة.">
+                                You are on track to stay within your budget for this trip.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <div class="lg:col-span-2 fade-in-scale" style="animation-delay: 0.5s;">
+                    <div class="card">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Category Breakdown" data-ar="تفصيل الفئات">Category Breakdown</h2>
+                            <button class="text-primary text-sm font-bold flex items-center hover:underline">
+                                <span data-en="View Trends" data-ar="عرض الاتجاهات">View Trends</span>
+                                <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                            </button>
+                        </div>
+
+                        <div class="space-y-6" id="categoryBreakdown">
+                            <!-- Categories will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="fade-in-up" style="animation-delay: 0.6s;">
+                <div class="card">
+                    <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Recent Transactions" data-ar="المعاملات الأخيرة">Recent Transactions</h2>
+                        <div class="flex gap-2">
+                            <button onclick="toggleFilterDropdown()"
+                                class="flex items-center gap-2 px-4 py-2 border border-[#e7ecf3] dark:border-slate-800 rounded-lg text-sm font-medium hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-all">
+                                <span class="material-symbols-outlined text-lg">filter_list</span>
+                                <span data-en="Filter" data-ar="تصفية">Filter</span>
+                            </button>
+                            <button onclick="addTransaction()"
+                                class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
+                                <span class="material-symbols-outlined text-lg">add</span>
+                                <span data-en="Add Transaction" data-ar="إضافة معاملة">Add Transaction</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Grid -->
+                    <div class="space-y-3" id="transactionsContainer">
+                        <!-- Transactions will be rendered here -->
+                    </div>
+
+                    <!-- View All Button -->
+                    <div class="mt-6 text-center">
+                        <button onclick="viewAllTransactions()" class="text-primary text-sm font-bold hover:underline transition-all" data-en="View All Transactions" data-ar="عرض جميع المعاملات">
+                            View All Transactions
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3 text-primary">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h2 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h2>
+                    </div>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys." data-ar="رفيقك المثالي لاستكشاف عجائب مصر. خطط، حدد ميزانيتك، واختبر رحلات لا تُنسى.">
+                        Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="About Us" data-ar="من نحن">About Us</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="How It Works" data-ar="كيف يعمل">How It Works</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Travel Tips" data-ar="نصائح السفر">Travel Tips</a>
+                    </nav>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Explore" data-ar="استكشف">Explore</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Historical Sites" data-ar="المواقع التاريخية">Historical Sites</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Natural Wonders" data-ar="العجائب الطبيعية">Natural Wonders</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Shopping" data-ar="التسوق">Shopping</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h3>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Cairo, Egypt" data-ar="القاهرة، مصر">Cairo, Egypt</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm">info@dalilak.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">© 2025 Dalilak. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./Script/Budget.js"></script>
+
+</body>
+
+</html>

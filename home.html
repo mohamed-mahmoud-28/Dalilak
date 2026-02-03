@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Explore Egypt</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "accent-gold": "#D4AF37",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "arabic": ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="./Style file/home.css" />
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6 flex flex-col h-full">
+            <!-- Menu Header -->
+            <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-700">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="flex items-center gap-3">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                </div>
+            </a>
+            </div>
+
+            <!-- Mobile Navigation Links -->
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Menu Footer -->
+            <div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700">
+                <p class="text-xs text-slate-500 dark:text-slate-400 text-center"
+                    data-en="© 2026 Dalilak. Explore Egypt" data-ar="© 2026 دليلك. استكشف مصر">
+                    © 2026 Dalilak. Explore Egypt
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <div class="grid-pattern"></div>
+
+    <!-- Enhanced Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between gap-6">
+
+            <!-- Left: Logo -->
+            <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="flex items-center gap-3">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                </div>
+            </a>
+
+            <!-- Center: Main Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link active text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-3">
+
+                
+                <!-- Notifications -->
+                <div class="relative hidden md:block">
+                    <button id="notificationBtn"
+                        class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 text-[#0d131b] dark:text-white hover:text-primary transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined text-xl">notifications</span>
+                        <span class="notification-badge">3</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div id="notificationDropdown"
+                        class="dropdown-menu absolute right-[-70px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                            <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline" data-en="Mark all as read"
+                                data-ar="تعليم الكل كمقروء">Mark all as read</button>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">flight</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Trip to Cairo confirmed!"
+                                            data-ar="تم تأكيد رحلتك إلى القاهرة!">Trip to Cairo confirmed!</p>
+                                        <p class="text-xs text-slate-500"
+                                            data-en="Your booking is ready. Check details."
+                                            data-ar="حجزك جاهز. تحقق من التفاصيل.">Your booking is ready. Check details.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block">2 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-xl">local_offer</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Special offer: 20% off hotels"
+                                            data-ar="عرض خاص: خصم 20% على الفنادق">Special offer: 20% off hotels</p>
+                                        <p class="text-xs text-slate-500" data-en="Limited time deal in Luxor"
+                                            data-ar="عرض لفترة محدودة في الأقصر">Limited time deal in Luxor</p>
+                                        <span class="text-xs text-slate-400 mt-1 block">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Budget updated successfully"
+                                            data-ar="تم تحديث الميزانية بنجاح">Budget updated successfully</p>
+                                        <p class="text-xs text-slate-500" data-en="Your trip budget has been saved."
+                                            data-ar="تم حفظ ميزانية رحلتك.">Your trip budget has been saved.</p>
+                                        <span class="text-xs text-slate-400 mt-1 block">3 days ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3 text-center border-t border-slate-200 dark:border-slate-700">
+                            <a href="#" class="text-xs text-primary font-semibold hover:underline"
+                                data-en="View all notifications" data-ar="عرض كل الإشعارات">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Dropdown -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=أحمد+حسن&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=أحمد+حسن&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="Userpadge.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="UserSeting.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="logout()"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 dark:hover:bg-white/10 text-primary dark:text-white text-sm font-semibold transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 dark:hover:bg-white/10 text-primary dark:text-white transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden hamburger text-[#0d131b] dark:text-white" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+
+
+
+    <main class="flex flex-col">
+        <!-- Hero Section -->
+        <section class="relative w-full px-6 py-10 flex flex-col items-center">
+            <div class="max-w-[1200px] w-full">
+                <div class="relative min-h-[560px] flex flex-col items-center justify-center rounded-3xl overflow-hidden p-8 text-center"
+                    style='background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("./Images/home1.jpg"); background-size: cover; background-position: center;'>
+                    <div class="relative z-10 max-w-3xl flex flex-col gap-6 hero-content">
+                        <div
+                            class="inline-flex items-center self-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-widest hero-badge">
+                            <span class="text-accent-gold mr-2">✦</span>
+                            <span data-en="Discover Egypt" data-ar="اكتشف مصر">Discover Egypt</span>
+                        </div>
+                        <h1 class="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tight hero-title">
+                            <span data-en="Explore Egypt" data-ar="استكشف مصر">Explore Egypt</span> <br />
+                            <span class="text-accent-gold" data-en="Like Never Before" data-ar="كما لم ترها من قبل">Like
+                                Never Before</span>
+                        </h1>
+                        <p class="text-white/90 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed hero-description"
+                            data-en="Your AI-powered companion for personalized travel, smart budgeting, and unforgettable cultural experiences in the land of pharaohs."
+                            data-ar="رفيقك المدعوم بالذكاء الاصطناعي للسفر الشخصي والميزانية الذكية والتجارب الثقافية لا تُنسى في أرض الفراعنة.">
+                            Your AI-powered companion for personalized travel, smart budgeting, and unforgettable
+                            cultural experiences in the land of pharaohs.
+                        </p>
+                        <!-- Search Bar -->
+                        <div
+                            class="mt-8 bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center gap-2 w-full max-w-4xl mx-auto hero-search">
+                            <div
+                                class="flex-1 flex items-center px-4 w-full border-r-0 md:border-r border-slate-100 dark:border-slate-800">
+                                <span class="material-symbols-outlined text-primary mr-3">location_on</span>
+                                <input
+                                    class="w-full py-4 bg-transparent border-none focus:ring-0 text-[#0d131b] dark:text-white placeholder:text-slate-400 font-medium"
+                                    data-placeholder-en="Where to? (e.g. Cairo, Luxor, Aswan)"
+                                    data-placeholder-ar="إلى أين؟ (مثال: القاهرة، الأقصر، أسوان)"
+                                    placeholder="Where to? (e.g. Cairo, Luxor, Aswan)" type="text" />
+                            </div>
+                            <div
+                                class="flex-1 flex items-center px-4 w-full border-r-0 md:border-r border-slate-100 dark:border-slate-800">
+                                <span class="material-symbols-outlined text-primary mr-3">calendar_today</span>
+                                <input
+                                    class="w-full py-4 bg-transparent border-none focus:ring-0 text-[#0d131b] dark:text-white placeholder:text-slate-400 font-medium"
+                                    data-placeholder-en="Add dates" data-placeholder-ar="أضف التواريخ"
+                                    placeholder="Add dates" type="text" />
+                            </div>
+                            <button
+                                class="w-full md:w-auto min-w-[160px] bg-primary text-white font-bold py-4 px-8 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 btn-primary hover:scale-105">
+                                <span class="material-symbols-outlined">auto_awesome</span>
+                                <span data-en="Plan My Trip" data-ar="خطط رحلتي">Plan My Trip</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: AI Driven Recommendations -->
+        <section id="explore" class="max-w-[1200px] mx-auto w-full px-6 py-20 animate-on-scroll">
+            <div class="flex flex-col gap-12">
+                <div class="flex flex-col gap-4 text-center md:text-left">
+                    <h2 class="text-primary text-sm font-extrabold uppercase tracking-widest" data-en="Smart Travel"
+                        data-ar="السفر الذكي">Smart Travel</h2>
+                    <h3 class="text-3xl md:text-4xl font-black dark:text-white leading-tight"
+                        data-en="AI-Driven Recommendations" data-ar="توصيات مدعومة بالذكاء الاصطناعي">AI-Driven
+                        Recommendations</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl"
+                        data-en="Experience the future of travel with our intelligent tools designed to craft the perfect journey tailored to your style."
+                        data-ar="اختبر مستقبل السفر مع أدواتنا الذكية المصممة لصياغة الرحلة المثالية المصممة خصيصًا لأسلوبك.">
+                        Experience the future of travel with our intelligent tools designed to craft the perfect journey
+                        tailored to your style.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Feature Card 1 -->
+                    <div id="budget"
+                        class="stagger-item feature-card group flex flex-col gap-6 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all hover:shadow-xl">
+                        <div
+                            class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                            <span class="material-symbols-outlined text-3xl">account_balance_wallet</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-xl font-bold dark:text-white" data-en="Smart Budgeting"
+                                data-ar="ميزانية ذكية">Smart Budgeting</h4>
+                            <p class="text-slate-500 dark:text-slate-400 leading-relaxed"
+                                data-en="Keep your expenses in check with our real-time budget tracker and localized cost estimates."
+                                data-ar="راقب نفقاتك مع متتبع الميزانية في الوقت الفعلي وتقديرات التكلفة المحلية.">Keep
+                                your expenses in check with our real-time budget tracker and localized cost estimates.
+                            </p>
+                        </div>
+                        <a class="mt-2 text-primary font-bold text-sm flex items-center gap-2" href="#"><span
+                                data-en="Learn more" data-ar="اعرف المزيد">Learn more</span> <span
+                                class="material-symbols-outlined text-sm">arrow_forward</span></a>
+                    </div>
+                    <!-- Feature Card 2 -->
+                    <div id="trips"
+                        class="stagger-item feature-card group flex flex-col gap-6 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all hover:shadow-xl">
+                        <div
+                            class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                            <span class="material-symbols-outlined text-3xl">auto_fix</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-xl font-bold dark:text-white" data-en="AI-Curated Routes"
+                                data-ar="مسارات منسقة بالذكاء الاصطناعي">AI-Curated Routes</h4>
+                            <p class="text-slate-500 dark:text-slate-400 leading-relaxed"
+                                data-en="Personalized itineraries generated instantly based on your specific interests and pace."
+                                data-ar="برامج رحلات مخصصة يتم إنشاؤها على الفور بناءً على اهتماماتك وسرعتك المحددة.">
+                                Personalized itineraries generated instantly based on your specific interests and pace.
+                            </p>
+                        </div>
+                        <a class="mt-2 text-primary font-bold text-sm flex items-center gap-2" href="#"><span
+                                data-en="Learn more" data-ar="اعرف المزيد">Learn more</span> <span
+                                class="material-symbols-outlined text-sm">arrow_forward</span></a>
+                    </div>
+                    <!-- Feature Card 3 -->
+                    <div
+                        class="stagger-item feature-card group flex flex-col gap-6 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:border-primary/50 transition-all hover:shadow-xl">
+                        <div
+                            class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                            <span class="material-symbols-outlined text-3xl">map</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-xl font-bold dark:text-white" data-en="Local Expert Guides"
+                                data-ar="مرشدون محليون خبراء">Local Expert Guides</h4>
+                            <p class="text-slate-500 dark:text-slate-400 leading-relaxed"
+                                data-en="Connect with certified local guides who reveal the hidden gems of Egypt."
+                                data-ar="تواصل مع مرشدين محليين معتمدين يكشفون الجواهر الخفية في مصر.">Connect with
+                                certified local guides who reveal the hidden gems of Egypt.</p>
+                        </div>
+                        <a class="mt-2 text-primary font-bold text-sm flex items-center gap-2" href="#"><span
+                                data-en="Learn more" data-ar="اعرف المزيد">Learn more</span> <span
+                                class="material-symbols-outlined text-sm">arrow_forward</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Attractions Grid -->
+        <section id="favorites" class="bg-white dark:bg-background-dark py-20 px-6 animate-on-scroll">
+            <div class="max-w-[1200px] mx-auto w-full">
+                <div class="flex items-end justify-between mb-10">
+                    <div class="flex flex-col gap-3">
+                        <h2 class="text-3xl md:text-4xl font-black dark:text-white" data-en="Popular Attractions"
+                            data-ar="المعالم الشهيرة">Popular Attractions</h2>
+                        <p class="text-slate-500 dark:text-slate-400"
+                            data-en="Discover the most visited landmarks and hidden wonders of Egypt."
+                            data-ar="اكتشف المعالم الأكثر زيارة والعجائب المخفية في مصر.">Discover the most visited
+                            landmarks and hidden wonders of Egypt.</p>
+                    </div>
+                    <button class="hidden md:flex items-center gap-2 text-primary font-bold hover:underline">
+                        <span data-en="View all" data-ar="عرض الكل">View all</span> <span
+                            class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Attraction 1 -->
+                    <div
+                        class="stagger-item attraction-card group flex flex-col rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all">
+                        <div class="relative h-64 w-full overflow-hidden">
+                            <div
+                                class="pulse-glow absolute top-4 left-4 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-accent-gold text-sm"
+                                    style="font-variation-settings: 'FILL' 1">star</span>
+                                <span class="text-xs font-bold">5.0</span>
+                            </div>
+                            <div class="image-zoom h-full w-full bg-cover bg-center"
+                                style='background-image: url("./Images/Pyramids\ of\ Giza\ \(2\).jpg");'></div>
+                        </div>
+                        <div class="p-6 flex flex-col gap-2">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-bold dark:text-white" data-en="Pyramids of Giza"
+                                    data-ar="أهرامات الجيزة">Pyramids of Giza</h4>
+                                <span class="text-primary font-bold">$80<span
+                                        class="text-xs text-slate-400 font-normal">/day</span></span>
+                            </div>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2"
+                                data-en="Explore the last standing wonder of the ancient world and witness the greatness of pharaohs."
+                                data-ar="استكشف آخر عجائب الدنيا القديمة الباقية واشهد عظمة الفراعنة.">Explore the last
+                                standing wonder of the ancient world and witness the greatness of pharaohs.</p>
+                            <div class="flex items-center gap-4 mt-4">
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    <span class="text-xs" data-en="4-6 Hours" data-ar="4-6 ساعات">4-6 Hours</span>
+                                </div>
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">group</span>
+                                    <span class="text-xs" data-en="Guided Tour" data-ar="جولة مرشدة">Guided Tour</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Attraction 2 -->
+                    <div
+                        class="stagger-item attraction-card group flex flex-col rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all">
+                        <div class="relative h-64 w-full overflow-hidden">
+                            <div
+                                class="pulse-glow absolute top-4 left-4 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-accent-gold text-sm"
+                                    style="font-variation-settings: 'FILL' 1">star</span>
+                                <span class="text-xs font-bold">4.9</span>
+                            </div>
+                            <div class="image-zoom h-full w-full bg-cover bg-center"
+                                style='background-image: url("./Images/Luxor\ Temple.jpg");'></div>
+                        </div>
+                        <div class="p-6 flex flex-col gap-2">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-bold dark:text-white" data-en="Luxor Temple"
+                                    data-ar="معبد الأقصر">Luxor Temple</h4>
+                                <span class="text-primary font-bold">$60<span
+                                        class="text-xs text-slate-400 font-normal">/day</span></span>
+                            </div>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2"
+                                data-en="Journey through ancient Egyptian civilization at this magnificent temple complex on the Nile."
+                                data-ar="رحلة عبر الحضارة المصرية القديمة في هذا المجمع الرائع على النيل.">Journey
+                                through ancient Egyptian civilization at this magnificent temple complex on the Nile.
+                            </p>
+                            <div class="flex items-center gap-4 mt-4">
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    <span class="text-xs" data-en="3-5 Hours" data-ar="3-5 ساعات">3-5 Hours</span>
+                                </div>
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">history_edu</span>
+                                    <span class="text-xs" data-en="Historical" data-ar="تاريخي">Historical</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Attraction 3 -->
+                    <div id="transportation"
+                        class="stagger-item attraction-card group flex flex-col rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all">
+                        <div class="relative h-64 w-full overflow-hidden">
+                            <div
+                                class="pulse-glow absolute top-4 left-4 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-accent-gold text-sm"
+                                    style="font-variation-settings: 'FILL' 1">star</span>
+                                <span class="text-xs font-bold">4.8</span>
+                            </div>
+                            <div class="image-zoom h-full w-full bg-cover bg-center"
+                                style='background-image: url("./Images/Red\ Sea\ Coast.jpg");'></div>
+                        </div>
+                        <div class="p-6 flex flex-col gap-2">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-bold dark:text-white" data-en="Red Sea Coast"
+                                    data-ar="ساحل البحر الأحمر">Red Sea Coast</h4>
+                                <span class="text-primary font-bold">$120<span
+                                        class="text-xs text-slate-400 font-normal">/day</span></span>
+                            </div>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2"
+                                data-en="Dive into crystal-clear waters and explore vibrant coral reefs at Egypt's premier beach destination."
+                                data-ar="اغطس في المياه الصافية واستكشف الشعاب المرجانية النابضة بالحياة في وجهة الشاطئ الأولى في مصر.">
+                                Dive into crystal-clear waters and explore vibrant coral reefs at Egypt's premier beach
+                                destination.</p>
+                            <div class="flex items-center gap-4 mt-4">
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    <span class="text-xs" data-en="Full Day" data-ar="يوم كامل">Full Day</span>
+                                </div>
+                                <div class="flex items-center gap-1 text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">scuba_diving</span>
+                                    <span class="text-xs" data-en="Diving" data-ar="غوص">Diving</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="max-w-[1200px] mx-auto w-full px-6 py-20 animate-on-scroll">
+            <div
+                class="bg-primary/5 dark:bg-slate-900/30 rounded-[3rem] p-12 md:p-20 flex flex-col items-center gap-16 border border-primary/10">
+                <div class="text-center flex flex-col gap-4">
+                    <h2 class="text-3xl md:text-5xl font-black dark:text-white" data-en="How It Works"
+                        data-ar="كيف يعمل">How It Works</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-lg"
+                        data-en="Planning your dream Egyptian escape is easier than ever."
+                        data-ar="التخطيط لرحلتك المصرية الحلم أسهل من أي وقت مضى.">Planning your dream Egyptian escape
+                        is easier than ever.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
+                    <!-- Step 1 -->
+                    <div class="stagger-item step-item flex flex-col items-center text-center gap-6">
+                        <div class="relative">
+                            <div
+                                class="step-number size-20 rounded-full bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/30 text-3xl font-black">
+                                1</div>
+                        </div>
+                        <h4 class="text-2xl font-bold dark:text-white" data-en="Discover" data-ar="اكتشف">Discover</h4>
+                        <p class="text-slate-500 dark:text-slate-400"
+                            data-en="Browse hand-picked Egyptian destinations and filter by your unique interests."
+                            data-ar="تصفح الوجهات المصرية المختارة بعناية وقم بالتصفية حسب اهتماماتك الفريدة.">Browse
+                            hand-picked Egyptian destinations and filter by your unique interests.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="stagger-item step-item flex flex-col items-center text-center gap-6">
+                        <div class="relative">
+                            <div
+                                class="step-number size-20 rounded-full bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/30 text-3xl font-black">
+                                2</div>
+                        </div>
+                        <h4 class="text-2xl font-bold dark:text-white" data-en="AI Planning" data-ar="تخطيط ذكي">AI
+                            Planning</h4>
+                        <p class="text-slate-500 dark:text-slate-400"
+                            data-en="Let our AI build a custom itinerary based on your budget and dates."
+                            data-ar="دع الذكاء الاصطناعي يبني برنامج رحلة مخصص بناءً على ميزانيتك وتواريخك.">Let our AI
+                            build a custom itinerary based on your budget and dates.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="stagger-item step-item flex flex-col items-center text-center gap-6">
+                        <div
+                            class="step-number size-20 rounded-full bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/30 text-3xl font-black">
+                            3</div>
+                        <h4 class="text-2xl font-bold dark:text-white" data-en="Book & Go" data-ar="احجز وانطلق">Book
+                            &amp; Go</h4>
+                        <p class="text-slate-500 dark:text-slate-400"
+                            data-en="Finalize your bookings and get 24/7 support from local guides."
+                            data-ar="أنهِ حجوزاتك واحصل على دعم على مدار الساعة من المرشدين المحليين.">Finalize your
+                            bookings and get 24/7 support from local guides.</p>
+                    </div>
+                </div>
+                <button
+                    class="btn-primary bg-primary text-white font-extrabold px-10 py-5 rounded-2xl shadow-xl shadow-primary/20 hover:-translate-y-1 hover:scale-105 transition-all"
+                    data-en="Start Planning Now" data-ar="ابدأ التخطيط الآن">
+                    Start Planning Now
+                </button>
+            </div>
+        </section>
+
+        <!-- Newsletter / Footer CTA -->
+        <section class="w-full px-6 py-20 bg-background-dark text-white animate-on-scroll">
+            <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="flex flex-col gap-6 max-w-xl">
+                    <h2 class="text-4xl font-black leading-tight"
+                        data-en="Join Dalilak and get the latest travel insights"
+                        data-ar="انضم إلى دليلك واحصل على أحدث رؤى السفر">Join Dalilak and get the latest travel
+                        insights</h2>
+                    <p class="text-slate-400 text-lg"
+                        data-en="Receive weekly updates on hidden spots, exclusive hotel deals, and cultural festivals across Egypt."
+                        data-ar="احصل على تحديثات أسبوعية حول الأماكن المخفية وعروض الفنادق الحصرية والمهرجانات الثقافية في جميع أنحاء مصر.">
+                        Receive weekly updates on hidden spots, exclusive hotel deals, and cultural festivals across
+                        Egypt.</p>
+                    <div class="flex gap-2">
+                        <input
+                            class="flex-1 bg-white/10 border-white/20 rounded-xl px-6 py-4 focus:ring-primary focus:border-primary text-white"
+                            data-placeholder-en="Your email address" data-placeholder-ar="بريدك الإلكتروني"
+                            placeholder="Your email address" type="email" />
+                        <button
+                            class="btn-primary bg-accent-gold text-slate-950 font-black px-8 py-4 rounded-xl hover:bg-accent-gold/90 hover:scale-105 transition-all"
+                            data-en="Subscribe" data-ar="اشترك">Subscribe</button>
+                    </div>
+                </div>
+                <div class="newsletter-float relative w-full md:w-1/2 aspect-video rounded-[2rem] overflow-hidden border-4 border-white/5"
+                    style='background-image: url("https://images.unsplash.com/photo-1539768942893-daf53e448371?w=800"); background-size: cover; background-position: center;'>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent p-2"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-background-dark py-12 px-6 border-t border-white/5">
+        <div class="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div class="col-span-2 md:col-span-1 flex flex-col gap-6">
+                <div class="flex items-center gap-2 text-white">
+                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="30" height="30">
+                    <span class="text-xl font-bold tracking-tight" data-en="Dalilak" data-ar="دليلك">Dalilak</span>
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed"
+                    data-en="The ultimate travel companion for Egypt, powered by cutting-edge AI and local expertise."
+                    data-ar="الرفيق المثالي للسفر إلى مصر، مدعوم بالذكاء الاصطناعي المتطور والخبرة المحلية.">The
+                    ultimate travel companion for Egypt, powered by cutting-edge AI and local expertise.</p>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h5 class="text-white font-bold" data-en="Company" data-ar="الشركة">Company</h5>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="About Us"
+                    data-ar="من نحن">About Us</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Careers"
+                    data-ar="الوظائف">Careers</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Press"
+                    data-ar="الصحافة">Press</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h5 class="text-white font-bold" data-en="Resources" data-ar="الموارد">Resources</h5>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Travel Blog"
+                    data-ar="مدونة السفر">Travel Blog</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Guidebooks"
+                    data-ar="الأدلة">Guidebooks</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Destinations"
+                    data-ar="الوجهات">Destinations</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h5 class="text-white font-bold" data-en="Support" data-ar="الدعم">Support</h5>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Help Center"
+                    data-ar="مركز المساعدة">Help Center</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Contact Support"
+                    data-ar="اتصل بالدعم">Contact Support</a>
+                <a class="text-slate-500 hover:text-white transition-colors text-sm" href="#" data-en="Terms of Service"
+                    data-ar="شروط الخدمة">Terms of Service</a>
+            </div>
+        </div>
+        <div
+            class="max-w-[1200px] mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-xs" data-en="© 2026 Dalilak Tourism Platform. All rights reserved."
+                data-ar="© 2026 منصة دليلك السياحية. جميع الحقوق محفوظة.">© 2026 Dalilak Tourism Platform. All rights
+                reserved.</p>
+            <div class="flex gap-6">
+                <a class="text-slate-500 hover:text-white transition-all hover:scale-110" href="#"><span
+                        class="material-symbols-outlined text-xl">public</span></a>
+                <a class="text-slate-500 hover:text-white transition-all hover:scale-110" href="#"><span
+                        class="material-symbols-outlined text-xl">smartphone</span></a>
+                <a class="text-slate-500 hover:text-white transition-all hover:scale-110" href="#"><span
+                        class="material-symbols-outlined text-xl">share</span></a>
+            </div>
+        </div>
+
+
+    <script src="./Script/home.js"></script>
+</body>
+
+</html>

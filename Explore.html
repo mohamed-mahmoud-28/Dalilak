@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Explore Tourist Attractions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="./Style file/Exploer.css">
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Mobile Sidebar (Filters) -->
+    <aside class="mobile-sidebar" id="mobileSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Filters" data-ar="التصفية">Filters
+                </h2>
+                <button onclick="closeSidebar()"
+                    class="text-[#0d131b] dark:text-white p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <!-- Categories Mobile -->
+                <div class="flex flex-col gap-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="CATEGORIES"
+                        data-ar="الفئات">CATEGORIES</span>
+                    <div class="flex flex-col gap-1" id="categoryListMobile">
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all"
+                            data-category="all" onclick="filterCategory('all')">
+                            <span class="material-symbols-outlined text-lg">explore</span>
+                            <p class="text-sm font-semibold" data-en="All Attractions" data-ar="كل المعالم">All
+                                Attractions</p>
+                        </div>
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-category="historical" onclick="filterCategory('historical')">
+                            <span class="material-symbols-outlined text-lg">castle</span>
+                            <p class="text-sm font-medium" data-en="Historical" data-ar="تاريخية">Historical</p>
+                        </div>
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-category="nature" onclick="filterCategory('nature')">
+                            <span class="material-symbols-outlined text-lg">forest</span>
+                            <p class="text-sm font-medium" data-en="Nature" data-ar="طبيعة">Nature</p>
+                        </div>
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-category="shopping" onclick="filterCategory('shopping')">
+                            <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                            <p class="text-sm font-medium" data-en="Shopping" data-ar="تسوق">Shopping</p>
+                        </div>
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-category="hotel" onclick="filterCategory('hotel')">
+                            <span class="material-symbols-outlined text-lg">hotel</span>
+                            <p class="text-sm font-medium" data-en="Hotels" data-ar="فنادق">Hotels</p>
+                        </div>
+                        <div class="category-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-category="restaurant" onclick="filterCategory('restaurant')">
+                            <span class="material-symbols-outlined text-lg">restaurant</span>
+                            <p class="text-sm font-medium" data-en="Restaurants & Cafes" data-ar="مطاعم و كافيهات">Restaurants & Cafes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Range Mobile -->
+                <div class="flex flex-col gap-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="PRICE RANGE"
+                        data-ar="نطاق السعر">PRICE RANGE</span>
+                    <div class="px-2">
+                        <input id="priceRangeMobile"
+                            class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
+                            max="5000" min="0" type="range" value="5000" oninput="updatePriceRange(this.value)" />
+                        <div class="flex justify-between mt-2 text-xs font-medium text-[#4c6c9a]">
+                            <span>0 EGP</span>
+                            <span id="priceRangeValueMobile" class="text-primary font-bold">5,000+ EGP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Apply Filters Button -->
+                <button onclick="closeSidebar()"
+                    class="w-full mt-4 flex items-center justify-center gap-2 rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-lg">check</span>
+                    <span data-en="Apply Filters" data-ar="تطبيق التصفية">Apply Filters</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="#">
+                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
+                        data-ar="المفضلة">Favorites</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+
+
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link active text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="#" data-en="Favorites" data-ar="المفضلة">
+                    Favorites
+                </a>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Expandable Search (Desktop) -->
+                <div class="hidden lg:block search-container collapsed" id="searchContainer">
+                    <div class="search-btn" onclick="toggleSearch()">
+                        <span class="material-symbols-outlined text-xl text-[#4c6c9a]">search</span>
+                    </div>
+                    <div class="search-input-wrapper">
+                        <div class="flex w-full flex-1 items-stretch rounded-lg h-10 overflow-hidden">
+                            <div
+                                class="text-[#4c6c9a] flex border-none bg-[#e7ecf3] dark:bg-slate-800 items-center justify-center pl-4">
+                                <span class="material-symbols-outlined text-xl">search</span>
+                            </div>
+                            <input id="searchInput"
+                                class="form-input flex w-full min-w-0 flex-1 border-none bg-[#e7ecf3] dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-0 h-full placeholder:text-[#4c6c9a] px-3 text-sm"
+                                placeholder="Search destinations..." value="" onkeyup="handleSearch()" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="notificationBtn" onclick="toggleNotifications()"
+                        class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 text-[#0d131b] dark:text-white transition-all flex items-center justify-center relative">
+                        <span class="material-symbols-outlined text-xl">notifications</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <div id="notificationDropdown"
+                        class="dropdown-menu absolute left-auto right-[-75px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
+                                <p class="text-sm font-semibold" data-en="Trip to Cairo confirmed!"
+                                    data-ar="رحلة إلى القاهرة مؤكدة!">Trip to Cairo confirmed!</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="Your booking is ready"
+                                    data-ar="حجزك جاهز">Your booking is ready</p>
+                            </div>
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
+                                <p class="text-sm font-semibold" data-en="New offer: 20% off hotels"
+                                    data-ar="عرض جديد: خصم 20٪ على الفنادق">New offer: 20% off hotels</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="Limited time offer"
+                                    data-ar="عرض لفترة محدودة">Limited time offer</p>
+                            </div>
+                            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                <p class="text-sm font-semibold" data-en="Don't miss these attractions"
+                                    data-ar="لا تفوت هذه المعالم">Don't miss these attractions</p>
+                                <p class="text-xs text-slate-500 mt-1" data-en="Based on your interests"
+                                    data-ar="بناءً على اهتماماتك">Based on your interests</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="Userpadge.html" onclick="closeProfile(); alert('Opening profile')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="UserSeting.html" onclick="closeProfile(); alert('Opening settings')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html" onclick="closeProfile(); alert('Opening trip history')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#" onclick="closeProfile(); alert('Opening help & support')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html" onclick="closeProfile(); alert('Logging out')"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="xl:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-10 py-6 md:py-8 relative">
+
+        <!-- Filters Button (Mobile - Floating) -->
+        <button onclick="toggleSidebar()"
+            class="lg:hidden fixed bottom-24 right-6 z-40 size-14 bg-primary text-white rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center">
+            <span class="material-symbols-outlined text-2xl">filter_list</span>
+        </button>
+
+        <!-- Side Navigation Bar (Sidebar - Desktop) -->
+        <aside class="hidden lg:flex flex-col w-72 shrink-0 gap-6">
+            <div
+                class="flex flex-col bg-white dark:bg-slate-900 rounded-xl p-5 border border-[#e7ecf3] dark:border-slate-800 shadow-sm sticky top-24">
+                <div class="mb-6">
+                    <h1 class="text-[#0d131b] dark:text-white text-lg font-bold" data-en="Filters" data-ar="التصفية">
+                        Filters</h1>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Refine your exploration"
+                        data-ar="حسّن استكشافك">Refine your exploration</p>
+                </div>
+
+                <div class="flex flex-col gap-6">
+                    <!-- Categories -->
+                    <div class="flex flex-col gap-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="CATEGORIES"
+                            data-ar="الفئات">CATEGORIES</span>
+                        <div class="flex flex-col gap-1" id="categoryList">
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all"
+                                data-category="all" onclick="filterCategory('all')">
+                                <span class="material-symbols-outlined text-lg">explore</span>
+                                <p class="text-sm font-semibold" data-en="All Attractions" data-ar="كل المعالم">All
+                                    Attractions</p>
+                            </div>
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-category="historical" onclick="filterCategory('historical')">
+                                <span class="material-symbols-outlined text-lg">castle</span>
+                                <p class="text-sm font-medium" data-en="Historical" data-ar="تاريخية">Historical</p>
+                            </div>
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-category="nature" onclick="filterCategory('nature')">
+                                <span class="material-symbols-outlined text-lg">forest</span>
+                                <p class="text-sm font-medium" data-en="Nature" data-ar="طبيعة">Nature</p>
+                            </div>
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-category="shopping" onclick="filterCategory('shopping')">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <p class="text-sm font-medium" data-en="Shopping" data-ar="تسوق">Shopping</p>
+                            </div>
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-category="hotel" onclick="filterCategory('hotel')">
+                                <span class="material-symbols-outlined text-lg">hotel</span>
+                                <p class="text-sm font-medium" data-en="Hotels" data-ar="فنادق">Hotels</p>
+                            </div>
+                            <div class="category-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-category="restaurant" onclick="filterCategory('restaurant')">
+                                <span class="material-symbols-outlined text-lg">restaurant</span>
+                                <p class="text-sm font-medium" data-en="Restaurants & Cafes" data-ar="مطاعم و كافيهات">Restaurants & Cafes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="PRICE RANGE"
+                            data-ar="نطاق السعر">PRICE RANGE</span>
+                        <div class="px-2">
+                            <input id="priceRange"
+                                class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="5000" min="0" type="range" value="5000" oninput="updatePriceRange(this.value)" />
+                            <div class="flex justify-between mt-2 text-xs font-medium text-[#4c6c9a]">
+                                <span>0 EGP</span>
+                                <span id="priceRangeValue" class="text-primary font-bold">5,000+ EGP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Preview Toggle -->
+                    <div class="mt-4 pt-6 border-t border-[#e7ecf3] dark:border-slate-800">
+                        <div
+                            class="rounded-xl overflow-hidden relative h-40 group cursor-pointer border border-[#e7ecf3] dark:border-slate-800">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-5xl">map</span>
+                            </div>
+                        </div>
+                        <button onclick="openMapView()"
+                            class="w-full mt-4 flex items-center justify-center gap-2 rounded-lg h-11 border-2 border-primary text-primary text-sm font-bold hover:bg-primary/5 transition-all">
+                            <span class="material-symbols-outlined text-lg">map</span>
+                            <span data-en="Open Map View" data-ar="فتح عرض الخريطة">Open Map View</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Explore Attractions"
+                        data-ar="استكشف المعالم">Explore Attractions</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Explore Attractions" data-ar="استكشف المعالم">Explore Attractions</h1>
+                        <p class="text-primary font-bold flex items-center gap-2 mt-1">
+                            <span class="material-symbols-outlined text-lg">account_balance_wallet</span>
+                            <span data-en="Remaining Budget: 15,000 EGP"
+                                data-ar="الميزانية المتبقية: 15,000 جنيه">Remaining Budget: 15,000 EGP</span>
+                        </p>
+                    </div>
+
+                    <div class="flex gap-2 relative">
+                        <button id="sortBtn" onclick="toggleSortDropdown()"
+                            class="flex items-center gap-2 rounded-lg h-10 px-4 bg-[#e7ecf3] dark:bg-slate-800 text-[#0d131b] dark:text-white text-sm font-bold border border-transparent hover:border-primary/20 transition-all">
+                            <span id="sortLabel" data-en="Sort By: Popularity" data-ar="ترتيب حسب: الشعبية">Sort By:
+                                Popularity</span>
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                        </button>
+
+                        <!-- Sort Dropdown -->
+                        <div id="sortDropdown" class="sort-dropdown">
+                            <div class="py-2">
+                                <button onclick="sortAttractions('popularity')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Popularity" data-ar="الشعبية">Popularity</button>
+                                <button onclick="sortAttractions('price-low')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Price: Low to High" data-ar="السعر: من الأقل للأعلى">Price: Low to
+                                    High</button>
+                                <button onclick="sortAttractions('price-high')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Price: High to Low" data-ar="السعر: من الأعلى للأقل">Price: High to
+                                    Low</button>
+                                <button onclick="sortAttractions('rating')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Rating" data-ar="التقييم">Rating</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attractions Grid -->
+            <div id="attractionsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                <!-- Attraction cards will be dynamically added here -->
+            </div>
+
+            <!-- Pagination / Load More -->
+            <div class="flex justify-center py-8">
+                <button id="loadMoreBtn" onclick="loadMoreAttractions()"
+                    class="flex items-center gap-2 rounded-lg h-11 px-8 bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-all">
+                    <span data-en="Show More Attractions" data-ar="عرض المزيد من المعالم">Show More Attractions</span>
+                    <span class="material-symbols-outlined text-lg">expand_more</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- Map Modal -->
+    <div class="map-modal" id="mapModal">
+        <div class="map-container">
+            <div class="map-header">
+                <div>
+                    <h2 class="text-xl font-bold text-[#0d131b] dark:text-white" data-en="Explore Attractions on Map"
+                        data-ar="استكشف المعالم على الخريطة">Explore Attractions on Map</h2>
+                    <p class="text-sm text-[#4c6c9a] dark:text-slate-400 mt-1"
+                        data-en="Click on markers to view details" data-ar="انقر على العلامات لعرض التفاصيل">Click on
+                        markers to view details</p>
+                </div>
+                <button onclick="closeMapView()"
+                    class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 text-[#0d131b] dark:text-white hover:text-red-600 transition-all flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            <div id="map" style="flex: 1; position: relative;">
+                <!-- Google Map will be loaded here -->
+            </div>
+
+            <!-- Info Card for Selected Attraction -->
+            <div class="map-info-card" id="mapInfoCard">
+                <div class="flex items-start gap-4">
+                    <img id="infoCardImage" src="" alt="" class="w-24 h-24 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h3 id="infoCardName" class="text-lg font-bold text-[#0d131b] dark:text-white mb-1"></h3>
+                        <p id="infoCardLocation"
+                            class="text-sm text-[#4c6c9a] dark:text-slate-400 flex items-center gap-1 mb-2">
+                            <span class="material-symbols-outlined text-base">location_on</span>
+                            <span></span>
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <span id="infoCardPrice" class="text-primary font-bold"></span>
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-yellow-500 text-sm fill-current">star</span>
+                                <span id="infoCardRating" class="font-bold text-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="closeInfoCard()" class="text-[#4c6c9a] hover:text-[#0d131b] dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3 text-primary">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h2 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h2>
+                    </div>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys." data-ar="رفيقك المثالي لاستكشاف عجائب مصر. خطط، حدد ميزانيتك، واختبر رحلات لا تُنسى.">
+                        Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="size-10 rounded-lg bg-primary/10 hover:bg-primary text-primary hover:text-white transition-all flex items-center justify-center">
+                            <span class="material-symbols-outlined text-xl">language</span>
+                        </a>
+                        <a href="#" class="size-10 rounded-lg bg-primary/10 hover:bg-primary text-primary hover:text-white transition-all flex items-center justify-center">
+                            <span class="material-symbols-outlined text-xl">mail</span>
+                        </a>
+                        <a href="#" class="size-10 rounded-lg bg-primary/10 hover:bg-primary text-primary hover:text-white transition-all flex items-center justify-center">
+                            <span class="material-symbols-outlined text-xl">call</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="About Us" data-ar="من نحن">About Us</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="How It Works" data-ar="كيف يعمل">How It Works</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Travel Tips" data-ar="نصائح السفر">Travel Tips</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Blog" data-ar="المدونة">Blog</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="FAQs" data-ar="الأسئلة الشائعة">FAQs</a>
+                    </nav>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Explore" data-ar="استكشف">Explore</h3>
+                    <nav class="flex flex-col gap-2">
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Historical Sites" data-ar="المواقع التاريخية">Historical Sites</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Natural Wonders" data-ar="العجائب الطبيعية">Natural Wonders</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Shopping" data-ar="التسوق">Shopping</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Hotels" data-ar="الفنادق">Hotels</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Restaurants & Cafes" data-ar="المطاعم والكافيهات">Restaurants & Cafes</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h3>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Cairo, Egypt" data-ar="القاهرة، مصر">Cairo, Egypt</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5">mail</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm">info@dalilak.com</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5">call</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" dir="ltr">+20 12 88126382</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5">schedule</span>
+                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="24/7 Support" data-ar="دعم على مدار الساعة">24/7 Support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center md:text-left">
+                        <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">© 2025 Dalilak. All rights reserved.</span>
+                    </p>
+                    <div class="flex items-center gap-6">
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Terms of Service" data-ar="شروط الخدمة">Terms of Service</a>
+                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" data-en="Cookie Policy" data-ar="سياسة الكوكيز">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./Script/Explore.js"></script>
+
+</body>
+
+</html>
