@@ -37,6 +37,22 @@
         }
     </script>
 
+    <script src="//code.tidio.co/dixb7hccwg8hdummu49y4pqorzbqyknu.js" async></script>
+
+
+    <style>
+        .nav-link.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .menu-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+    </style>
+
+
     <link rel="stylesheet" href="./Style file/Budget.css">
 </head>
 
@@ -72,29 +88,33 @@
                     <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
                         data-ar="استكشف">Explore</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
                     href="Userpadge.html">
                     <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
                     <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
                         data-ar="رحلاتي">Trips</span>
                 </a>
-                <a class="menu-item flex items-center gap-4 p-4 rounded-xl bg-primary/5 dark:bg-primary/10"
-                    href="budget.html">
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
                     <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
-                    <span class="text-base font-semibold text-primary" data-en="Budget"
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
                         data-ar="الميزانية">Budget</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
-                    href="#">
+                    href="Transportation.html">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                     <span class="text-base font-semibold group-hover:text-primary transition-colors"
                         data-en="Transportation" data-ar="المواصلات">Transportation</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
-                    href="#">
-                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
-                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
-                        data-ar="المفضلة">Favorites</span>
+                    href="guide.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">co_present</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Guide"
+                        data-ar="المرشدين">Guide</span>
                 </a>
 
                 <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
@@ -105,6 +125,8 @@
                     </a>
                 </div>
             </nav>
+
+
         </div>
     </div>
 
@@ -128,28 +150,33 @@
                     href="Explore.html" data-en="Explore" data-ar="استكشف">
                     Explore
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
                     href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
                     Trips
                 </a>
-                <a class="nav-link active text-sm font-semibold text-primary cursor-pointer"
-                    href="budget.html" data-en="Budget" data-ar="الميزانية">
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Budget.html" data-en="Budget" data-ar="الميزانية">
                     Budget
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    href="Transportation.html" data-en="Transportation" data-ar="المواصلات">
                     Transportation
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    href="#" data-en="Favorites" data-ar="المفضلة">
-                    Favorites
+                    href="guide.html" data-en="Guide" data-ar="المرشدين">
+                    Guide
                 </a>
             </nav>
+
 
             <!-- Right Side Actions -->
             <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
                 <!-- Expandable Search (Desktop) -->
-                
+
 
                 <!-- Notifications (Desktop) -->
                 <div class="relative hidden md:block">
@@ -161,33 +188,96 @@
                     </button>
 
                     <div id="notificationDropdown"
-                        class="dropdown-menu absolute left-auto right-[-75px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                        class="dropdown-menu absolute right-[-15px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                             <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline" data-en="Mark all as read"
+                                data-ar="تعليم الكل كمقروء">
+                                Mark all as read
+                            </button>
                         </div>
                         <div class="max-h-96 overflow-y-auto">
                             <div
-                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
-                                <p class="text-sm font-semibold" data-en="Budget Alert: Food category exceeded!"
-                                    data-ar="تنبيه الميزانية: تجاوز فئة الطعام!">Budget Alert: Food category exceeded!</p>
-                                <p class="text-xs text-slate-500 mt-1" data-en="You've spent 115% of your daily food budget"
-                                    data-ar="لقد أنفقت 115٪ من ميزانية الطعام اليومية">You've spent 115% of your daily food budget</p>
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">flight</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Trip to Cairo confirmed!"
+                                            data-ar="رحلة إلى القاهرة مؤكدة!">
+                                            Trip to Cairo confirmed!
+                                        </p>
+                                        <p class="text-xs text-slate-500"
+                                            data-en="Your booking is ready. Check details."
+                                            data-ar="حجزك جاهز. تحقق من التفاصيل.">
+                                            Your booking is ready. Check details.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="2 hours ago"
+                                            data-ar="منذ ساعتين">
+                                            2 hours ago
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div
-                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-200 dark:border-slate-700">
-                                <p class="text-sm font-semibold" data-en="New transaction added"
-                                    data-ar="تمت إضافة معاملة جديدة">New transaction added</p>
-                                <p class="text-xs text-slate-500 mt-1" data-en="450 EGP - Al Mahara Dinner"
-                                    data-ar="450 جنيه - عشاء المحارة">450 EGP - Al Mahara Dinner</p>
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-xl">local_offer</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Special offer: 20% off hotels"
+                                            data-ar="عرض خاص: خصم 20% على الفنادق">
+                                            Special offer: 20% off hotels
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Limited time deal in Luxor"
+                                            data-ar="عرض لفترة محدودة في الأقصر">
+                                            Limited time deal in Luxor
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="1 day ago"
+                                            data-ar="منذ يوم">
+                                            1 day ago
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
-                                <p class="text-sm font-semibold" data-en="Budget update successful"
-                                    data-ar="تم تحديث الميزانية بنجاح">Budget update successful</p>
-                                <p class="text-xs text-slate-500 mt-1" data-en="Your budget plan has been saved"
-                                    data-ar="تم حفظ خطة ميزانيتك">Your budget plan has been saved</p>
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Budget updated successfully"
+                                            data-ar="تم تحديث الميزانية بنجاح">
+                                            Budget updated successfully
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Your trip budget has been saved."
+                                            data-ar="تم حفظ ميزانية رحلتك.">
+                                            Your trip budget has been saved.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="3 days ago"
+                                            data-ar="منذ 3 أيام">
+                                            3 days ago
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="p-3 text-center border-t border-slate-200 dark:border-slate-700">
+                            <a href="#" class="text-xs text-primary font-semibold hover:underline"
+                                data-en="View all notifications" data-ar="عرض كل الإشعارات">
+                                View all notifications
+                            </a>
+                        </div>
                     </div>
+
                 </div>
 
                 <!-- Profile Button with Dropdown (Desktop) -->
@@ -293,11 +383,12 @@
                 <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
                     <div class="flex flex-col">
                         <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
-                            data-en="Budget Tracker & Analytics" data-ar="تتبع الميزانية والتحليلات">Budget Tracker & Analytics</h1>
+                            data-en="Budget Tracker & Analytics" data-ar="تتبع الميزانية والتحليلات">Budget Tracker &
+                            Analytics</h1>
                         <p class="text-[#4c6c9a] flex items-center gap-2 mt-1">
                             <span class="material-symbols-outlined text-lg">location_on</span>
-                            <span data-en="Trip to Dubai - Oct 2023"
-                                data-ar="رحلة إلى دبي - أكتوبر 2023">Trip to Dubai - Oct 2023</span>
+                            <span data-en="Trip to Dubai - Oct 2023" data-ar="رحلة إلى دبي - أكتوبر 2023">Trip to Dubai
+                                - Oct 2023</span>
                         </p>
                     </div>
 
@@ -317,7 +408,8 @@
                     <div class="card">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="TOTAL BUDGET" data-ar="إجمالي الميزانية">TOTAL BUDGET</p>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2"
+                                    data-en="TOTAL BUDGET" data-ar="إجمالي الميزانية">TOTAL BUDGET</p>
                                 <h3 class="text-[#0d131b] dark:text-white text-3xl font-extrabold">$5,000.00</h3>
                             </div>
                             <span class="material-symbols-outlined text-primary text-3xl">account_balance_wallet</span>
@@ -332,7 +424,8 @@
                     <div class="card">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="SPENT SO FAR" data-ar="المصروف حتى الآن">SPENT SO FAR</p>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2"
+                                    data-en="SPENT SO FAR" data-ar="المصروف حتى الآن">SPENT SO FAR</p>
                                 <h3 class="text-[#0d131b] dark:text-white text-3xl font-extrabold">$2,450.00</h3>
                             </div>
                             <span class="material-symbols-outlined text-primary text-3xl">payments</span>
@@ -347,7 +440,8 @@
                     <div class="card border-l-4 border-l-primary">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2" data-en="REMAINING BALANCE" data-ar="الرصيد المتبقي">REMAINING BALANCE</p>
+                                <p class="text-[#4c6c9a] text-sm font-semibold uppercase tracking-wider mb-2"
+                                    data-en="REMAINING BALANCE" data-ar="الرصيد المتبقي">REMAINING BALANCE</p>
                                 <h3 class="text-primary text-3xl font-extrabold">$2,550.00</h3>
                             </div>
                             <span class="material-symbols-outlined text-primary text-3xl">savings</span>
@@ -356,7 +450,8 @@
                             <span class="text-green-500 font-bold flex items-center">
                                 <span class="material-symbols-outlined text-sm">trending_up</span> 12%
                             </span>
-                            <span class="text-[#4c6c9a]" data-en="vs last week" data-ar="مقارنة بالأسبوع الماضي">vs last week</span>
+                            <span class="text-[#4c6c9a]" data-en="vs last week" data-ar="مقارنة بالأسبوع الماضي">vs last
+                                week</span>
                         </div>
                     </div>
                 </div>
@@ -364,28 +459,31 @@
 
             <!-- Budget Health & Category Breakdown -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
+
                 <!-- Budget Health -->
                 <div class="fade-in-scale" style="animation-delay: 0.4s;">
                     <div class="card">
-                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold mb-6" data-en="Budget Health" data-ar="صحة الميزانية">Budget Health</h2>
+                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold mb-6" data-en="Budget Health"
+                            data-ar="صحة الميزانية">Budget Health</h2>
                         <div class="flex flex-col items-center py-6">
                             <!-- Circular Progress -->
                             <div class="relative w-40 h-40 flex items-center justify-center">
                                 <svg class="w-full h-full transform -rotate-90">
-                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" 
-                                            class="text-[#e7ecf3] dark:text-slate-800" stroke-width="12"/>
-                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" 
-                                            class="text-primary progress-circle" stroke-width="12"
-                                            stroke-dasharray="440" stroke-dashoffset="220"
-                                            stroke-linecap="round"/>
+                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor"
+                                        class="text-[#e7ecf3] dark:text-slate-800" stroke-width="12" />
+                                    <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor"
+                                        class="text-primary progress-circle" stroke-width="12" stroke-dasharray="440"
+                                        stroke-dashoffset="220" stroke-linecap="round" />
                                 </svg>
                                 <div class="absolute text-center">
                                     <p class="text-3xl font-black text-[#0d131b] dark:text-white">49%</p>
-                                    <p class="text-xs font-bold text-[#4c6c9a] uppercase" data-en="Utilized" data-ar="مستخدم">Utilized</p>
+                                    <p class="text-xs font-bold text-[#4c6c9a] uppercase" data-en="Utilized"
+                                        data-ar="مستخدم">Utilized</p>
                                 </div>
                             </div>
-                            <p class="mt-6 text-center text-sm text-[#4c6c9a]" data-en="You are on track to stay within your budget for this trip." data-ar="أنت على المسار الصحيح للبقاء ضمن ميزانيتك لهذه الرحلة.">
+                            <p class="mt-6 text-center text-sm text-[#4c6c9a]"
+                                data-en="You are on track to stay within your budget for this trip."
+                                data-ar="أنت على المسار الصحيح للبقاء ضمن ميزانيتك لهذه الرحلة.">
                                 You are on track to stay within your budget for this trip.
                             </p>
                         </div>
@@ -396,7 +494,8 @@
                 <div class="lg:col-span-2 fade-in-scale" style="animation-delay: 0.5s;">
                     <div class="card">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Category Breakdown" data-ar="تفصيل الفئات">Category Breakdown</h2>
+                            <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Category Breakdown"
+                                data-ar="تفصيل الفئات">Category Breakdown</h2>
                             <button class="text-primary text-sm font-bold flex items-center hover:underline">
                                 <span data-en="View Trends" data-ar="عرض الاتجاهات">View Trends</span>
                                 <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
@@ -414,7 +513,8 @@
             <div class="fade-in-up" style="animation-delay: 0.6s;">
                 <div class="card">
                     <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
-                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Recent Transactions" data-ar="المعاملات الأخيرة">Recent Transactions</h2>
+                        <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Recent Transactions"
+                            data-ar="المعاملات الأخيرة">Recent Transactions</h2>
                         <div class="flex gap-2">
                             <button onclick="toggleFilterDropdown()"
                                 class="flex items-center gap-2 px-4 py-2 border border-[#e7ecf3] dark:border-slate-800 rounded-lg text-sm font-medium hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-all">
@@ -436,7 +536,9 @@
 
                     <!-- View All Button -->
                     <div class="mt-6 text-center">
-                        <button onclick="viewAllTransactions()" class="text-primary text-sm font-bold hover:underline transition-all" data-en="View All Transactions" data-ar="عرض جميع المعاملات">
+                        <button onclick="viewAllTransactions()"
+                            class="text-primary text-sm font-bold hover:underline transition-all"
+                            data-en="View All Transactions" data-ar="عرض جميع المعاملات">
                             View All Transactions
                         </button>
                     </div>
@@ -449,62 +551,49 @@
     <!-- Footer -->
     <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
         <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <!-- Brand Section -->
-                <div class="flex flex-col gap-4">
-                    <div class="flex items-center gap-3 text-primary">
-                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
-                        <h2 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h2>
-                    </div>
-                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys." data-ar="رفيقك المثالي لاستكشاف عجائب مصر. خطط، حدد ميزانيتك، واختبر رحلات لا تُنسى.">
-                        Your ultimate travel companion for exploring Egypt's wonders. Plan, budget, and experience unforgettable journeys.
-                    </p>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h3>
-                    <nav class="flex flex-col gap-2">
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="About Us" data-ar="من نحن">About Us</a>
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="How It Works" data-ar="كيف يعمل">How It Works</a>
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Travel Tips" data-ar="نصائح السفر">Travel Tips</a>
-                    </nav>
-                </div>
-
-                <!-- Categories -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Explore" data-ar="استكشف">Explore</h3>
-                    <nav class="flex flex-col gap-2">
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Historical Sites" data-ar="المواقع التاريخية">Historical Sites</a>
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Natural Wonders" data-ar="العجائب الطبيعية">Natural Wonders</a>
-                        <a href="#" class="text-[#4c6c9a] dark:text-slate-400 hover:text-primary transition-colors text-sm" data-en="Shopping" data-ar="التسوق">Shopping</a>
-                    </nav>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-[#0d131b] dark:text-white font-bold text-lg" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h3>
-                    <div class="flex flex-col gap-3">
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-primary text-xl">location_on</span>
-                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Cairo, Egypt" data-ar="القاهرة، مصر">Cairo, Egypt</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-primary text-xl">mail</span>
-                            <p class="text-[#4c6c9a] dark:text-slate-400 text-sm">info@dalilak.com</p>
-                        </div>
-                    </div>
+            <div class="text-center py-8">
+                <p class="text-[#4c6c9a] text-sm mb-4">
+                    <span data-en="By completing this purchase, you agree to Dalilak's"
+                        data-ar="بإتمام هذا الشراء، فإنك توافق على">By completing this purchase, you agree to
+                        Dalilak's</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Terms of Service"
+                        data-ar="شروط الخدمة">Terms of Service</a>
+                    <span data-en="and" data-ar="و">and</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Privacy Policy"
+                        data-ar="سياسة الخصوصية">Privacy Policy</a>.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                    </a>
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">mail</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- Bottom Bar -->
             <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
                 <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
-                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">© 2025 Dalilak. All rights reserved.</span>
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
                 </p>
             </div>
         </div>
     </footer>
+
+    <script>
+        const current = location.pathname.split("/").pop().toLowerCase();
+
+        document.querySelectorAll(".nav-link, .menu-item").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            if (href.toLowerCase() === current) {
+                link.classList.add("active");
+            }
+        });
+    </script>
+
 
     <script src="./Script/Budget.js"></script>
 

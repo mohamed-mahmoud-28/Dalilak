@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Find a Tour Guide | Dalilak</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.fill-current {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .dark .mobile-menu {
+            background: #1e293b;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        [dir="rtl"] .mobile-menu {
+            right: auto;
+            left: -100%;
+            transition: left 0.3s ease-in-out;
+        }
+
+        [dir="rtl"] .mobile-menu.active {
+            left: 0;
+            right: auto;
+        }
+
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Sidebar (Filters) */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            max-width: 85vw;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+
+        .dark .mobile-sidebar {
+            background: #1e293b;
+        }
+
+        .mobile-sidebar.active {
+            right: 0;
+        }
+
+        [dir="rtl"] .mobile-sidebar {
+            right: auto;
+            left: -100%;
+            transition: left 0.3s ease-in-out;
+        }
+
+        [dir="rtl"] .mobile-sidebar.active {
+            left: 0;
+            right: auto;
+        }
+
+        /* Dropdown Menus */
+        .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .search-container.collapsed {
+            width: 40px;
+        }
+
+        .search-container.expanded {
+            width: 320px;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7ecf3;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .dark .search-btn {
+            background: #1e293b;
+        }
+
+        .search-container.expanded .search-btn {
+            background: transparent;
+            cursor: default;
+        }
+
+        .search-input-wrapper {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-container.expanded .search-input-wrapper {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 9999;
+            min-width: 280px;
+        }
+
+        .dark .toast {
+            background: #1e293b;
+            color: white;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        [dir="rtl"] .toast {
+            right: auto;
+            left: 20px;
+            transform: translateX(-400px);
+        }
+
+        [dir="rtl"] .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        [dir="rtl"] .toast.success {
+            border-left: none;
+            border-right: 4px solid #10b981;
+        }
+
+        [dir="rtl"] .toast.error {
+            border-left: none;
+            border-right: 4px solid #ef4444;
+        }
+
+        /* Hamburger Button */
+        .hamburger {
+            width: 24px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: currentColor;
+            border-radius: 3px;
+            opacity: 1;
+            transform: rotate(0deg);
+            transition: all 0.25s ease-in-out;
+            position: relative;
+        }
+
+        .hamburger span:nth-child(1) {
+            margin-bottom: 5px;
+        }
+
+        .hamburger span:nth-child(2) {
+            margin-bottom: 5px;
+        }
+
+        .hamburger span:nth-child(3) {
+            margin-bottom: 0;
+        }
+
+        .hamburger.active {
+            gap: 0;
+        }
+
+        .hamburger.active span {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            margin: 0;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        [dir="rtl"] .hamburger.active span:nth-child(2) {
+            transform: translateX(60px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .guide-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .guide-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .guide-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .guide-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .guide-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .guide-card:nth-child(n+5) {
+            animation-delay: 0.5s;
+        }
+
+.nav-link.active {
+  color: #3b82f6;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.menu-item.active {
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.3);
+}
+</style>
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Mobile Sidebar (Filters) -->
+    <aside class="mobile-sidebar" id="mobileSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Filters" data-ar="التصفية">
+                    Filters</h2>
+                <button onclick="closeSidebar()"
+                    class="text-[#0d131b] dark:text-white p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <!-- Specialization Mobile -->
+                <div>
+                    <h4 class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">category</span>
+                        <span data-en="Specialization" data-ar="التخصص">Specialization</span>
+                    </h4>
+                    <div class="space-y-3" id="specializationMobile">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Languages Mobile -->
+                <div>
+                    <h4 class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">language</span>
+                        <span data-en="Languages" data-ar="اللغات">Languages</span>
+                    </h4>
+                    <div class="space-y-3" id="languagesMobile">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Rating Mobile -->
+                <div>
+                    <h4 class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">star</span>
+                        <span data-en="Minimum Rating" data-ar="الحد الأدنى للتقييم">Minimum Rating</span>
+                    </h4>
+                    <div class="space-y-3" id="ratingMobile">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Price Range Mobile -->
+                <div>
+                    <h4 class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">payments</span>
+                        <span data-en="Price Range" data-ar="نطاق السعر">Price Range</span>
+                    </h4>
+                    <input id="priceRangeMobile"
+                        class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary"
+                        type="range" min="10" max="100" value="100" oninput="updatePriceRange(this.value)" />
+                    <div class="flex justify-between mt-2">
+                        <span class="text-xs text-slate-500">$10/hr</span>
+                        <span id="priceRangeValueMobile" class="text-xs text-primary font-bold">$100/hr</span>
+                    </div>
+                </div>
+
+                <!-- Apply Button -->
+                <button onclick="closeSidebar()"
+                    class="w-full mt-4 flex items-center justify-center gap-2 rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-lg">check</span>
+                    <span data-en="Apply Filters" data-ar="تطبيق التصفية">Apply Filters</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Transportation.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="guide.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">co_present</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Guide"
+                        data-ar="المرشدين">Guide</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="layout-container flex flex-col min-h-screen">
+        <!-- Top Navigation Bar -->
+        <header
+            class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+            <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 text-primary">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Center Navigation (Desktop) -->
+                <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                    <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        href="Explore.html" data-en="Explore" data-ar="استكشف">
+                        Explore
+                    </a>
+
+                    <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                        Trips
+                    </a>
+
+                    <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        href="Budget.html" data-en="Budget" data-ar="الميزانية">
+                        Budget
+                    </a>
+
+                    <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        href="Transportation.html" data-en="Transportation" data-ar="المواصلات">
+                        Transportation
+                    </a>
+
+                    <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        href="guide.html" data-en="Guide" data-ar="المرشدين">
+                        Guide
+                    </a>
+                </nav>
+
+
+                <!-- Right Side Actions -->
+                <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                    <!-- Expandable Search (Desktop) -->
+                    <div class="hidden lg:block search-container collapsed" id="searchContainer">
+                        <div class="search-btn" onclick="toggleSearch()">
+                            <span class="material-symbols-outlined text-xl text-[#4c6c9a]">search</span>
+                        </div>
+                        <div class="search-input-wrapper">
+                            <div class="flex w-full flex-1 items-stretch rounded-lg h-10 overflow-hidden">
+                                <div
+                                    class="text-[#4c6c9a] flex border-none bg-[#e7ecf3] dark:bg-slate-800 items-center justify-center pl-4">
+                                    <span class="material-symbols-outlined text-xl">search</span>
+                                </div>
+                                <input id="searchInput"
+                                    class="form-input flex w-full min-w-0 flex-1 border-none bg-[#e7ecf3] dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-0 h-full placeholder:text-[#4c6c9a] px-3 text-sm"
+                                    placeholder="Search guides..." value="" onkeyup="handleSearch()" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications (Desktop) -->
+                    <div class="relative hidden md:block">
+                        <button id="notificationBtn" onclick="toggleNotifications()"
+                            class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 text-[#0d131b] dark:text-white transition-all flex items-center justify-center relative">
+                            <span class="material-symbols-outlined text-xl">notifications</span>
+                            <span
+                                class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">3</span>
+                        </button>
+
+                        <div id="notificationDropdown"
+                            class="dropdown-menu absolute right-[-15px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                            <div
+                                class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                                <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications
+                                </h3>
+                                <button class="text-xs text-primary hover:underline" data-en="Mark all as read"
+                                    data-ar="تعليم الكل كمقروء">
+                                    Mark all as read
+                                </button>
+                            </div>
+                            <div class="max-h-96 overflow-y-auto">
+                                <div
+                                    class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                    <div class="flex gap-3">
+                                        <div
+                                            class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                            <span class="material-symbols-outlined text-primary text-xl">flight</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold mb-1" data-en="Trip to Cairo confirmed!"
+                                                data-ar="رحلة إلى القاهرة مؤكدة!">
+                                                Trip to Cairo confirmed!
+                                            </p>
+                                            <p class="text-xs text-slate-500"
+                                                data-en="Your booking is ready. Check details."
+                                                data-ar="حجزك جاهز. تحقق من التفاصيل.">
+                                                Your booking is ready. Check details.
+                                            </p>
+                                            <span class="text-xs text-slate-400 mt-1 block" data-en="2 hours ago"
+                                                data-ar="منذ ساعتين">
+                                                2 hours ago
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                    <div class="flex gap-3">
+                                        <div
+                                            class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center shrink-0">
+                                            <span
+                                                class="material-symbols-outlined text-accent-gold text-xl">local_offer</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold mb-1"
+                                                data-en="Special offer: 20% off hotels"
+                                                data-ar="عرض خاص: خصم 20% على الفنادق">
+                                                Special offer: 20% off hotels
+                                            </p>
+                                            <p class="text-xs text-slate-500" data-en="Limited time deal in Luxor"
+                                                data-ar="عرض لفترة محدودة في الأقصر">
+                                                Limited time deal in Luxor
+                                            </p>
+                                            <span class="text-xs text-slate-400 mt-1 block" data-en="1 day ago"
+                                                data-ar="منذ يوم">
+                                                1 day ago
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                    <div class="flex gap-3">
+                                        <div
+                                            class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                            <span
+                                                class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold mb-1" data-en="Budget updated successfully"
+                                                data-ar="تم تحديث الميزانية بنجاح">
+                                                Budget updated successfully
+                                            </p>
+                                            <p class="text-xs text-slate-500" data-en="Your trip budget has been saved."
+                                                data-ar="تم حفظ ميزانية رحلتك.">
+                                                Your trip budget has been saved.
+                                            </p>
+                                            <span class="text-xs text-slate-400 mt-1 block" data-en="3 days ago"
+                                                data-ar="منذ 3 أيام">
+                                                3 days ago
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 text-center border-t border-slate-200 dark:border-slate-700">
+                                <a href="#" class="text-xs text-primary font-semibold hover:underline"
+                                    data-en="View all notifications" data-ar="عرض كل الإشعارات">
+                                    View all notifications
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Button with Dropdown (Desktop) -->
+                    <div class="relative hidden md:block">
+                        <button id="profileBtn" onclick="toggleProfile()"
+                            class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                            <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                            <span
+                                class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                        </button>
+
+                        <!-- Profile Dropdown Menu -->
+                        <div id="profileDropdown"
+                            class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                        alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                    <div>
+                                        <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed
+                                            Hassan
+                                        </p>
+                                        <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2">
+                                <a href="Userpadge.html"
+                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                    <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                    <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                        Profile</span>
+                                </a>
+                                <a href="UserSeting.html"
+                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                    <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                    <span class="text-sm font-medium" data-en="Settings"
+                                        data-ar="الإعدادات">Settings</span>
+                                </a>
+                                <a href="Budget.html"
+                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                    <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                    <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                        History</span>
+                                </a>
+                                <a href="#"
+                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                    <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                    <span class="text-sm font-medium" data-en="Help & Support"
+                                        data-ar="المساعدة والدعم">Help & Support</span>
+                                </a>
+                            </div>
+                            <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                                <a href="login.html"
+                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                    <span class="material-symbols-outlined text-xl">logout</span>
+                                    <span class="text-sm font-medium" data-en="Logout"
+                                        data-ar="تسجيل الخروج">Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Theme & Language Toggle -->
+                    <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                        <button id="lang-toggle" onclick="toggleLanguage()"
+                            class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                            title="Change Language">
+                            <span class="material-symbols-outlined text-lg">language</span>
+                        </button>
+                        <button id="theme-toggle" onclick="toggleTheme()"
+                            class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                            title="Change Theme">
+                            <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                            <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                        </button>
+                    </div>
+
+                    <!-- Hamburger Menu Button (Mobile) -->
+                    <button id="hamburgerButton" onclick="toggleMobileMenu()" class="lg:hidden text-[#0d131b] dark:text-white p-2">
+                        <div class="hamburger" id="hamburgerIcon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 px-4 md:px-10 lg:px-20 xl:px-40 py-8 max-w-[1440px] mx-auto w-full">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-[#0d131b] dark:text-white text-3xl font-bold tracking-tight"
+                    data-en="Find your perfect tour guide" data-ar="ابحث عن مرشدك السياحي المثالي">Find your perfect
+                    tour guide</h1>
+                <p class="text-[#4c6c9a] dark:text-slate-400 mt-2"
+                    data-en="Connect with local experts to discover the hidden gems of your destination."
+                    data-ar="تواصل مع خبراء محليين لاكتشاف الجواهر المخفية لوجهتك.">Connect with local experts to
+                    discover the hidden gems of your destination.</p>
+            </div>
+
+            <!-- Mobile Search & Filter -->
+            <div class="mb-6 lg:hidden">
+                <div class="flex gap-2">
+                    <div
+                        class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center px-4 h-12">
+                        <span class="material-symbols-outlined text-slate-400 mr-2">search</span>
+                        <input id="searchInputMobile" class="bg-transparent border-none focus:ring-0 w-full text-sm"
+                            placeholder="Search guides..." type="text" onkeyup="handleSearchMobile()" />
+                    </div>
+                    <button onclick="toggleSidebar()"
+                        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 flex items-center justify-center">
+                        <span class="material-symbols-outlined">tune</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Side Filters (Desktop) -->
+                <aside class="hidden lg:block w-64 flex-shrink-0">
+                    <div
+                        class="sticky top-24 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-[#0d131b] dark:text-white" data-en="Filters"
+                                data-ar="التصفية">Filters</h3>
+                            <button onclick="clearFilters()"
+                                class="text-primary text-xs font-bold uppercase tracking-wider" data-en="Clear All"
+                                data-ar="مسح الكل">Clear All</button>
+                        </div>
+
+                        <div class="space-y-8">
+                            <!-- Specialization -->
+                            <div>
+                                <h4
+                                    class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">category</span>
+                                    <span data-en="Specialization" data-ar="التخصص">Specialization</span>
+                                </h4>
+                                <div class="space-y-3" id="specializationDesktop">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Languages -->
+                            <div>
+                                <h4
+                                    class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">language</span>
+                                    <span data-en="Languages" data-ar="اللغات">Languages</span>
+                                </h4>
+                                <div class="space-y-3" id="languagesDesktop">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Rating -->
+                            <div>
+                                <h4
+                                    class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">star</span>
+                                    <span data-en="Minimum Rating" data-ar="الحد الأدنى للتقييم">Minimum Rating</span>
+                                </h4>
+                                <div class="space-y-3" id="ratingDesktop">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div>
+                                <h4
+                                    class="text-sm font-bold text-[#0d131b] dark:text-white mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">payments</span>
+                                    <span data-en="Price Range" data-ar="نطاق السعر">Price Range</span>
+                                </h4>
+                                <input id="priceRangeDesktop"
+                                    class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary"
+                                    type="range" min="10" max="100" value="100"
+                                    oninput="updatePriceRange(this.value)" />
+                                <div class="flex justify-between mt-2">
+                                    <span class="text-xs text-slate-500">$10/hr</span>
+                                    <span id="priceRangeValueDesktop"
+                                        class="text-xs text-primary font-bold">$100/hr</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Guides Grid -->
+                <div class="flex-1">
+                    <!-- Quick Filters -->
+                    <div class="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+                        <div onclick="filterBySpecialization('all')"
+                            class="filter-chip active flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 cursor-pointer"
+                            data-filter="all">
+                            <p class="text-sm font-medium leading-normal" data-en="All Experts" data-ar="جميع الخبراء">
+                                All Experts</p>
+                        </div>
+                        <div onclick="filterBySpecialization('History')"
+                            class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 cursor-pointer hover:border-primary transition-colors"
+                            data-filter="History">
+                            <span class="material-symbols-outlined text-sm">history_edu</span>
+                            <p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal"
+                                data-en="History" data-ar="تاريخ">History</p>
+                        </div>
+                        <div onclick="filterBySpecialization('Adventure')"
+                            class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 cursor-pointer hover:border-primary transition-colors"
+                            data-filter="Adventure">
+                            <span class="material-symbols-outlined text-sm">hiking</span>
+                            <p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal"
+                                data-en="Adventure" data-ar="مغامرة">Adventure</p>
+                        </div>
+                        <div onclick="filterBySpecialization('Local Food')"
+                            class="filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 cursor-pointer hover:border-primary transition-colors"
+                            data-filter="Local Food">
+                            <span class="material-symbols-outlined text-sm">restaurant</span>
+                            <p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal"
+                                data-en="Local Food" data-ar="طعام محلي">Local Food</p>
+                        </div>
+                    </div>
+
+                    <!-- Cards Grid -->
+                    <div id="guidesGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        <!-- Will be populated by JS -->
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="mt-12 flex flex-col items-center gap-4">
+                        <button id="loadMoreBtn" onclick="loadMoreGuides()"
+                            class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[#0d131b] dark:text-white font-bold py-3 px-10 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm">
+                            <span data-en="Load More Guides" data-ar="تحميل المزيد">Load More Guides</span>
+                        </button>
+                        <p id="resultsCount" class="text-slate-400 text-sm">Showing 4 of 4 experts</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+            <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+                <div class="text-center py-8">
+                    <p class="text-[#4c6c9a] text-sm mb-4">
+                        <span data-en="By completing this purchase, you agree to Dalilak's"
+                            data-ar="بإتمام هذا الشراء، فإنك توافق على">By completing this purchase, you agree to
+                            Dalilak's</span>
+                        <a class="text-primary hover:underline mx-1" href="#" data-en="Terms of Service"
+                            data-ar="شروط الخدمة">Terms of Service</a>
+                        <span data-en="and" data-ar="و">and</span>
+                        <a class="text-primary hover:underline mx-1" href="#" data-en="Privacy Policy"
+                            data-ar="سياسة الخصوصية">Privacy Policy</a>.
+                    </p>
+                    <div class="flex justify-center gap-4">
+                        <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                            <span class="material-symbols-outlined">chat_bubble</span>
+                        </a>
+                        <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                            <span class="material-symbols-outlined">mail</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                        <span data-en="© 2025 Dalilak. All rights reserved."
+                            data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                            2025 Dalilak. All rights reserved.</span>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // =========================================================
+        // GLOBAL STORAGE
+        // =========================================================
+        const STORAGE = {
+            LANGUAGE: 'dalilak_language',
+            THEME: 'dalilak_theme',
+            SAVED_GUIDES: 'dalilak_saved_guides'
+        };
+
+        // =========================================================
+        // TOUR GUIDES DATABASE
+        // =========================================================
+        const guides = [
+            {
+                id: 1,
+                nameEn: "Ahmed Al-Farsi",
+                nameAr: "أحمد الفارسي",
+                specializationEn: "History & Culture Specialist",
+                specializationAr: "متخصص في التاريخ والثقافة",
+                specialization: "History",
+                languages: ["English", "Arabic"],
+                rating: 4.9,
+                reviews: 245,
+                price: 35,
+                verified: true,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+                descEn: "Expert in ancient Egyptian history with 10 years of experience guiding tourists through Cairo's historical sites.",
+                descAr: "خبير في التاريخ المصري القديم مع 10 سنوات من الخبرة في إرشاد السياح عبر المواقع التاريخية في القاهرة.",
+                saved: false
+            },
+            {
+                id: 2,
+                nameEn: "Sarah Jenkins",
+                nameAr: "سارة جينكينز",
+                specializationEn: "Adventure & Trekking",
+                specializationAr: "مغامرات وتسلق",
+                specialization: "Adventure",
+                languages: ["English", "French"],
+                rating: 4.8,
+                reviews: 198,
+                price: 42,
+                verified: false,
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+                descEn: "Adventure specialist focusing on desert safaris, hiking, and outdoor activities in Sinai and Western Desert.",
+                descAr: "متخصصة في المغامرات مع التركيز على رحلات السفاري الصحراوية والمشي لمسافات طويلة والأنشطة الخارجية في سيناء والصحراء الغربية.",
+                saved: false
+            },
+            {
+                id: 3,
+                nameEn: "Omar Hassan",
+                nameAr: "عمر حسن",
+                specializationEn: "Culinary Arts & Street Food",
+                specializationAr: "فنون الطهي والأكل الشعبي",
+                specialization: "Local Food",
+                languages: ["Arabic", "English"],
+                rating: 5.0,
+                reviews: 312,
+                price: 28,
+                verified: true,
+                superguide: true,
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+                descEn: "Food enthusiast specializing in Egyptian cuisine, street food tours, and cooking classes in Cairo and Alexandria.",
+                descAr: "عاشق الطعام متخصص في المطبخ المصري وجولات الأكل الشعبي ودروس الطبخ في القاهرة والإسكندرية.",
+                saved: false
+            },
+            {
+                id: 4,
+                nameEn: "Elena Rodriguez",
+                nameAr: "إيلينا رودريجيز",
+                specializationEn: "Shopping & City Life",
+                specializationAr: "تسوق وحياة المدينة",
+                specialization: "Shopping",
+                languages: ["Spanish", "English"],
+                rating: 4.7,
+                reviews: 176,
+                price: 30,
+                verified: false,
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+                descEn: "Shopping expert and city guide, helping visitors discover the best markets, malls, and local boutiques.",
+                descAr: "خبيرة تسوق ومرشدة المدينة، تساعد الزوار على اكتشاف أفضل الأسواق والمولات والبوتيكات المحلية.",
+                saved: false
+            },
+            {
+                id: 5,
+                nameEn: "Mohamed Salah",
+                nameAr: "محمد صلاح",
+                specializationEn: "History & Archaeology",
+                specializationAr: "تاريخ وآثار",
+                specialization: "History",
+                languages: ["Arabic", "English", "French"],
+                rating: 4.9,
+                reviews: 289,
+                price: 40,
+                verified: true,
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+                descEn: "Licensed Egyptologist with extensive knowledge of pharaonic history and archaeological sites.",
+                descAr: "عالم مصريات مرخص مع معرفة واسعة بالتاريخ الفرعوني والمواقع الأثرية.",
+                saved: false
+            },
+            {
+                id: 6,
+                nameEn: "Layla Ibrahim",
+                nameAr: "ليلى إبراهيم",
+                specializationEn: "Local Food & Markets",
+                specializationAr: "طعام محلي وأسواق",
+                specialization: "Local Food",
+                languages: ["Arabic", "English"],
+                rating: 4.8,
+                reviews: 203,
+                price: 32,
+                verified: true,
+                image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
+                descEn: "Local food expert specializing in traditional Egyptian dishes and market tours.",
+                descAr: "خبيرة طعام محلي متخصصة في الأطباق المصرية التقليدية وجولات الأسواق.",
+                saved: false
+            },
+            {
+                id: 7,
+                nameEn: "David Thompson",
+                nameAr: "ديفيد تومبسون",
+                specializationEn: "Adventure & Diving",
+                specializationAr: "مغامرات وغوص",
+                specialization: "Adventure",
+                languages: ["English", "German"],
+                rating: 4.9,
+                reviews: 267,
+                price: 45,
+                verified: true,
+                image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
+                descEn: "Certified diving instructor and adventure guide for Red Sea expeditions.",
+                descAr: "مدرب غوص معتمد ومرشد مغامرات لرحلات البحر الأحمر.",
+                saved: false
+            },
+            {
+                id: 8,
+                nameEn: "Fatima Nour",
+                nameAr: "فاطمة نور",
+                specializationEn: "Shopping & Fashion",
+                specializationAr: "تسوق وموضة",
+                specialization: "Shopping",
+                languages: ["Arabic", "English", "Italian"],
+                rating: 4.6,
+                reviews: 145,
+                price: 35,
+                verified: false,
+                image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
+                descEn: "Fashion consultant and shopping guide for luxury and traditional Egyptian products.",
+                descAr: "مستشارة أزياء ومرشدة تسوق للمنتجات المصرية الفاخرة والتقليدية.",
+                saved: false
+            }
+        ];
+
+        // =========================================================
+        // STATE MANAGEMENT
+        // =========================================================
+        let currentLanguage = 'en';
+        let currentTheme = 'light';
+        let searchExpanded = false;
+        let searchQuery = '';
+        let displayedGuides = 4;
+
+        // Filters
+        let selectedSpecializations = [];
+        let selectedLanguages = [];
+        let selectedRating = 0;
+        let maxPrice = 100;
+
+        // =========================================================
+        // INITIALIZATION
+        // =========================================================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSettings();
+            initializeFilters();
+            renderGuides();
+            updateAllTranslations();
+        });
+
+        // =========================================================
+        // SETTINGS MANAGEMENT
+        // =========================================================
+        function loadSettings() {
+            const savedLang = localStorage.getItem(STORAGE.LANGUAGE) || 'en';
+            const savedTheme = localStorage.getItem(STORAGE.THEME) || 'light';
+            const savedGuides = localStorage.getItem(STORAGE.SAVED_GUIDES);
+
+            currentLanguage = savedLang;
+            currentTheme = savedTheme;
+
+            if (savedGuides) {
+                const savedIds = JSON.parse(savedGuides);
+                savedIds.forEach(id => {
+                    const guide = guides.find(g => g.id === id);
+                    if (guide) guide.saved = true;
+                });
+            }
+
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+        }
+
+        function saveSettings() {
+            localStorage.setItem(STORAGE.LANGUAGE, currentLanguage);
+            localStorage.setItem(STORAGE.THEME, currentTheme);
+            const savedIds = guides.filter(g => g.saved).map(g => g.id);
+            localStorage.setItem(STORAGE.SAVED_GUIDES, JSON.stringify(savedIds));
+        }
+
+        // =========================================================
+        // INITIALIZE FILTERS
+        // =========================================================
+        function initializeFilters() {
+            const specializations = ['History', 'Adventure', 'Local Food', 'Shopping'];
+            const languages = ['English', 'Arabic', 'French', 'Spanish', 'German', 'Italian'];
+            const ratings = [
+                { value: 4.5, labelEn: '4.5 & up', labelAr: '4.5 فأكثر' },
+                { value: 4.0, labelEn: '4.0 & up', labelAr: '4.0 فأكثر' },
+                { value: 0, labelEn: 'All ratings', labelAr: 'جميع التقييمات' }
+            ];
+
+            // Desktop Specialization
+            const specDesktop = document.getElementById('specializationDesktop');
+            specializations.forEach(spec => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                label.innerHTML = `
+            <input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" 
+                   type="checkbox" value="${spec}" onchange="toggleSpecialization('${spec}')"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${spec}</span>
+        `;
+                specDesktop.appendChild(label);
+            });
+
+            // Mobile Specialization
+            const specMobile = document.getElementById('specializationMobile');
+            specializations.forEach(spec => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                label.innerHTML = `
+            <input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" 
+                   type="checkbox" value="${spec}" onchange="toggleSpecialization('${spec}')"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${spec}</span>
+        `;
+                specMobile.appendChild(label);
+            });
+
+            // Desktop Languages
+            const langDesktop = document.getElementById('languagesDesktop');
+            languages.forEach(lang => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                label.innerHTML = `
+            <input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" 
+                   type="checkbox" value="${lang}" onchange="toggleGuideLanguage('${lang}')"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${lang}</span>
+        `;
+                langDesktop.appendChild(label);
+            });
+
+            // Mobile Languages
+            const langMobile = document.getElementById('languagesMobile');
+            languages.forEach(lang => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                label.innerHTML = `
+            <input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" 
+                   type="checkbox" value="${lang}" onchange="toggleGuideLanguage('${lang}')"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${lang}</span>
+        `;
+                langMobile.appendChild(label);
+            });
+
+            // Desktop Rating
+            const ratingDesktop = document.getElementById('ratingDesktop');
+            ratings.forEach(rating => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                const labelText = currentLanguage === 'ar' ? rating.labelAr : rating.labelEn;
+                label.innerHTML = `
+            <input class="text-primary focus:ring-primary h-4 w-4" 
+                   name="rating" type="radio" value="${rating.value}" 
+                   ${rating.value === 0 ? 'checked' : ''} 
+                   onchange="updateRating(${rating.value})"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${labelText}</span>
+        `;
+                ratingDesktop.appendChild(label);
+            });
+
+            // Mobile Rating
+            const ratingMobile = document.getElementById('ratingMobile');
+            ratings.forEach(rating => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-3 cursor-pointer';
+                const labelText = currentLanguage === 'ar' ? rating.labelAr : rating.labelEn;
+                label.innerHTML = `
+            <input class="text-primary focus:ring-primary h-4 w-4" 
+                   name="ratingMobile" type="radio" value="${rating.value}" 
+                   ${rating.value === 0 ? 'checked' : ''} 
+                   onchange="updateRating(${rating.value})"/>
+            <span class="text-sm text-slate-600 dark:text-slate-400">${labelText}</span>
+        `;
+                ratingMobile.appendChild(label);
+            });
+        }
+
+        // =========================================================
+        // FILTER FUNCTIONS
+        // =========================================================
+        function toggleSpecialization(spec) {
+            const index = selectedSpecializations.indexOf(spec);
+            if (index > -1) {
+                selectedSpecializations.splice(index, 1);
+            } else {
+                selectedSpecializations.push(spec);
+            }
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function toggleGuideLanguage(lang) {
+            const index = selectedLanguages.indexOf(lang);
+            if (index > -1) {
+                selectedLanguages.splice(index, 1);
+            } else {
+                selectedLanguages.push(lang);
+            }
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function updateRating(rating) {
+            selectedRating = rating;
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function updatePriceRange(value) {
+            maxPrice = parseInt(value);
+            const displayValue = `$${maxPrice}/hr`;
+
+            document.getElementById('priceRangeValueDesktop').textContent = displayValue;
+            document.getElementById('priceRangeValueMobile').textContent = displayValue;
+
+            // Sync both sliders
+            document.getElementById('priceRangeDesktop').value = value;
+            document.getElementById('priceRangeMobile').value = value;
+
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function filterBySpecialization(spec) {
+            // Update quick filter chips
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                const filterValue = chip.getAttribute('data-filter');
+                if (filterValue === spec) {
+                    chip.className = 'filter-chip active flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 cursor-pointer';
+                } else {
+                    chip.className = 'filter-chip flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 cursor-pointer hover:border-primary transition-colors';
+                }
+            });
+
+            if (spec === 'all') {
+                selectedSpecializations = [];
+            } else {
+                selectedSpecializations = [spec];
+            }
+
+            // Update checkboxes
+            document.querySelectorAll('#specializationDesktop input, #specializationMobile input').forEach(checkbox => {
+                checkbox.checked = selectedSpecializations.includes(checkbox.value);
+            });
+
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function clearFilters() {
+            selectedSpecializations = [];
+            selectedLanguages = [];
+            selectedRating = 0;
+            maxPrice = 100;
+            searchQuery = '';
+
+            // Reset all checkboxes
+            document.querySelectorAll('#specializationDesktop input, #specializationMobile input').forEach(cb => cb.checked = false);
+            document.querySelectorAll('#languagesDesktop input, #languagesMobile input').forEach(cb => cb.checked = false);
+
+            // Reset radio buttons
+            document.querySelectorAll('input[name="rating"]').forEach(radio => {
+                radio.checked = radio.value === '0';
+            });
+            document.querySelectorAll('input[name="ratingMobile"]').forEach(radio => {
+                radio.checked = radio.value === '0';
+            });
+
+            // Reset sliders
+            document.getElementById('priceRangeDesktop').value = 100;
+            document.getElementById('priceRangeMobile').value = 100;
+            updatePriceRange(100);
+
+            // Reset quick chips
+            filterBySpecialization('all');
+
+            // Reset search
+            const searchInputs = document.querySelectorAll('#searchInput, #searchInputMobile');
+            searchInputs.forEach(input => input.value = '');
+
+            displayedGuides = 4;
+            renderGuides();
+            showToast(currentLanguage === 'ar' ? 'تم مسح جميع الفلاتر' : 'All filters cleared', 'success');
+        }
+
+        // =========================================================
+        // SEARCH
+        // =========================================================
+        function toggleSearch() {
+            const container = document.getElementById('searchContainer');
+            const input = document.getElementById('searchInput');
+
+            searchExpanded = !searchExpanded;
+
+            if (searchExpanded) {
+                container.classList.remove('collapsed');
+                container.classList.add('expanded');
+                setTimeout(() => input.focus(), 300);
+            } else {
+                container.classList.remove('expanded');
+                container.classList.add('collapsed');
+                input.value = '';
+                searchQuery = '';
+                renderGuides();
+            }
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        function handleSearchMobile() {
+            searchQuery = document.getElementById('searchInputMobile').value.toLowerCase();
+            displayedGuides = 4;
+            renderGuides();
+        }
+
+        // =========================================================
+        // THEME & LANGUAGE
+        // =========================================================
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.classList.toggle('dark');
+            saveSettings();
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            updateAllTranslations();
+            renderGuides();
+            saveSettings();
+        }
+
+        function updateAllTranslations() {
+            document.querySelectorAll('[data-en], [data-ar]').forEach(el => {
+                const key = currentLanguage === 'ar' ? 'data-ar' : 'data-en';
+                if (el.hasAttribute(key)) {
+                    el.textContent = el.getAttribute(key);
+                }
+            });
+
+            const searchInputs = document.querySelectorAll('#searchInput, #searchInputMobile');
+            searchInputs.forEach(input => {
+                input.placeholder = currentLanguage === 'ar' ? 'ابحث عن المرشدين...' : 'Search guides...';
+            });
+        }
+
+        // =========================================================
+        // MENU FUNCTIONS
+        // =========================================================
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            mobileSidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            if (mobileSidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            mobileSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            profileDropdown.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+
+            notificationDropdown.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        // =========================================================
+        // CLICK OUTSIDE HANDLER - التحديث هنا! 🎯
+        // =========================================================
+        document.addEventListener('click', function (event) {
+            // Close dropdowns
+            const notifBtn = document.getElementById('notificationBtn');
+            const profileBtn = document.getElementById('profileBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (notifBtn && notificationDropdown && !notifBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                notificationDropdown.classList.remove('active');
+            }
+
+            if (profileBtn && profileDropdown && !profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('active');
+            }
+
+            // Close search
+            const container = document.getElementById('searchContainer');
+            const input = document.getElementById('searchInput');
+
+            if (searchExpanded && container && !container.contains(event.target)) {
+                searchExpanded = false;
+                container.classList.remove('expanded');
+                container.classList.add('collapsed');
+                if (input) {
+                    input.value = '';
+                    searchQuery = '';
+                    renderGuides();
+                }
+            }
+
+            // ========= التعديل الجديد للهامبورجر مينيو =========
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const hamburgerButton = document.getElementById('hamburgerButton');
+
+            // إذا كان الأوفرلاي ظاهر والضغطة على الأوفرلاي نفسه
+            if (overlay && overlay.classList.contains('active') && event.target === overlay) {
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+                if (mobileSidebar && mobileSidebar.classList.contains('active')) {
+                    closeSidebar();
+                }
+            }
+
+            // إذا كانت الضغطة خارج الهامبورجر مينيو والهامبورجر بوتن
+            if (mobileMenu && hamburgerButton && 
+                !mobileMenu.contains(event.target) && 
+                !hamburgerButton.contains(event.target) && 
+                mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // =========================================================
+        // TOAST NOTIFICATIONS
+        // =========================================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icon = type === 'success' ? 'check_circle' : 'cancel';
+
+            toast.innerHTML = `
+        <div class="flex items-center justify-center w-8 h-8 rounded-full ${type === 'success' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">
+            <span class="material-symbols-outlined text-lg">${icon}</span>
+        </div>
+        <div class="flex-1">
+            <p class="font-semibold text-sm">${message}</p>
+        </div>
+    `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => container.removeChild(toast), 400);
+            }, 3000);
+        }
+
+        // =========================================================
+        // RENDER GUIDES
+        // =========================================================
+        function renderGuides() {
+            let filtered = guides.filter(guide => {
+                // Specialization filter
+                const specMatch = selectedSpecializations.length === 0 ||
+                    selectedSpecializations.includes(guide.specialization);
+
+                // Language filter
+                const langMatch = selectedLanguages.length === 0 ||
+                    selectedLanguages.some(lang => guide.languages.includes(lang));
+
+                // Rating filter
+                const ratingMatch = guide.rating >= selectedRating;
+
+                // Price filter
+                const priceMatch = guide.price <= maxPrice;
+
+                // Search filter
+                const searchMatch = searchQuery === '' ||
+                    guide.nameEn.toLowerCase().includes(searchQuery) ||
+                    guide.nameAr.includes(searchQuery) ||
+                    guide.specializationEn.toLowerCase().includes(searchQuery) ||
+                    guide.specializationAr.includes(searchQuery);
+
+                return specMatch && langMatch && ratingMatch && priceMatch && searchMatch;
+            });
+
+            const grid = document.getElementById('guidesGrid');
+            grid.innerHTML = '';
+
+            const toDisplay = filtered.slice(0, displayedGuides);
+
+            if (toDisplay.length === 0) {
+                grid.innerHTML = `
+            <div class="col-span-full text-center py-12">
+                <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4">person_search</span>
+                <p class="text-slate-500 dark:text-slate-400 text-lg" data-en="No guides found matching your criteria" data-ar="لم يتم العثور على مرشدين مطابقين لمعاييرك">
+                    No guides found matching your criteria
+                </p>
+            </div>
+        `;
+                updateAllTranslations();
+            } else {
+                toDisplay.forEach(guide => {
+                    const card = createGuideCard(guide);
+                    grid.appendChild(card);
+                });
+            }
+
+            // Update load more button
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const resultsCount = document.getElementById('resultsCount');
+
+            if (displayedGuides >= filtered.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+
+            const countText = currentLanguage === 'ar'
+                ? `عرض ${toDisplay.length} من ${filtered.length} خبير`
+                : `Showing ${toDisplay.length} of ${filtered.length} experts`;
+            resultsCount.textContent = countText;
+        }
+
+        // =========================================================
+        // CREATE GUIDE CARD
+        // =========================================================
+        function createGuideCard(guide) {
+            const div = document.createElement('div');
+            div.className = 'guide-card bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl transition-shadow group';
+
+            const name = currentLanguage === 'ar' ? guide.nameAr : guide.nameEn;
+            const specialization = currentLanguage === 'ar' ? guide.specializationAr : guide.specializationEn;
+            const languages = guide.languages.join(', ');
+
+            div.innerHTML = `
+        <div class="relative h-48 w-full">
+            <div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" 
+                 style="background-image: url('${guide.image}')"></div>
+            <div class="absolute top-3 right-3 bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-lg px-2 py-1 flex items-center gap-1 shadow-sm">
+                <span class="material-symbols-outlined text-yellow-500 text-sm fill-current">star</span>
+                <span class="text-xs font-bold text-[#0d131b] dark:text-white">${guide.rating}</span>
+            </div>
+            ${guide.verified ? `
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">Verified</span>
+                </div>
+            ` : ''}
+            ${guide.superguide ? `
+                <div class="absolute bottom-3 left-3 flex gap-1">
+                    <span class="bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">Superguide</span>
+                </div>
+            ` : ''}
+        </div>
+        <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <h3 class="text-lg font-bold text-[#0d131b] dark:text-white">${name}</h3>
+                    <p class="text-slate-500 text-sm">${specialization}</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <div class="bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full flex items-center gap-1">
+                    <span class="material-symbols-outlined text-xs">translate</span>
+                    <span class="text-xs font-medium text-slate-600 dark:text-slate-300">${languages}</span>
+                </div>
+            </div>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-400 uppercase font-bold tracking-widest" data-en="Rate" data-ar="السعر">Rate</p>
+                    <p class="text-lg font-bold text-[#0d131b] dark:text-white">$${guide.price}<span class="text-sm font-normal text-slate-500"> / hr</span></p>
+                </div>
+                <button onclick="bookGuide(${guide.id})" class="bg-primary text-white font-bold py-2.5 px-5 rounded-lg hover:bg-primary/90 transition-colors" data-en="Book Now" data-ar="احجز الآن">
+                    Book Now
+                </button>
+            </div>
+        </div>
+    `;
+
+            return div;
+        }
+
+        // =========================================================
+        // BOOK GUIDE
+        // =========================================================
+        function bookGuide(id) {
+            const guide = guides.find(g => g.id === id);
+            if (!guide) return;
+
+            const name = currentLanguage === 'ar' ? guide.nameAr : guide.nameEn;
+            const message = currentLanguage === 'ar'
+                ? `تم حجز ${name} بنجاح!`
+                : `${name} booked successfully!`;
+
+            showToast(message, 'success');
+        }
+
+        // =========================================================
+        // LOAD MORE
+        // =========================================================
+        function loadMoreGuides() {
+            displayedGuides += 4;
+            renderGuides();
+        }
+
+        // =========================================================
+        // STORAGE LISTENER
+        // =========================================================
+        window.addEventListener('storage', function (event) {
+            if (event.key === STORAGE.LANGUAGE) {
+                currentLanguage = event.newValue || 'en';
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                updateAllTranslations();
+                renderGuides();
+            }
+
+            if (event.key === STORAGE.THEME) {
+                currentTheme = event.newValue || 'light';
+                document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            }
+        });
+
+        const current = location.pathname.split("/").pop().toLowerCase();
+
+        document.querySelectorAll(".nav-link, .menu-item").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            if (href.toLowerCase() === current) {
+                link.classList.add("active");
+            }
+        });
+    </script>
+</body>
+
+</html>

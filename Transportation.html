@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html class="light" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dalilak - Transportation Services</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <script src="//code.tidio.co/dixb7hccwg8hdummu49y4pqorzbqyknu.js" async></script>
+
+    <style>
+        /* ============= BASE STYLES ============= */
+        body {
+            font-family: "Cairo", "Plus Jakarta Sans", sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Plus Jakarta Sans", "Cairo", sans-serif;
+            font-weight: 600;
+        }
+
+        p,
+        li,
+        span,
+        a {
+            font-family: "Cairo", "Plus Jakarta Sans", sans-serif;
+        }
+
+        [dir="rtl"] {
+            font-family: "Cairo", sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .material-symbols-outlined.fill-current {
+            font-variation-settings: "FILL" 1;
+        }
+
+        /* ============= NAVIGATION ACTIVE STATE ============= */
+        .nav-link.active {
+            color: #136dec;
+            position: relative;
+        }
+
+
+
+        /* ============= MOBILE MENU STYLES ============= */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .dark .mobile-menu {
+            background: #1e293b;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        /* RTL Support for Mobile Menu */
+        [dir="rtl"] .mobile-menu {
+            right: auto;
+            left: -100%;
+            transition: left 0.3s ease-in-out;
+        }
+
+        [dir="rtl"] .mobile-menu.active {
+            left: 0;
+            right: auto;
+        }
+
+        /* ============= SIDEBAR OVERLAY ============= */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ============= MOBILE SIDEBAR (FILTERS) ============= */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            max-width: 85vw;
+            height: 100vh;
+            background: white;
+            transition: right 0.3s ease-in-out;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+
+        .dark .mobile-sidebar {
+            background: #1e293b;
+        }
+
+        .mobile-sidebar.active {
+            right: 0;
+        }
+
+        /* RTL Support for Mobile Sidebar */
+        [dir="rtl"] .mobile-sidebar {
+            right: auto;
+            left: -100%;
+            transition: left 0.3s ease-in-out;
+        }
+
+        [dir="rtl"] .mobile-sidebar.active {
+            left: 0;
+            right: auto;
+        }
+
+        /* ============= DROPDOWN MENUS ============= */
+        .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============= SORT DROPDOWN ============= */
+        .sort-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            min-width: 200px;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dark .sort-dropdown {
+            background: #1e293b;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .sort-dropdown.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RTL Support for Sort Dropdown */
+        [dir="rtl"] .sort-dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        /* ============= SEARCH BAR EXPANDABLE ============= */
+        .search-container {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .search-container.collapsed {
+            width: 40px;
+        }
+
+        .search-container.expanded {
+            width: 320px;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e7ecf3;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .dark .search-btn {
+            background: #1e293b;
+        }
+
+        .search-container.expanded .search-btn {
+            background: transparent;
+            cursor: default;
+        }
+
+        .search-input-wrapper {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-container.expanded .search-input-wrapper {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ============= TOAST NOTIFICATIONS ============= */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 9999;
+            min-width: 280px;
+        }
+
+        .dark .toast {
+            background: #1e293b;
+            color: white;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* RTL Support for Toast */
+        [dir="rtl"] .toast {
+            right: auto;
+            left: 20px;
+            transform: translateX(-400px);
+        }
+
+        [dir="rtl"] .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .toast.info {
+            border-left: 4px solid #136dec;
+        }
+
+        /* RTL Toast Borders */
+        [dir="rtl"] .toast.success {
+            border-left: none;
+            border-right: 4px solid #10b981;
+        }
+
+        [dir="rtl"] .toast.error {
+            border-left: none;
+            border-right: 4px solid #ef4444;
+        }
+
+        [dir="rtl"] .toast.info {
+            border-left: none;
+            border-right: 4px solid #136dec;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast.success .toast-icon {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .toast.error .toast-icon {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .toast.info .toast-icon {
+            background: #dbeafe;
+            color: #136dec;
+        }
+
+        /* ============= ANIMATIONS ============= */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .fade-in-scale {
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        /* Stagger animation for grid items */
+        .transport-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .transport-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .transport-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .transport-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .transport-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .transport-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .transport-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .transport-card:nth-child(n + 7) {
+            animation-delay: 0.7s;
+        }
+
+        @keyframes successPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .success-pulse {
+            animation: successPulse 0.6s ease-in-out;
+        }
+
+        /* ============= HAMBURGER BUTTON ============= */
+        .hamburger {
+            width: 24px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: currentColor;
+            border-radius: 3px;
+            opacity: 1;
+            transform: rotate(0deg);
+            transition: all 0.25s ease-in-out;
+            position: relative;
+        }
+
+        .hamburger span:nth-child(1) {
+            margin-bottom: 5px;
+        }
+
+        .hamburger span:nth-child(2) {
+            margin-bottom: 5px;
+        }
+
+        .hamburger span:nth-child(3) {
+            margin-bottom: 0;
+        }
+
+        /* Active state */
+        .hamburger.active {
+            gap: 0;
+        }
+
+        .hamburger.active span {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            margin: 0;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        /* RTL specific adjustments */
+        [dir="rtl"] .hamburger.active span:nth-child(2) {
+            transform: translateX(60px);
+        }
+
+        /* ============= TRANSPORT CARD HOVER EFFECTS ============= */
+        .transport-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .transport-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Badge animations */
+        .badge-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* ============= CALCULATOR SECTION ============= */
+        #tripCalculator {
+            scroll-margin-top: 100px;
+        }
+
+        /* ============= SMOOTH SCROLLING ============= */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ============= CUSTOM SCROLLBAR ============= */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #136dec;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0f5ac7;
+        }
+
+        /* Dark mode scrollbar */
+        .dark ::-webkit-scrollbar-thumb {
+            background: #136dec;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #1e88e5;
+        }
+
+        /* ============= RESPONSIVE BREAKPOINTS ============= */
+        @media (max-width: 768px) {
+            .transport-card {
+                animation-delay: 0.1s !important;
+            }
+        }
+
+        /* ============= LOADING STATE ============= */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============= FEATURE BADGE ============= */
+        .feature-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-badge::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-badge:hover::before {
+            left: 100%;
+        }
+
+        /* ============= PRICE HIGHLIGHT ============= */
+        .price-highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .price-highlight::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: rgba(19, 109, 236, 0.1);
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        /* ============= RTL FIXES ============= */
+        [dir="rtl"] .search-container.collapsed {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .search-btn {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .dropdown-menu {
+            left: 0;
+            right: auto;
+        }
+
+        /* ============= ACCESSIBILITY ============= */
+        .focus-visible:focus {
+            outline: 2px solid #136dec;
+            outline-offset: 2px;
+        }
+
+        button:focus-visible {
+            outline: 2px solid #136dec;
+            outline-offset: 2px;
+        }
+
+        /* ============= PRINT STYLES ============= */
+        @media print {
+
+            .no-print,
+            header,
+            footer,
+            .mobile-menu,
+            .mobile-sidebar,
+            .sidebar-overlay,
+            .hamburger,
+            #notificationBtn,
+            #profileBtn,
+            #theme-toggle,
+            #lang-toggle {
+                display: none !important;
+            }
+        }
+
+
+        .nav-link.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .menu-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+    </style>
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#0d131b] dark:text-slate-50 min-h-screen">
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Mobile Sidebar (Filters) -->
+    <aside class="mobile-sidebar" id="mobileSidebar">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-[#0d131b] dark:text-white text-xl font-bold" data-en="Filters" data-ar="التصفية">Filters
+                </h2>
+                <button onclick="closeSidebar()"
+                    class="text-[#0d131b] dark:text-white p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <!-- Transport Types Mobile -->
+                <div class="flex flex-col gap-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="TRANSPORT TYPE"
+                        data-ar="نوع المواصلات">TRANSPORT TYPE</span>
+                    <div class="flex flex-col gap-1" id="transportTypeListMobile">
+                        <div class="transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all"
+                            data-type="all" onclick="filterTransportType('all')">
+                            <span class="material-symbols-outlined text-lg">explore</span>
+                            <p class="text-sm font-semibold" data-en="All Transportation" data-ar="كل المواصلات">All
+                                Transportation</p>
+                        </div>
+                        <div class="transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-type="car-rental" onclick="filterTransportType('car-rental')">
+                            <span class="material-symbols-outlined text-lg">directions_car</span>
+                            <p class="text-sm font-medium" data-en="Car Rental" data-ar="تأجير سيارات">Car Rental</p>
+                        </div>
+                        <div class="transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-type="private-driver" onclick="filterTransportType('private-driver')">
+                            <span class="material-symbols-outlined text-lg">person_pin</span>
+                            <p class="text-sm font-medium" data-en="Private Drivers" data-ar="سائقين خاصين">Private
+                                Drivers</p>
+                        </div>
+                        <div class="transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-type="public-transport" onclick="filterTransportType('public-transport')">
+                            <span class="material-symbols-outlined text-lg">directions_bus</span>
+                            <p class="text-sm font-medium" data-en="Public Transport" data-ar="المواصلات العامة">Public
+                                Transport</p>
+                        </div>
+                        <div class="transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                            data-type="taxi" onclick="filterTransportType('taxi')">
+                            <span class="material-symbols-outlined text-lg">local_taxi</span>
+                            <p class="text-sm font-medium" data-en="Taxi & Ride Apps" data-ar="تاكسي وتطبيقات">Taxi &
+                                Ride Apps</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Range Mobile -->
+                <div class="flex flex-col gap-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]"
+                        data-en="PRICE RANGE (PER DAY)" data-ar="نطاق السعر (يومي)">PRICE RANGE (PER DAY)</span>
+                    <div class="px-2">
+                        <input id="priceRangeMobile"
+                            class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
+                            max="2000" min="0" type="range" value="2000" oninput="updatePriceRange(this.value)" />
+                        <div class="flex justify-between mt-2 text-xs font-medium text-[#4c6c9a]">
+                            <span>0 EGP</span>
+                            <span id="priceRangeValueMobile" class="text-primary font-bold">2,000+ EGP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Apply Filters Button -->
+                <button onclick="closeSidebar()"
+                    class="w-full mt-4 flex items-center justify-center gap-2 rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-lg">check</span>
+                    <span data-en="Apply Filters" data-ar="تطبيق التصفية">Apply Filters</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu (Navigation) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div class="flex items-center gap-3">
+                            <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                            <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-[#0d131b] dark:text-white">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Transportation.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
+                </a>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="guide.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">co_present</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Guide"
+                        data-ar="المرشدين">Guide</span>
+                </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7ecf3] dark:border-slate-800 px-4 md:px-6 lg:px-20 py-3">
+        <div class="flex items-center justify-between max-w-[1280px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-primary">
+                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
+                    Explore
+                </a>
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
+                    Trips
+                </a>
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Budget.html" data-en="Budget" data-ar="الميزانية">
+                    Budget
+                </a>
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Transportation.html" data-en="Transportation" data-ar="المواصلات">
+                    Transportation
+                </a>
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="guide.html" data-en="Guide" data-ar="المرشدين">
+                    Guide
+                </a>
+            </nav>
+
+
+            <!-- Right Side Actions -->
+            <div class="flex flex-1 lg:flex-none justify-end gap-3 items-center">
+                <!-- Expandable Search (Desktop) -->
+                <div class="hidden lg:block search-container collapsed" id="searchContainer">
+                    <div class="search-btn" onclick="toggleSearch()">
+                        <span class="material-symbols-outlined text-xl text-[#4c6c9a]">search</span>
+                    </div>
+                    <div class="search-input-wrapper">
+                        <div class="flex w-full flex-1 items-stretch rounded-lg h-10 overflow-hidden">
+                            <div
+                                class="text-[#4c6c9a] flex border-none bg-[#e7ecf3] dark:bg-slate-800 items-center justify-center pl-4">
+                                <span class="material-symbols-outlined text-xl">search</span>
+                            </div>
+                            <input id="searchInput"
+                                class="form-input flex w-full min-w-0 flex-1 border-none bg-[#e7ecf3] dark:bg-slate-800 text-[#0d131b] dark:text-white focus:ring-0 h-full placeholder:text-[#4c6c9a] px-3 text-sm"
+                                placeholder="Search transportation..." value="" onkeyup="handleSearch()" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="notificationBtn" onclick="toggleNotifications()"
+                        class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 text-[#0d131b] dark:text-white transition-all flex items-center justify-center relative">
+                        <span class="material-symbols-outlined text-xl">notifications</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <div id="notificationDropdown"
+                        class="dropdown-menu absolute right-[-15px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                            <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline" data-en="Mark all as read"
+                                data-ar="تعليم الكل كمقروء">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">flight</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Trip to Cairo confirmed!"
+                                            data-ar="رحلة إلى القاهرة مؤكدة!">
+                                            Trip to Cairo confirmed!
+                                        </p>
+                                        <p class="text-xs text-slate-500"
+                                            data-en="Your booking is ready. Check details."
+                                            data-ar="حجزك جاهز. تحقق من التفاصيل.">
+                                            Your booking is ready. Check details.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="2 hours ago"
+                                            data-ar="منذ ساعتين">
+                                            2 hours ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b border-slate-100 dark:border-slate-800">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-accent-gold/10 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-accent-gold text-xl">local_offer</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Special offer: 20% off hotels"
+                                            data-ar="عرض خاص: خصم 20% على الفنادق">
+                                            Special offer: 20% off hotels
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Limited time deal in Luxor"
+                                            data-ar="عرض لفترة محدودة في الأقصر">
+                                            Limited time deal in Luxor
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="1 day ago"
+                                            data-ar="منذ يوم">
+                                            1 day ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold mb-1" data-en="Budget updated successfully"
+                                            data-ar="تم تحديث الميزانية بنجاح">
+                                            Budget updated successfully
+                                        </p>
+                                        <p class="text-xs text-slate-500" data-en="Your trip budget has been saved."
+                                            data-ar="تم حفظ ميزانية رحلتك.">
+                                            Your trip budget has been saved.
+                                        </p>
+                                        <span class="text-xs text-slate-400 mt-1 block" data-en="3 days ago"
+                                            data-ar="منذ 3 أيام">
+                                            3 days ago
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-3 text-center border-t border-slate-200 dark:border-slate-700">
+                            <a href="#" class="text-xs text-primary font-semibold hover:underline"
+                                data-en="View all notifications" data-ar="عرض كل الإشعارات">
+                                View all notifications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Button with Dropdown (Desktop) -->
+                <div class="relative hidden md:block">
+                    <button id="profileBtn" onclick="toggleProfile()"
+                        class="flex items-center gap-2 p-1 pr-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary/10 dark:hover:bg-primary/20 transition-all">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                        <span
+                            class="material-symbols-outlined text-xl text-[#0d131b] dark:text-white">expand_more</span>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileDropdown"
+                        class="dropdown-menu absolute left-auto right-[-65px] mt-3 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3 mb-2">
+                                <img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=136dec&color=fff&bold=true&font-size=0.4"
+                                    alt="Profile" class="size-12 rounded-full border-2 border-primary">
+                                <div>
+                                    <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
+                                    </p>
+                                    <p class="text-xs text-slate-500">ahmed@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a href="Userpadge.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">person</span>
+                                <span class="text-sm font-medium" data-en="My Profile" data-ar="ملفي الشخصي">My
+                                    Profile</span>
+                            </a>
+                            <a href="UserSeting.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">settings</span>
+                                <span class="text-sm font-medium" data-en="Settings" data-ar="الإعدادات">Settings</span>
+                            </a>
+                            <a href="Budget.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">history</span>
+                                <span class="text-sm font-medium" data-en="Trip History" data-ar="سجل الرحلات">Trip
+                                    History</span>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-xl text-primary">help</span>
+                                <span class="text-sm font-medium" data-en="Help & Support"
+                                    data-ar="المساعدة والدعم">Help & Support</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-slate-200 dark:border-slate-700 py-2">
+                            <a href="login.html"
+                                class="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors">
+                                <span class="material-symbols-outlined text-xl">logout</span>
+                                <span class="text-sm font-medium" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme & Language Toggle -->
+                <div class="flex items-center gap-1.5 bg-primary/10 dark:bg-slate-800 rounded-lg p-1.5">
+                    <button id="lang-toggle" onclick="toggleLanguage()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Language">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()"
+                        class="size-9 rounded-md bg-transparent hover:bg-primary/20 text-primary dark:text-white transition-all flex items-center justify-center"
+                        title="Change Theme">
+                        <span class="material-symbols-outlined dark:hidden text-lg">dark_mode</span>
+                        <span class="material-symbols-outlined hidden dark:inline text-lg">light_mode</span>
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <button onclick="toggleMobileMenu()" class="xl:hidden text-[#0d131b] dark:text-white p-2">
+                    <div class="hamburger" id="hamburgerIcon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1280px] mx-auto flex gap-6 px-4 md:px-6 lg:px-10 py-6 md:py-8 relative">
+
+        <!-- Filters Button (Mobile - Floating) -->
+        <button onclick="toggleSidebar()"
+            class="lg:hidden fixed bottom-[130px] right-6 z-40 size-14 bg-primary text-white rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-95 flex items-center justify-center">
+            <span class="material-symbols-outlined text-2xl">filter_list</span>
+        </button>
+
+        <!-- Side Navigation Bar (Sidebar - Desktop) -->
+        <aside class="hidden lg:flex flex-col w-72 shrink-0 gap-6">
+            <div
+                class="flex flex-col bg-white dark:bg-slate-900 rounded-xl p-5 border border-[#e7ecf3] dark:border-slate-800 shadow-sm sticky top-24">
+                <div class="mb-6">
+                    <h1 class="text-[#0d131b] dark:text-white text-lg font-bold" data-en="Filters" data-ar="التصفية">
+                        Filters</h1>
+                    <p class="text-[#4c6c9a] dark:text-slate-400 text-sm" data-en="Refine your search"
+                        data-ar="حسّن بحثك">Refine your search</p>
+                </div>
+
+                <div class="flex flex-col gap-6">
+                    <!-- Transport Types -->
+                    <div class="flex flex-col gap-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]" data-en="TRANSPORT TYPE"
+                            data-ar="نوع المواصلات">TRANSPORT TYPE</span>
+                        <div class="flex flex-col gap-1" id="transportTypeList">
+                            <div class="transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all"
+                                data-type="all" onclick="filterTransportType('all')">
+                                <span class="material-symbols-outlined text-lg">explore</span>
+                                <p class="text-sm font-semibold" data-en="All Transportation" data-ar="كل المواصلات">All
+                                    Transportation</p>
+                            </div>
+                            <div class="transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-type="car-rental" onclick="filterTransportType('car-rental')">
+                                <span class="material-symbols-outlined text-lg">directions_car</span>
+                                <p class="text-sm font-medium" data-en="Car Rental" data-ar="تأجير سيارات">Car Rental
+                                </p>
+                            </div>
+                            <div class="transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-type="private-driver" onclick="filterTransportType('private-driver')">
+                                <span class="material-symbols-outlined text-lg">person_pin</span>
+                                <p class="text-sm font-medium" data-en="Private Drivers" data-ar="سائقين خاصين">Private
+                                    Drivers</p>
+                            </div>
+                            <div class="transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-type="public-transport" onclick="filterTransportType('public-transport')">
+                                <span class="material-symbols-outlined text-lg">directions_bus</span>
+                                <p class="text-sm font-medium" data-en="Public Transport" data-ar="المواصلات العامة">
+                                    Public Transport</p>
+                            </div>
+                            <div class="transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300"
+                                data-type="taxi" onclick="filterTransportType('taxi')">
+                                <span class="material-symbols-outlined text-lg">local_taxi</span>
+                                <p class="text-sm font-medium" data-en="Taxi & Ride Apps" data-ar="تاكسي وتطبيقات">Taxi
+                                    & Ride Apps</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="flex flex-col gap-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#4c6c9a]"
+                            data-en="PRICE RANGE (PER DAY)" data-ar="نطاق السعر (يومي)">PRICE RANGE (PER DAY)</span>
+                        <div class="px-2">
+                            <input id="priceRange"
+                                class="w-full h-2 bg-[#e7ecf3] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="2000" min="0" type="range" value="2000" oninput="updatePriceRange(this.value)" />
+                            <div class="flex justify-between mt-2 text-xs font-medium text-[#4c6c9a]">
+                                <span>0 EGP</span>
+                                <span id="priceRangeValue" class="text-primary font-bold">2,000+ EGP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trip Calculator Preview -->
+                    <div class="mt-4 pt-6 border-t border-[#e7ecf3] dark:border-slate-800">
+                        <div class="bg-primary/5 dark:bg-primary/10 rounded-lg p-4 border border-primary/20">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="material-symbols-outlined text-primary">calculate</span>
+                                <h3 class="font-bold text-sm" data-en="Trip Calculator" data-ar="حاسبة الرحلة">Trip
+                                    Calculator</h3>
+                            </div>
+                            <p class="text-xs text-[#4c6c9a] dark:text-slate-400 mb-3"
+                                data-en="Estimate your total transport costs" data-ar="احسب تكاليف المواصلات">Estimate
+                                your total transport costs</p>
+                            <button onclick="scrollToCalculator()"
+                                class="w-full flex items-center justify-center gap-2 rounded-lg h-9 bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-all">
+                                <span class="material-symbols-outlined text-base">arrow_downward</span>
+                                <span data-en="Use Calculator" data-ar="استخدم الحاسبة">Use Calculator</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2">
+                <nav class="flex items-center gap-2 text-sm font-medium text-[#4c6c9a]">
+                    <a class="hover:text-primary transition-colors" href="#" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <span class="material-symbols-outlined text-base">chevron_right</span>
+                    <span class="text-[#0d131b] dark:text-white" data-en="Transportation Services"
+                        data-ar="خدمات المواصلات">Transportation Services</span>
+                </nav>
+
+                <div class="flex flex-wrap items-end justify-between gap-4 mt-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-[#0d131b] dark:text-white text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]"
+                            data-en="Transportation Services" data-ar="خدمات المواصلات">Transportation Services</h1>
+                        <p class="text-[#4c6c9a] dark:text-slate-400 text-sm mt-1"
+                            data-en="Find the best way to move around Egypt" data-ar="اختر أفضل وسيلة تنقل في مصر">Find
+                            the best way to move around Egypt</p>
+                    </div>
+
+                    <div class="flex gap-2 relative">
+                        <button id="sortBtn" onclick="toggleSortDropdown()"
+                            class="flex items-center gap-2 rounded-lg h-10 px-4 bg-[#e7ecf3] dark:bg-slate-800 text-[#0d131b] dark:text-white text-sm font-bold border border-transparent hover:border-primary/20 transition-all">
+                            <span id="sortLabel" data-en="Sort By: Price (Low)" data-ar="ترتيب: السعر (منخفض)">Sort By:
+                                Price (Low)</span>
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                        </button>
+
+                        <!-- Sort Dropdown -->
+                        <div id="sortDropdown" class="sort-dropdown">
+                            <div class="py-2">
+                                <button onclick="sortTransport('price-low')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Price: Low to High" data-ar="السعر: من الأقل للأعلى">Price: Low to
+                                    High</button>
+                                <button onclick="sortTransport('price-high')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Price: High to Low" data-ar="السعر: من الأعلى للأقل">Price: High to
+                                    Low</button>
+                                <button onclick="sortTransport('rating')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Rating" data-ar="التقييم">Rating</button>
+                                <button onclick="sortTransport('capacity')"
+                                    class="sort-option w-full text-left px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
+                                    data-en="Capacity" data-ar="السعة">Capacity</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transportation Grid -->
+            <div id="transportGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                <!-- Transport cards will be dynamically added here -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="flex justify-center py-8">
+                <button id="loadMoreBtn" onclick="loadMoreTransport()"
+                    class="flex items-center gap-2 rounded-lg h-11 px-8 bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 text-[#0d131b] dark:text-white text-sm font-bold hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-all">
+                    <span data-en="Show More Options" data-ar="عرض المزيد">Show More Options</span>
+                    <span class="material-symbols-outlined text-lg">expand_more</span>
+                </button>
+            </div>
+
+            <!-- Trip Calculator Section -->
+            <div id="tripCalculator"
+                class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-[#e7ecf3] dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-2xl">calculate</span>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold" data-en="Trip Cost Calculator" data-ar="حاسبة تكلفة الرحلة">Trip
+                            Cost Calculator</h2>
+                        <p class="text-sm text-[#4c6c9a] dark:text-slate-400"
+                            data-en="Estimate your total transport budget" data-ar="احسب ميزانية المواصلات الكلية">
+                            Estimate your total transport budget</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left Column: Inputs -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs font-bold uppercase text-[#4c6c9a] dark:text-slate-400 mb-2 block"
+                                data-en="Total Distance (km)" data-ar="المسافة الكلية (كم)">Total Distance (km)</label>
+                            <div class="relative">
+                                <input id="calcDistance"
+                                    class="w-full bg-[#f6f7f8] dark:bg-slate-800 border border-[#e7ecf3] dark:border-slate-700 rounded-lg text-sm p-3 pl-10 focus:ring-2 focus:ring-primary/20"
+                                    type="number" value="50" oninput="calculateCost()" />
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-3 text-primary text-lg">route</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase text-[#4c6c9a] dark:text-slate-400 mb-2 block"
+                                data-en="Number of Days" data-ar="عدد الأيام">Number of Days</label>
+                            <div class="relative">
+                                <input id="calcDays"
+                                    class="w-full bg-[#f6f7f8] dark:bg-slate-800 border border-[#e7ecf3] dark:border-slate-700 rounded-lg text-sm p-3 pl-10 focus:ring-2 focus:ring-primary/20"
+                                    type="number" value="3" oninput="calculateCost()" />
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-3 text-primary text-lg">calendar_today</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase text-[#4c6c9a] dark:text-slate-400 mb-2 block"
+                                data-en="Fuel Price (EGP/L)" data-ar="سعر الوقود (جنيه/لتر)">Fuel Price (EGP/L)</label>
+                            <div class="relative">
+                                <input id="calcFuel"
+                                    class="w-full bg-[#f6f7f8] dark:bg-slate-800 border border-[#e7ecf3] dark:border-slate-700 rounded-lg text-sm p-3 pl-10 focus:ring-2 focus:ring-primary/20"
+                                    type="number" value="13.5" step="0.1" oninput="calculateCost()" />
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-3 text-primary text-lg">local_gas_station</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3 pt-2">
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-sm font-medium" data-en="Include Toll Fees"
+                                    data-ar="شامل رسوم المرور">Include Toll Fees</span>
+                                <div class="relative inline-flex items-center cursor-pointer">
+                                    <input id="calcTolls" checked class="sr-only peer" type="checkbox"
+                                        onchange="calculateCost()" />
+                                    <div
+                                        class="w-11 h-6 bg-[#e7ecf3] peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-sm font-medium" data-en="Include Parking"
+                                    data-ar="شامل المواقف">Include Parking</span>
+                                <div class="relative inline-flex items-center cursor-pointer">
+                                    <input id="calcParking" class="sr-only peer" type="checkbox"
+                                        onchange="calculateCost()" />
+                                    <div
+                                        class="w-11 h-6 bg-[#e7ecf3] peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Results -->
+                    <div
+                        class="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 rounded-lg p-6 border border-primary/20">
+                        <h3 class="text-sm font-bold text-primary mb-4" data-en="Cost Breakdown"
+                            data-ar="تفاصيل التكلفة">Cost Breakdown</h3>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#4c6c9a] dark:text-slate-400" data-en="Base Rental"
+                                    data-ar="الإيجار الأساسي">Base Rental</span>
+                                <span class="font-bold" id="costBase">450 EGP</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#4c6c9a] dark:text-slate-400" data-en="Fuel Estimate"
+                                    data-ar="تقدير الوقود">Fuel Estimate</span>
+                                <span class="font-bold" id="costFuel">135 EGP</span>
+                            </div>
+                            <div class="flex justify-between text-sm" id="costTollsRow">
+                                <span class="text-[#4c6c9a] dark:text-slate-400" data-en="Toll Fees"
+                                    data-ar="رسوم المرور">Toll Fees</span>
+                                <span class="font-bold" id="costTolls">60 EGP</span>
+                            </div>
+                            <div class="flex justify-between text-sm" id="costParkingRow" style="display: none;">
+                                <span class="text-[#4c6c9a] dark:text-slate-400" data-en="Parking"
+                                    data-ar="المواقف">Parking</span>
+                                <span class="font-bold" id="costParking">90 EGP</span>
+                            </div>
+
+                            <div class="border-t border-primary/20 pt-3 mt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-black text-lg" data-en="Total Cost"
+                                        data-ar="التكلفة الإجمالية">Total Cost</span>
+                                    <span class="font-black text-2xl text-primary" id="costTotal">645 EGP</span>
+                                </div>
+                                <p class="text-xs text-[#4c6c9a] dark:text-slate-400 mt-2" id="costPerDay"
+                                    data-en="(215 EGP per day)" data-ar="(215 جنيه يومياً)">(215 EGP per day)</p>
+                            </div>
+                        </div>
+
+                        <button onclick="addToBudget()"
+                            class="w-full mt-6 flex items-center justify-center gap-2 rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+                            <span class="material-symbols-outlined text-lg">add_circle</span>
+                            <span data-en="Add to Trip Budget" data-ar="إضافة للميزانية">Add to Trip Budget</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="text-center py-8">
+                <p class="text-[#4c6c9a] text-sm mb-4">
+                    <span data-en="By completing this purchase, you agree to Dalilak's"
+                        data-ar="بإتمام هذا الشراء، فإنك توافق على">By completing this purchase, you agree to
+                        Dalilak's</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Terms of Service"
+                        data-ar="شروط الخدمة">Terms of Service</a>
+                    <span data-en="and" data-ar="و">and</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Privacy Policy"
+                        data-ar="سياسة الخصوصية">Privacy Policy</a>.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                    </a>
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">mail</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================================================
+           GLOBAL SHARED STORAGE
+        ========================================================= */
+        const STORAGE = {
+            LANGUAGE: 'dalilak_language',
+            THEME: 'dalilak_theme',
+            SAVED_TRANSPORT: 'dalilak_saved_transport',
+            USER_BUDGET: 'dalilak_user_budget'
+        };
+
+        // =============================================
+        // DATA STORAGE - Egyptian Transportation Options
+        // =============================================
+        const transportOptions = [
+            // CAR RENTALS
+            {
+                id: 1,
+                nameEn: "Economy Sedan - Hyundai Accent",
+                nameAr: "سيدان اقتصادي - هيونداي أكسنت",
+                type: "car-rental",
+                price: 350,
+                pricePerDay: 350,
+                locationEn: "Cairo & Major Cities",
+                locationAr: "القاهرة والمدن الكبرى",
+                descEn: "Fuel-efficient compact sedan perfect for city driving. Automatic transmission, A/C, 4 seats.",
+                descAr: "سيدان صغير اقتصادي في استهلاك الوقود مثالي للقيادة في المدينة. ناقل حركة أوتوماتيكي، تكييف، 4 مقاعد.",
+                rating: 4.5,
+                reviews: 342,
+                capacity: 4,
+                features: ["A/C", "Auto", "Bluetooth"],
+                image: "./Images/car-economy.jpg",
+                saved: false,
+                company: "Budget Egypt",
+                featured: true
+            },
+            {
+                id: 2,
+                nameEn: "SUV - Mitsubishi Pajero",
+                nameAr: "دفع رباعي - ميتسوبيشي باجيرو",
+                type: "car-rental",
+                price: 800,
+                pricePerDay: 800,
+                locationEn: "All Egypt",
+                locationAr: "جميع أنحاء مصر",
+                descEn: "Powerful 4WD SUV ideal for desert trips and family travel. 7 seats, premium interior.",
+                descAr: "سيارة دفع رباعي قوية مثالية لرحلات الصحراء والعائلة. 7 مقاعد، تشطيبات فاخرة.",
+                rating: 4.8,
+                reviews: 218,
+                capacity: 7,
+                features: ["4WD", "7 Seats", "GPS", "Sunroof"],
+                image: "./Images/car-suv.jpg",
+                saved: false,
+                company: "Europcar Egypt"
+            },
+            {
+                id: 3,
+                nameEn: "Luxury Sedan - Mercedes C-Class",
+                nameAr: "سيدان فاخر - مرسيدس C كلاس",
+                type: "car-rental",
+                price: 1200,
+                pricePerDay: 1200,
+                locationEn: "Cairo, Alexandria, Sharm El Sheikh",
+                locationAr: "القاهرة، الإسكندرية، شرم الشيخ",
+                descEn: "Premium luxury sedan with leather interior, advanced safety features, and superior comfort.",
+                descAr: "سيدان فاخر مع تشطيبات جلد، ميزات أمان متقدمة، وراحة فائقة.",
+                rating: 4.9,
+                reviews: 156,
+                capacity: 5,
+                features: ["Leather", "Premium Sound", "Auto Climate", "Cruise Control"],
+                image: "./Images/car-luxury.jpg",
+                saved: false,
+                company: "Sixt Egypt"
+            },
+            {
+                id: 4,
+                nameEn: "Minivan - Toyota Hiace",
+                nameAr: "ميني باص - تويوتا هايس",
+                type: "car-rental",
+                price: 650,
+                pricePerDay: 650,
+                locationEn: "Cairo, Luxor, Aswan",
+                locationAr: "القاهرة، الأقصر، أسوان",
+                descEn: "Spacious minivan perfect for large groups and families. 12 passenger capacity.",
+                descAr: "ميني باص واسع مثالي للمجموعات الكبيرة والعائلات. سعة 12 راكب.",
+                rating: 4.6,
+                reviews: 189,
+                capacity: 12,
+                features: ["12 Seats", "A/C", "Luggage Space", "Manual"],
+                image: "./Images/car-minivan.jpg",
+                saved: false,
+                company: "Budget Egypt"
+            },
+            {
+                id: 5,
+                nameEn: "Compact Car - Chevrolet Aveo",
+                nameAr: "سيارة صغيرة - شيفروليه أفيو",
+                type: "car-rental",
+                price: 300,
+                pricePerDay: 300,
+                locationEn: "Cairo, Giza, Alexandria",
+                locationAr: "القاهرة، الجيزة، الإسكندرية",
+                descEn: "Perfect city car with excellent fuel economy. Manual transmission, basic features.",
+                descAr: "سيارة مدينة مثالية مع استهلاك وقود ممتاز. ناقل حركة يدوي، ميزات أساسية.",
+                rating: 4.3,
+                reviews: 428,
+                capacity: 4,
+                features: ["Manual", "A/C", "Radio"],
+                image: "./Images/car-compact.jpg",
+                saved: false,
+                company: "Avis Egypt",
+                featured: true
+            },
+            {
+                id: 6,
+                nameEn: "Jeep Wrangler - Desert Edition",
+                nameAr: "جيب رانجلر - إصدار الصحراء",
+                type: "car-rental",
+                price: 1500,
+                pricePerDay: 1500,
+                locationEn: "Siwa, Bahariya, White Desert",
+                locationAr: "سيوة، الواحات البحرية، الصحراء البيضاء",
+                descEn: "Rugged off-road vehicle perfect for desert adventures and safari trips.",
+                descAr: "سيارة وعرة قوية مثالية لمغامرات الصحراء ورحلات السفاري.",
+                rating: 5.0,
+                reviews: 94,
+                capacity: 5,
+                features: ["4x4", "Off-Road Tires", "Winch", "Roof Rack"],
+                image: "./Images/car-jeep.jpg",
+                saved: false,
+                company: "Safari Egypt Rentals"
+            },
+
+            // PRIVATE DRIVERS
+            {
+                id: 7,
+                nameEn: "Professional Driver - Full Day",
+                nameAr: "سائق محترف - يوم كامل",
+                type: "private-driver",
+                price: 400,
+                pricePerDay: 400,
+                locationEn: "Cairo & Giza",
+                locationAr: "القاهرة والجيزة",
+                descEn: "Experienced local driver with sedan vehicle. 8 hours service, fuel included.",
+                descAr: "سائق محلي خبير مع سيارة سيدان. خدمة 8 ساعات، الوقود مشمول.",
+                rating: 4.7,
+                reviews: 267,
+                capacity: 4,
+                features: ["8 Hours", "Fuel Included", "Local Expert", "English Speaking"],
+                image: "./Images/driver-professional.jpg",
+                saved: false,
+                company: "Cairo Drivers",
+                featured: true
+            },
+            {
+                id: 8,
+                nameEn: "Luxury Chauffeur Service",
+                nameAr: "خدمة سائق VIP",
+                type: "private-driver",
+                price: 1000,
+                pricePerDay: 1000,
+                locationEn: "Cairo, Alexandria",
+                locationAr: "القاهرة، الإسكندرية",
+                descEn: "Premium chauffeur service with luxury Mercedes. Professional uniforms, multilingual.",
+                descAr: "خدمة سائق فاخرة مع مرسيدس فاخرة. زي رسمي، متعدد اللغات.",
+                rating: 4.9,
+                reviews: 143,
+                capacity: 4,
+                features: ["Luxury Vehicle", "Multilingual", "Airport Transfers", "24/7 Available"],
+                image: "./Images/driver-luxury.jpg",
+                saved: false,
+                company: "Elite Drivers Egypt"
+            },
+            {
+                id: 9,
+                nameEn: "Airport Transfer Driver",
+                nameAr: "سائق نقل من المطار",
+                type: "private-driver",
+                price: 250,
+                pricePerDay: 250,
+                locationEn: "Cairo Airport",
+                locationAr: "مطار القاهرة",
+                descEn: "Reliable airport pickup and drop-off service. Flight tracking, meet & greet.",
+                descAr: "خدمة استقبال وتوصيل موثوقة من/إلى المطار. تتبع الرحلات، استقبال ومساعدة.",
+                rating: 4.6,
+                reviews: 512,
+                capacity: 4,
+                features: ["Flight Tracking", "Meet & Greet", "Luggage Assistance", "Fixed Price"],
+                image: "./Images/driver-airport.jpg",
+                saved: false,
+                company: "Cairo Airport Transfers"
+            },
+            {
+                id: 10,
+                nameEn: "Tour Guide Driver - Pyramids",
+                nameAr: "سائق ومرشد - الأهرامات",
+                type: "private-driver",
+                price: 600,
+                pricePerDay: 600,
+                locationEn: "Giza Pyramids & Sphinx",
+                locationAr: "أهرامات الجيزة وأبو الهول",
+                descEn: "Combined driver and tour guide service. Historical insights, photo stops, entrance tickets assistance.",
+                descAr: "خدمة سائق ومرشد سياحي معاً. معلومات تاريخية، توقفات للصور، مساعدة في التذاكر.",
+                rating: 4.8,
+                reviews: 198,
+                capacity: 6,
+                features: ["Tour Guide", "Historical Sites", "Photo Stops", "Flexible Schedule"],
+                image: "./Images/driver-tour.jpg",
+                saved: false,
+                company: "Pyramids Tour Drivers"
+            },
+            {
+                id: 11,
+                nameEn: "Family Driver - Minivan",
+                nameAr: "سائق عائلي - ميني فان",
+                type: "private-driver",
+                price: 500,
+                pricePerDay: 500,
+                locationEn: "Cairo, Hurghada, Luxor",
+                locationAr: "القاهرة، الغردقة، الأقصر",
+                descEn: "Family-friendly driver with spacious minivan. Child seats available, patient and careful.",
+                descAr: "سائق ودود للعائلات مع ميني فان واسع. مقاعد أطفال متاحة، صبور وحذر.",
+                rating: 4.7,
+                reviews: 234,
+                capacity: 7,
+                features: ["Child Seats", "7 Passengers", "Family Friendly", "Patient Driver"],
+                image: "./Images/driver-family.jpg",
+                saved: false,
+                company: "Family Tours Egypt"
+            },
+
+            // PUBLIC TRANSPORT
+            {
+                id: 12,
+                nameEn: "Cairo Metro - Day Pass",
+                nameAr: "مترو القاهرة - تذكرة يومية",
+                type: "public-transport",
+                price: 20,
+                pricePerDay: 20,
+                locationEn: "Greater Cairo",
+                locationAr: "القاهرة الكبرى",
+                descEn: "Unlimited metro rides for one day. 3 lines covering major Cairo districts.",
+                descAr: "رحلات مترو غير محدودة ليوم واحد. 3 خطوط تغطي أحياء القاهرة الرئيسية.",
+                rating: 4.2,
+                reviews: 1847,
+                capacity: 9,
+                features: ["Unlimited Rides", "3 Lines", "Women's Cars", "Air Conditioned"],
+                image: "./Images/transport-metro.jpg",
+                saved: false,
+                company: "Cairo Metro Authority",
+                featured: true
+            },
+            {
+                id: 13,
+                nameEn: "Microbus - Shared Route",
+                nameAr: "ميكروباص - خط مشترك",
+                type: "public-transport",
+                price: 10,
+                pricePerDay: 10,
+                locationEn: "Cairo Routes",
+                locationAr: "خطوط القاهرة",
+                descEn: "Shared microbus on fixed routes. Cheapest option for local transport.",
+                descAr: "ميكروباص مشترك على خطوط ثابتة. الخيار الأرخص للمواصلات المحلية.",
+                rating: 3.8,
+                reviews: 923,
+                capacity: 14,
+                features: ["Fixed Routes", "Very Cheap", "Frequent Service"],
+                image: "./Images/transport-microbus.jpg",
+                saved: false,
+                company: "Local Service"
+            },
+            {
+                id: 14,
+                nameEn: "CTA Bus - City Transport",
+                nameAr: "أتوبيس هيئة النقل",
+                type: "public-transport",
+                price: 5,
+                pricePerDay: 5,
+                locationEn: "Cairo, Alexandria",
+                locationAr: "القاهرة، الإسكندرية",
+                descEn: "Public bus service covering major city routes. AC and non-AC options available.",
+                descAr: "خدمة أتوبيس عام تغطي الطرق الرئيسية. خيارات مكيفة وغير مكيفة.",
+                rating: 3.9,
+                reviews: 1342,
+                capacity: 50,
+                features: ["Extensive Routes", "Very Affordable", "Regular Schedule"],
+                image: "./Images/transport-bus.jpg",
+                saved: false,
+                company: "CTA"
+            },
+            {
+                id: 15,
+                nameEn: "Alexandria Tram",
+                nameAr: "ترام الإسكندرية",
+                type: "public-transport",
+                price: 3,
+                pricePerDay: 3,
+                locationEn: "Alexandria",
+                locationAr: "الإسكندرية",
+                descEn: "Historic tram service along the corniche and city routes. Scenic coastal views.",
+                descAr: "خدمة ترام تاريخية على الكورنيش وطرق المدينة. مناظر ساحلية خلابة.",
+                rating: 4.1,
+                reviews: 687,
+                capacity: 40,
+                features: ["Scenic Route", "Historic", "Coastal Views", "Very Cheap"],
+                image: "./Images/transport-tram.jpg",
+                saved: false,
+                company: "Alexandria Transport"
+            },
+            {
+                id: 16,
+                nameEn: "Go Bus - Intercity",
+                nameAr: "جو باص - رحلات بين المدن",
+                type: "public-transport",
+                price: 150,
+                pricePerDay: 150,
+                locationEn: "Cairo to Red Sea / Upper Egypt",
+                locationAr: "القاهرة للبحر الأحمر / صعيد مصر",
+                descEn: "Modern AC coaches for intercity travel. WiFi, USB charging, comfortable seats.",
+                descAr: "حافلات حديثة مكيفة للسفر بين المدن. واي فاي، شحن USB، مقاعد مريحة.",
+                rating: 4.5,
+                reviews: 892,
+                capacity: 45,
+                features: ["WiFi", "USB Charging", "AC", "Comfortable Seats"],
+                image: "./Images/transport-gobus.jpg",
+                saved: false,
+                company: "Go Bus Egypt",
+                featured: true
+            },
+            {
+                id: 17,
+                nameEn: "River Taxi - Nile Cruise",
+                nameAr: "تاكسي نيلي - رحلة نيلية",
+                type: "public-transport",
+                price: 50,
+                pricePerDay: 50,
+                locationEn: "Cairo Nile River",
+                locationAr: "نهر النيل - القاهرة",
+                descEn: "Scenic river taxi service along the Nile. Multiple stops at key locations.",
+                descAr: "خدمة تاكسي نيلي خلابة على النيل. محطات متعددة في مواقع رئيسية.",
+                rating: 4.4,
+                reviews: 456,
+                capacity: 30,
+                features: ["Scenic Views", "Multiple Stops", "River Transport"],
+                image: "./Images/transport-river.jpg",
+                saved: false,
+                company: "Nile Transport"
+            },
+
+            // TAXI & RIDE APPS
+            {
+                id: 18,
+                nameEn: "Uber - Standard Ride",
+                nameAr: "أوبر - رحلة عادية",
+                type: "taxi",
+                price: 40,
+                pricePerDay: 40,
+                locationEn: "Cairo, Alexandria, Major Cities",
+                locationAr: "القاهرة، الإسكندرية، المدن الكبرى",
+                descEn: "App-based ride service. Cashless payment, GPS tracking, rated drivers.",
+                descAr: "خدمة نقل عبر التطبيق. دفع إلكتروني، تتبع GPS، سائقين مقيّمين.",
+                rating: 4.3,
+                reviews: 3421,
+                capacity: 4,
+                features: ["Cashless", "GPS Tracking", "Rated Drivers", "24/7"],
+                image: "./Images/taxi-uber.jpg",
+                saved: false,
+                company: "Uber Egypt",
+                featured: true
+            },
+            {
+                id: 19,
+                nameEn: "Careem - Economy",
+                nameAr: "كريم - اقتصادي",
+                type: "taxi",
+                price: 35,
+                pricePerDay: 35,
+                locationEn: "All Major Egyptian Cities",
+                locationAr: "جميع المدن المصرية الكبرى",
+                descEn: "Popular ride app with competitive prices. Multiple payment options.",
+                descAr: "تطبيق نقل شهير بأسعار تنافسية. خيارات دفع متعددة.",
+                rating: 4.4,
+                reviews: 2987,
+                capacity: 4,
+                features: ["Multiple Payments", "Promo Codes", "Schedule Rides", "Safety Features"],
+                image: "./Images/taxi-careem.jpg",
+                saved: false,
+                company: "Careem Egypt"
+            },
+            {
+                id: 20,
+                nameEn: "InDrive - Negotiate Price",
+                nameAr: "إن درايف - تفاوض السعر",
+                type: "taxi",
+                price: 30,
+                pricePerDay: 30,
+                locationEn: "Cairo, Giza, Alexandria",
+                locationAr: "القاهرة، الجيزة، الإسكندرية",
+                descEn: "Unique app where you propose your price. Drivers accept or counter-offer.",
+                descAr: "تطبيق فريد حيث تقترح سعرك. السائقون يقبلون أو يقدمون عرضاً مضاداً.",
+                rating: 4.1,
+                reviews: 1654,
+                capacity: 4,
+                features: ["Price Negotiation", "Lower Costs", "Direct Contact", "Flexible"],
+                image: "./Images/taxi-indrive.jpg",
+                saved: false,
+                company: "InDrive Egypt"
+            },
+            {
+                id: 21,
+                nameEn: "White Taxi - Metered",
+                nameAr: "تاكسي أبيض - بالعداد",
+                type: "taxi",
+                price: 25,
+                pricePerDay: 25,
+                locationEn: "Cairo",
+                locationAr: "القاهرة",
+                descEn: "Official metered taxis. Fixed rates, AC, professional drivers.",
+                descAr: "تاكسيات رسمية بالعداد. أسعار ثابتة، مكيف، سائقون محترفون.",
+                rating: 4.0,
+                reviews: 892,
+                capacity: 4,
+                features: ["Metered Fare", "Official Service", "AC", "Available 24/7"],
+                image: "./Images/taxi-white.jpg",
+                saved: false,
+                company: "Cairo Taxi"
+            },
+            {
+                id: 22,
+                nameEn: "Uber Comfort",
+                nameAr: "أوبر كومفورت",
+                type: "taxi",
+                price: 60,
+                pricePerDay: 60,
+                locationEn: "Cairo, Alexandria",
+                locationAr: "القاهرة، الإسكندرية",
+                descEn: "Premium Uber service with newer cars and top-rated drivers.",
+                descAr: "خدمة أوبر المتميزة مع سيارات أحدث وسائقين ذوي تقييم عالي.",
+                rating: 4.6,
+                reviews: 1287,
+                capacity: 4,
+                features: ["Newer Cars", "Top Drivers", "Extra Legroom", "Premium Service"],
+                image: "./Images/taxi-uber-comfort.jpg",
+                saved: false,
+                company: "Uber Egypt"
+            },
+            {
+                id: 23,
+                nameEn: "Halan - Motorcycle Taxi",
+                nameAr: "حلان - موتوسيكل",
+                type: "taxi",
+                price: 15,
+                pricePerDay: 15,
+                locationEn: "Cairo",
+                locationAr: "القاهرة",
+                descEn: "Fast motorcycle taxi service to beat traffic. Helmets provided.",
+                descAr: "خدمة موتوسيكل سريعة للتغلب على الزحام. خوذات متوفرة.",
+                rating: 4.2,
+                reviews: 2341,
+                capacity: 1,
+                features: ["Beat Traffic", "Very Fast", "Cheap", "Helmet Included"],
+                image: "./Images/taxi-halan.jpg",
+                saved: false,
+                company: "Halan Egypt"
+            },
+            {
+                id: 24,
+                nameEn: "DiDi - Budget Rides",
+                nameAr: "ديدي - رحلات اقتصادية",
+                type: "taxi",
+                price: 32,
+                pricePerDay: 32,
+                locationEn: "Cairo, Giza",
+                locationAr: "القاهرة، الجيزة",
+                descEn: "Budget-friendly ride app with regular promotions and discounts.",
+                descAr: "تطبيق نقل اقتصادي مع عروض ترويجية وخصومات منتظمة.",
+                rating: 4.3,
+                reviews: 1567,
+                capacity: 4,
+                features: ["Budget Friendly", "Regular Promos", "Easy App", "Safe Rides"],
+                image: "./Images/taxi-didi.jpg",
+                saved: false,
+                company: "DiDi Egypt"
+            }
+        ];
+
+        // =============================================
+        // STATE MANAGEMENT
+        // =============================================
+        let currentLanguage = 'en';
+        let currentTheme = 'light';
+        let currentType = 'all';
+        let currentSort = 'price-low';
+        let maxPrice = 2000;
+        let savedTransport = [];
+        let displayedOptions = 6;
+        let searchQuery = '';
+        let searchExpanded = false;
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSettings();
+            renderTransportOptions();
+            setupEventListeners();
+            updateAllTranslations();
+            calculateCost();
+        });
+
+        // =============================================
+        // SETTINGS MANAGEMENT
+        // =============================================
+        function loadSettings() {
+            const savedLang = localStorage.getItem(STORAGE.LANGUAGE) || 'en';
+            const savedTheme = localStorage.getItem(STORAGE.THEME) || 'light';
+            const savedTransportData = localStorage.getItem(STORAGE.SAVED_TRANSPORT);
+
+            currentLanguage = savedLang;
+            currentTheme = savedTheme;
+
+            if (savedTransportData) {
+                savedTransport = JSON.parse(savedTransportData);
+                savedTransport.forEach(id => {
+                    const option = transportOptions.find(o => o.id === id);
+                    if (option) option.saved = true;
+                });
+            }
+
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+        }
+
+        function saveSettings() {
+            localStorage.setItem(STORAGE.LANGUAGE, currentLanguage);
+            localStorage.setItem(STORAGE.THEME, currentTheme);
+            localStorage.setItem(STORAGE.SAVED_TRANSPORT, JSON.stringify(savedTransport));
+        }
+
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const iconMap = {
+                'success': 'check_circle',
+                'error': 'cancel',
+                'info': 'info'
+            };
+
+            const icon = iconMap[type] || 'info';
+
+            toast.innerHTML = `
+        <div class="toast-icon">
+            <span class="material-symbols-outlined text-lg">${icon}</span>
+        </div>
+        <div class="flex-1">
+            <p class="font-semibold text-sm">${message}</p>
+        </div>
+    `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 400);
+            }, 3000);
+        }
+
+        // =============================================
+        // SEARCH TOGGLE
+        // =============================================
+        function toggleSearch() {
+            const container = document.getElementById('searchContainer');
+            const input = document.getElementById('searchInput');
+
+            searchExpanded = !searchExpanded;
+
+            if (searchExpanded) {
+                container.classList.remove('collapsed');
+                container.classList.add('expanded');
+                setTimeout(() => {
+                    input.focus();
+                }, 300);
+            } else {
+                container.classList.remove('expanded');
+                container.classList.add('collapsed');
+                input.value = '';
+                searchQuery = '';
+                renderTransportOptions();
+            }
+        }
+
+        // =============================================
+        // THEME TOGGLE
+        // =============================================
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.classList.toggle('dark');
+            saveSettings();
+        }
+
+        // =============================================
+        // LANGUAGE TOGGLE
+        // =============================================
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            updateAllTranslations();
+            renderTransportOptions();
+            calculateCost();
+            saveSettings();
+        }
+
+        function updateAllTranslations() {
+            document.querySelectorAll('[data-en], [data-ar]').forEach(el => {
+                const key = currentLanguage === 'ar' ? 'data-ar' : 'data-en';
+                if (el.hasAttribute(key)) {
+                    el.textContent = el.getAttribute(key);
+                }
+            });
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.placeholder = currentLanguage === 'ar' ? 'ابحث عن المواصلات...' : 'Search transportation...';
+            }
+        }
+
+        // =============================================
+        // STORAGE LISTENER
+        // =============================================
+        window.addEventListener('storage', function (event) {
+            if (event.key === STORAGE.LANGUAGE) {
+                currentLanguage = event.newValue || 'en';
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                updateAllTranslations();
+                renderTransportOptions();
+            }
+
+            if (event.key === STORAGE.THEME) {
+                currentTheme = event.newValue || 'light';
+                document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            }
+        });
+
+        // =============================================
+        // MENU & SIDEBAR FUNCTIONS
+        // =============================================
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            mobileSidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            if (mobileSidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            mobileSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const sortDropdown = document.getElementById('sortDropdown');
+
+            profileDropdown.classList.remove('active');
+            sortDropdown.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const sortDropdown = document.getElementById('sortDropdown');
+
+            notificationDropdown.classList.remove('active');
+            sortDropdown.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        function closeProfile() {
+            document.getElementById('profileDropdown').classList.remove('active');
+        }
+
+        function toggleSortDropdown() {
+            const dropdown = document.getElementById('sortDropdown');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            notificationDropdown.classList.remove('active');
+            profileDropdown.classList.remove('active');
+            dropdown.classList.toggle('active');
+        }
+
+        // =============================================
+        // CLICK OUTSIDE HANDLER
+        // =============================================
+        document.addEventListener('click', function (event) {
+            const notifBtn = document.getElementById('notificationBtn');
+            const profileBtn = document.getElementById('profileBtn');
+            const sortBtn = document.getElementById('sortBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const sortDropdown = document.getElementById('sortDropdown');
+
+            if (notifBtn && notificationDropdown && !notifBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                notificationDropdown.classList.remove('active');
+            }
+
+            if (profileBtn && profileDropdown && !profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('active');
+            }
+
+            if (sortBtn && sortDropdown && !sortBtn.contains(event.target) && !sortDropdown.contains(event.target)) {
+                sortDropdown.classList.remove('active');
+            }
+
+            const container = document.getElementById('searchContainer');
+            const input = document.getElementById('searchInput');
+
+            if (searchExpanded && container && !container.contains(event.target)) {
+                searchExpanded = false;
+                container.classList.remove('expanded');
+                container.classList.add('collapsed');
+                if (input) {
+                    input.value = '';
+                    searchQuery = '';
+                    renderTransportOptions();
+                }
+            }
+
+            const overlay = document.getElementById('sidebarOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const hamburger = document.getElementById('hamburgerIcon');
+
+            if (overlay && overlay.classList.contains('active') && event.target === overlay) {
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+                if (mobileSidebar && mobileSidebar.classList.contains('active')) {
+                    closeSidebar();
+                }
+            }
+
+            if (mobileMenu && hamburger) {
+                const isClickInsideMenu = mobileMenu.contains(event.target);
+                const isClickOnHamburger = hamburger.contains(event.target);
+
+                if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            }
+
+            if (mobileSidebar) {
+                const isClickInsideSidebar = mobileSidebar.contains(event.target);
+                const filterBtn = document.querySelector('[onclick="toggleSidebar()"]');
+                const isClickOnFilterBtn = filterBtn && filterBtn.contains(event.target);
+
+                if (!isClickInsideSidebar && !isClickOnFilterBtn && mobileSidebar.classList.contains('active')) {
+                    closeSidebar();
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            if (mobileSidebar) {
+                mobileSidebar.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+        });
+
+        // =============================================
+        // FILTER & SORT FUNCTIONS
+        // =============================================
+        function filterTransportType(type) {
+            currentType = type;
+            displayedOptions = 6;
+
+            // Update active state for desktop
+            document.querySelectorAll('#transportTypeList .transport-item').forEach(item => {
+                if (item.dataset.type === type) {
+                    item.className = 'transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all';
+                } else {
+                    item.className = 'transport-item flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300';
+                }
+            });
+
+            // Update active state for mobile
+            document.querySelectorAll('#transportTypeListMobile .transport-item-mobile').forEach(item => {
+                if (item.dataset.type === type) {
+                    item.className = 'transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary cursor-pointer transition-all';
+                } else {
+                    item.className = 'transport-item-mobile flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#e7ecf3] dark:hover:bg-slate-800 transition-colors cursor-pointer text-[#4c6c9a] dark:text-slate-300';
+                }
+            });
+
+            renderTransportOptions();
+        }
+
+        function updatePriceRange(value) {
+            maxPrice = parseInt(value);
+            const displayValue = maxPrice >= 2000 ? '2,000+ EGP' : `${maxPrice.toLocaleString()} EGP`;
+
+            document.getElementById('priceRangeValue').textContent = displayValue;
+            document.getElementById('priceRangeValueMobile').textContent = displayValue;
+
+            document.getElementById('priceRange').value = value;
+            document.getElementById('priceRangeMobile').value = value;
+
+            displayedOptions = 6;
+            renderTransportOptions();
+        }
+
+        function sortTransport(sortType) {
+            currentSort = sortType;
+
+            const labels = {
+                'price-low': { en: 'Sort By: Price (Low)', ar: 'ترتيب: السعر (منخفض)' },
+                'price-high': { en: 'Sort By: Price (High)', ar: 'ترتيب: السعر (مرتفع)' },
+                'rating': { en: 'Sort By: Rating', ar: 'ترتيب: التقييم' },
+                'capacity': { en: 'Sort By: Capacity', ar: 'ترتيب: السعة' }
+            };
+
+            const label = labels[sortType][currentLanguage];
+            document.getElementById('sortLabel').textContent = label;
+
+            toggleSortDropdown();
+            displayedOptions = 6;
+            renderTransportOptions();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            displayedOptions = 6;
+            renderTransportOptions();
+        }
+
+        // =============================================
+        // RENDER TRANSPORT OPTIONS
+        // =============================================
+        function renderTransportOptions() {
+            let filtered = transportOptions.filter(o => {
+                const typeMatch = currentType === 'all' || o.type === currentType;
+                const priceMatch = o.pricePerDay <= maxPrice;
+                const searchMatch = searchQuery === '' ||
+                    o.nameEn.toLowerCase().includes(searchQuery) ||
+                    o.nameAr.includes(searchQuery) ||
+                    o.locationEn.toLowerCase().includes(searchQuery) ||
+                    o.locationAr.includes(searchQuery) ||
+                    o.company.toLowerCase().includes(searchQuery);
+
+                return typeMatch && priceMatch && searchMatch;
+            });
+
+            // Sort
+            switch (currentSort) {
+                case 'price-low':
+                    filtered.sort((a, b) => a.pricePerDay - b.pricePerDay);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.pricePerDay - a.pricePerDay);
+                    break;
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'capacity':
+                    filtered.sort((a, b) => b.capacity - a.capacity);
+                    break;
+            }
+
+            const grid = document.getElementById('transportGrid');
+            grid.innerHTML = '';
+
+            const toDisplay = filtered.slice(0, displayedOptions);
+
+            toDisplay.forEach(option => {
+                const card = createTransportCard(option);
+                grid.appendChild(card);
+            });
+
+            updateLoadMoreButton(filtered.length);
+        }
+
+        // =============================================
+        // UPDATE LOAD MORE BUTTON
+        // =============================================
+        function updateLoadMoreButton(totalFilteredCount) {
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+            if (!loadMoreBtn) return;
+
+            if (displayedOptions >= totalFilteredCount) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'flex';
+            }
+        }
+
+        function createTransportCard(option) {
+            const div = document.createElement('div');
+            div.className = 'transport-card';
+
+            const name = currentLanguage === 'ar' ? option.nameAr : option.nameEn;
+            const location = currentLanguage === 'ar' ? option.locationAr : option.locationEn;
+            const desc = currentLanguage === 'ar' ? option.descAr : option.descEn;
+
+            const typeIcons = {
+                'car-rental': 'directions_car',
+                'private-driver': 'person_pin',
+                'public-transport': 'directions_bus',
+                'taxi': 'local_taxi'
+            };
+
+            const typeLabels = {
+                'car-rental': { en: 'Car Rental', ar: 'تأجير سيارات' },
+                'private-driver': { en: 'Private Driver', ar: 'سائق خاص' },
+                'public-transport': { en: 'Public Transport', ar: 'مواصلات عامة' },
+                'taxi': { en: 'Taxi / Ride App', ar: 'تاكسي / تطبيق' }
+            };
+
+            const typeLabel = typeLabels[option.type][currentLanguage];
+            const typeIcon = typeIcons[option.type];
+
+            const featuredBadge = option.featured ? `
+        <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">verified</span>
+            ${currentLanguage === 'ar' ? 'مميز' : 'Featured'}
+        </span>
+    ` : '';
+
+            div.innerHTML = `
+        <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-[#e7ecf3] dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 group h-full">
+            <div class="relative overflow-hidden h-48">
+                <img src="${option.image}" alt="${name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                ${featuredBadge}
+                <button onclick="toggleFavorite(${option.id})" class="absolute top-3 right-3 size-10 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-xl ${option.saved ? 'fill-current text-red-500' : 'text-slate-600 dark:text-slate-300'}">${option.saved ? 'favorite' : 'favorite_border'}</span>
+                </button>
+                <div class="absolute bottom-3 left-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-sm">${typeIcon}</span>
+                    <span class="text-xs font-bold text-[#0d131b] dark:text-white">${typeLabel}</span>
+                </div>
+            </div>
+
+            <div class="p-4 flex flex-col gap-3 flex-1">
+                <div class="flex items-start justify-between gap-2">
+                    <div class="flex-1">
+                        <h3 class="text-[#0d131b] dark:text-white font-bold text-base line-clamp-2">${name}</h3>
+                        <p class="text-[#4c6c9a] dark:text-slate-400 text-xs flex items-center gap-1 mt-1">
+                            <span class="material-symbols-outlined text-sm">location_on</span>
+                            ${location}
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm line-clamp-2">${desc}</p>
+
+                <div class="flex flex-wrap gap-1.5 mt-1">
+                    ${option.features.slice(0, 3).map(f => `
+                        <span class="bg-primary/10 text-primary text-[10px] font-semibold px-2 py-0.5 rounded">${f}</span>
+                    `).join('')}
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-[#e7ecf3] dark:border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm fill-current">star</span>
+                            <span class="font-bold text-sm">${option.rating}</span>
+                        </div>
+                        <span class="text-[#4c6c9a] text-xs">(${option.reviews})</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-primary text-sm">group</span>
+                        <span class="text-xs font-semibold">${option.capacity}</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between mt-auto pt-3">
+                    <div class="flex flex-col">
+                        <span class="text-primary font-black text-xl">${option.pricePerDay} ${currentLanguage === 'ar' ? 'جنيه' : 'EGP'}</span>
+                        <span class="text-[#4c6c9a] text-[10px]">${currentLanguage === 'ar' ? 'يومياً' : 'per day'}</span>
+                    </div>
+                    <button onclick="bookTransport(${option.id})" class="flex items-center gap-1.5 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-lg transition-all">
+                        <span class="material-symbols-outlined text-base">add_circle</span>
+                        <span>${currentLanguage === 'ar' ? 'احجز' : 'Book'}</span>
+                    </button>
+                </div>
+
+                <p class="text-[10px] text-[#4c6c9a] dark:text-slate-400 text-center">${option.company}</p>
+            </div>
+        </div>
+    `;
+
+            return div;
+        }
+
+        // =============================================
+        // BOOK TRANSPORT
+        // =============================================
+        function bookTransport(id) {
+            const option = transportOptions.find(o => o.id === id);
+            if (!option) return;
+
+            const message = currentLanguage === 'ar'
+                ? `تم إضافة ${option.nameAr} إلى رحلتك!`
+                : `${option.nameEn} added to your trip!`;
+
+            showToast(message, 'success');
+        }
+
+        // =============================================
+        // FAVORITE TOGGLE
+        // =============================================
+        function toggleFavorite(id) {
+            const option = transportOptions.find(o => o.id === id);
+            if (!option) return;
+
+            option.saved = !option.saved;
+
+            if (option.saved) {
+                savedTransport.push(id);
+                const message = currentLanguage === 'ar'
+                    ? `تمت إضافة ${option.nameAr} إلى المفضلة`
+                    : `${option.nameEn} added to favorites`;
+                showToast(message, 'success');
+            } else {
+                savedTransport = savedTransport.filter(x => x !== id);
+                const message = currentLanguage === 'ar'
+                    ? `تمت إزالة ${option.nameAr} من المفضلة`
+                    : `${option.nameEn} removed from favorites`;
+                showToast(message, 'info');
+            }
+
+            saveSettings();
+            renderTransportOptions();
+        }
+
+        // =============================================
+        // LOAD MORE
+        // =============================================
+        function loadMoreTransport() {
+            let filtered = transportOptions.filter(o => {
+                const typeMatch = currentType === 'all' || o.type === currentType;
+                const priceMatch = o.pricePerDay <= maxPrice;
+                const searchMatch = searchQuery === '' ||
+                    o.nameEn.toLowerCase().includes(searchQuery) ||
+                    o.nameAr.includes(searchQuery) ||
+                    o.locationEn.toLowerCase().includes(searchQuery) ||
+                    o.locationAr.includes(searchQuery);
+
+                return typeMatch && priceMatch && searchMatch;
+            });
+
+            const totalCount = filtered.length;
+
+            if (displayedOptions < totalCount) {
+                displayedOptions += 6;
+                renderTransportOptions();
+            } else {
+                const message = currentLanguage === 'ar'
+                    ? 'لا يوجد المزيد من الخيارات'
+                    : 'No more options to display';
+                showToast(message, 'info');
+            }
+        }
+
+        // =============================================
+        // TRIP CALCULATOR
+        // =============================================
+        function calculateCost() {
+            const distance = parseFloat(document.getElementById('calcDistance').value) || 50;
+            const days = parseInt(document.getElementById('calcDays').value) || 3;
+            const fuelPrice = parseFloat(document.getElementById('calcFuel').value) || 13.5;
+            const includeTolls = document.getElementById('calcTolls').checked;
+            const includeParking = document.getElementById('calcParking').checked;
+
+            // Base rental (assuming economy car at 350 EGP/day)
+            const baseRental = 350 * days;
+
+            // Fuel calculation (assuming 8L/100km)
+            const fuelConsumption = (distance / 100) * 8;
+            const fuelCost = fuelConsumption * fuelPrice * days;
+
+            // Tolls (average 20 EGP per day if traveling intercity)
+            const tollCost = includeTolls ? (20 * days) : 0;
+
+            // Parking (average 30 EGP per day)
+            const parkingCost = includeParking ? (30 * days) : 0;
+
+            const totalCost = baseRental + fuelCost + tollCost + parkingCost;
+            const costPerDay = totalCost / days;
+
+            document.getElementById('costBase').textContent = `${baseRental.toFixed(0)} EGP`;
+            document.getElementById('costFuel').textContent = `${fuelCost.toFixed(0)} EGP`;
+            document.getElementById('costTolls').textContent = `${tollCost.toFixed(0)} EGP`;
+            document.getElementById('costParking').textContent = `${parkingCost.toFixed(0)} EGP`;
+            document.getElementById('costTotal').textContent = `${totalCost.toFixed(0)} EGP`;
+
+            const perDayText = currentLanguage === 'ar'
+                ? `(${costPerDay.toFixed(0)} جنيه يومياً)`
+                : `(${costPerDay.toFixed(0)} EGP per day)`;
+            document.getElementById('costPerDay').textContent = perDayText;
+
+            // Show/hide rows
+            document.getElementById('costTollsRow').style.display = includeTolls ? 'flex' : 'none';
+            document.getElementById('costParkingRow').style.display = includeParking ? 'flex' : 'none';
+        }
+
+        function addToBudget() {
+            const total = document.getElementById('costTotal').textContent;
+            const message = currentLanguage === 'ar'
+                ? `تمت إضافة ${total} إلى ميزانية الرحلة!`
+                : `${total} added to trip budget!`;
+
+            showToast(message, 'success');
+        }
+
+        function scrollToCalculator() {
+            document.getElementById('tripCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // =============================================
+        // EVENT LISTENERS
+        // =============================================
+        function setupEventListeners() {
+            // Calculator inputs
+            const calcInputs = ['calcDistance', 'calcDays', 'calcFuel', 'calcTolls', 'calcParking'];
+            calcInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('change', calculateCost);
+                    element.addEventListener('input', calculateCost);
+                }
+            });
+        }
+        const current = location.pathname.split("/").pop().toLowerCase();
+
+        document.querySelectorAll(".nav-link, .menu-item").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            if (href.toLowerCase() === current) {
+                link.classList.add("active");
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

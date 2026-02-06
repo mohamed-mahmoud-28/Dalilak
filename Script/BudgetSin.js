@@ -149,7 +149,7 @@
                 console.log(message);
                 
                 // Navigate to user page
-                window.location.href = "Userpadge.html";
+                window.location.href = "Subscriptions.html";
             }
         },
 

@@ -145,7 +145,7 @@
                     : `رائع! لقد اخترت ${selectedInterests.size} اهتمامات.`;
                 
                 console.log(message);
-                window.location.href = "budget.html";
+                window.location.href = "BudgetSin.html";
             }
         },
 

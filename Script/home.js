@@ -380,3 +380,24 @@
 function logout() {
     alert('Logging out.....');
 }
+
+
+document.getElementById("subscribeBtn").addEventListener("click", function () {
+    const email = document.getElementById("emailInput").value.trim();
+
+    if (email === "") {
+        alert("Please enter your email — من فضلك اكتب بريدك الإلكتروني");
+        return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+        alert("Invalid email address — الإيميل غير صحيح");
+        return;
+    }
+
+
+    window.location.href = "success.html";
+});
+

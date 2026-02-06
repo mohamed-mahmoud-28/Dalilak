@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dalilak - Subscription Plans</title>
+    <meta name="description" content="Choose the perfect plan to supercharge your travel experiences" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+        rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#136dec",
+                        "accent-gold": "#D4AF37",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        arabic: ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <script src="//code.tidio.co/dixb7hccwg8hdummu49y4pqorzbqyknu.js" async></script>
+
+    <style>
+        body {
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            font-weight: 700;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Grid Pattern Background */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(19, 109, 236, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(19, 109, 236, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .animate-fadeInDown {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+
+        .animate-scaleIn {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+
+        /* RTL Support */
+        html[dir="rtl"] body {
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Plan Card Hover Effect */
+        .plan-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .plan-card-featured {
+            transform: scale(1.05);
+        }
+
+        .plan-card-featured:hover {
+            transform: scale(1.08) translateY(-8px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden">
+
+    <!-- Grid Pattern Background -->
+    <div class="grid-pattern"></div>
+
+    <!-- Header -->
+    <header class="p-6 flex items-center justify-between animate-fadeInDown relative z-10">
+        <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-3">
+                <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+            </div>
+        </a>
+        <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 bg-[#136decfc] dark:bg-[#162233] rounded-full p-1.5">
+                <button id="lang-toggle"
+                    class="size-10 rounded-full bg-transparent hover:bg-white/10 dark:hover:bg-white/5 text-white dark:text-slate-200 text-sm font-semibold transition-all flex items-center justify-center">
+                    <span class="material-symbols-outlined text-xl">language</span>
+                </button>
+                <button id="theme-toggle"
+                    class="size-10 rounded-full bg-transparent hover:bg-white/10 dark:hover:bg-white/5 text-white dark:text-slate-200 transition-all flex items-center justify-center">
+                    <span class="material-symbols-outlined text-xl dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl hidden dark:inline">light_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1200px] mx-auto px-6 py-12 lg:py-20 relative z-10">
+
+        <!-- Page Heading -->
+        <div class="text-center mb-16 animate-fadeInUp">
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4" data-en="Upgrade Your Journey"
+                data-ar="طوّر رحلتك">
+                Upgrade Your Journey
+            </h2>
+            <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto"
+                data-en="Choose the perfect plan to supercharge your travel experiences with AI-driven insights and advanced planning tools."
+                data-ar="اختر الخطة المثالية لتعزيز تجارب سفرك بالرؤى المدعومة بالذكاء الاصطناعي وأدوات التخطيط المتقدمة.">
+                Choose the perfect plan to supercharge your travel experiences with AI-driven insights and advanced
+                planning tools.
+            </p>
+        </div>
+
+        <!-- Pricing Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+            <!-- Plan 1: Free Trial -->
+            <div
+                class="plan-card bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 flex flex-col shadow-sm hover:shadow-lg animate-scaleIn delay-100">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-2" data-en="3-Day Free Trial" data-ar="تجربة مجانية 3 أيام">
+                        3-Day Free Trial
+                    </h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black">$0</span>
+                        <span class="text-slate-500 text-sm font-medium" data-en="/3 days" data-ar="/3 أيام">/3
+                            days</span>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-500" data-en="Perfect for exploring the basics of smart planning."
+                        data-ar="مثالي لاستكشاف أساسيات التخطيط الذكي.">
+                        Perfect for exploring the basics of smart planning.
+                    </p>
+                </div>
+
+                <button onclick="handlePlanSelection('free')"
+                    class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white py-3 rounded-xl font-bold text-sm mb-8 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    <span data-en="Start Trial" data-ar="ابدأ التجربة">Start Trial</span>
+                </button>
+
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Limited AI Queries"
+                            data-ar="استعلامات ذكاء اصطناعي محدودة">Limited AI Queries</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Basic Trip Planner" data-ar="مخطط رحلات أساسي">Basic
+                            Trip Planner</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Standard Support" data-ar="دعم قياسي">Standard
+                            Support</span>
+                    </div>
+                    <div class="flex items-start gap-3 opacity-40">
+                        <span class="material-symbols-outlined text-xl">cancel</span>
+                        <span class="text-sm" data-en="Budget Tracker" data-ar="متتبع الميزانية">Budget Tracker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan 2: Monthly (Featured) -->
+            <div
+                class="plan-card plan-card-featured bg-white dark:bg-slate-900 rounded-xl p-8 border-4 border-accent-gold dark:border-accent-gold/50 flex flex-col shadow-xl relative z-10 animate-scaleIn delay-200">
+                <div
+                    class="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-gold text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <span data-en="Most Popular" data-ar="الأكثر شعبية">Most Popular</span>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-2" data-en="Monthly Subscription" data-ar="اشتراك شهري">
+                        Monthly Subscription
+                    </h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-primary">$9.99</span>
+                        <span class="text-slate-500 text-sm font-medium" data-en="/month" data-ar="/شهر">/month</span>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-500" data-en="The essential toolkit for frequent travelers."
+                        data-ar="الأدوات الأساسية للمسافرين الدائمين.">
+                        The essential toolkit for frequent travelers.
+                    </p>
+                </div>
+
+                <button onclick="handlePlanSelection('monthly')"
+                    class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold text-sm mb-8 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/30">
+                    <span data-en="Subscribe Now" data-ar="اشترك الآن">Subscribe Now</span>
+                </button>
+
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">verified</span>
+                        <span class="text-sm font-semibold" data-en="Full AI Assistant"
+                            data-ar="مساعد ذكاء اصطناعي كامل">Full AI Assistant</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Budget Tracker" data-ar="متتبع الميزانية">Budget
+                            Tracker</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Unlimited Saved Places"
+                            data-ar="أماكن محفوظة غير محدودة">Unlimited Saved Places</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Offline Access" data-ar="وصول بدون إنترنت">Offline
+                            Access</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Custom PDF Exports" data-ar="تصدير PDF مخصص">Custom
+                            PDF Exports</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan 3: Yearly -->
+            <div
+                class="plan-card bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 flex flex-col shadow-sm hover:shadow-lg animate-scaleIn delay-300">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold" data-en="Yearly Subscription" data-ar="اشتراك سنوي">
+                            Yearly Subscription
+                        </h3>
+                        <span
+                            class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-lg border border-primary/20"
+                            data-en="20% OFF" data-ar="خصم 20%">
+                            20% OFF
+                        </span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black">$99</span>
+                        <span class="text-slate-500 text-sm font-medium" data-en="/year" data-ar="/سنة">/year</span>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-500" data-en="Ultimate convenience and the best possible value."
+                        data-ar="راحة مطلقة وأفضل قيمة ممكنة.">
+                        Ultimate convenience and the best possible value.
+                    </p>
+                </div>
+
+                <button onclick="handlePlanSelection('yearly')"
+                    class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white py-3 rounded-xl font-bold text-sm mb-8 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    <span data-en="Go Yearly" data-ar="اختر السنوي">Go Yearly</span>
+                </button>
+
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Everything in Monthly"
+                            data-ar="كل ميزات الشهري">Everything in Monthly</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Priority Support" data-ar="دعم ذو أولوية">Priority
+                            Support</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Early Access to Features"
+                            data-ar="وصول مبكر للميزات">Early Access to Features</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+                        <span class="text-sm font-medium" data-en="Multi-device Sync"
+                            data-ar="مزامنة متعددة الأجهزة">Multi-device Sync</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="mt-24 max-w-3xl mx-auto animate-fadeInUp delay-400">
+            <h2 class="text-2xl font-bold mb-8 text-center" data-en="Frequently Asked Questions"
+                data-ar="الأسئلة الشائعة">
+                Frequently Asked Questions
+            </h2>
+
+            <div class="space-y-3">
+                <details
+                    class="group bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden"
+                    open>
+                    <summary
+                        class="flex items-center justify-between p-4 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        <span data-en="Can I cancel my subscription anytime?"
+                            data-ar="هل يمكنني إلغاء اشتراكي في أي وقت؟">
+                            Can I cancel my subscription anytime?
+                        </span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div
+                        class="p-4 pt-0 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 mt-2">
+                        <p data-en="Yes, you can cancel your subscription at any time through your account settings. You will continue to have access to your premium features until the end of your current billing period."
+                            data-ar="نعم، يمكنك إلغاء اشتراكك في أي وقت من خلال إعدادات حسابك. ستستمر في الوصول إلى ميزاتك المميزة حتى نهاية فترة الفوترة الحالية.">
+                            Yes, you can cancel your subscription at any time through your account settings. You will
+                            continue to have access to your premium features until the end of your current billing
+                            period.
+                        </p>
+                    </div>
+                </details>
+
+                <details
+                    class="group bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <summary
+                        class="flex items-center justify-between p-4 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        <span data-en="What happens after the 3-day trial?"
+                            data-ar="ماذا يحدث بعد التجربة المجانية لمدة 3 أيام؟">
+                            What happens after the 3-day trial?
+                        </span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div
+                        class="p-4 pt-0 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 mt-2">
+                        <p data-en="After 3 days, your account will revert to the limited free version unless you choose to upgrade to one of our paid plans. No charges will be made automatically."
+                            data-ar="بعد 3 أيام، سيعود حسابك إلى النسخة المجانية المحدودة ما لم تختر الترقية إلى إحدى خططنا المدفوعة. لن يتم إجراء أي رسوم تلقائياً.">
+                            After 3 days, your account will revert to the limited free version unless you choose to
+                            upgrade to one of our paid plans. No charges will be made automatically.
+                        </p>
+                    </div>
+                </details>
+
+                <details
+                    class="group bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <summary
+                        class="flex items-center justify-between p-4 cursor-pointer font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        <span data-en="Do you offer student or group discounts?"
+                            data-ar="هل تقدمون خصومات للطلاب أو المجموعات؟">
+                            Do you offer student or group discounts?
+                        </span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div
+                        class="p-4 pt-0 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 mt-2">
+                        <p data-en="We currently offer group plans for teams of 5 or more. Please contact our support team to learn more about our education and group discount programs."
+                            data-ar="نحن نقدم حالياً خطط جماعية للفرق المكونة من 5 أشخاص أو أكثر. يرجى الاتصال بفريق الدعم لدينا لمعرفة المزيد عن برامج الخصم التعليمية والجماعية.">
+                            We currently offer group plans for teams of 5 or more. Please contact our support team to
+                            learn more about our education and group discount programs.
+                        </p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Trust Badges -->
+        <div class="mt-20 flex flex-col items-center gap-6 opacity-60 animate-fadeInUp delay-400">
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400" data-en="Secure Payments via"
+                data-ar="مدفوعات آمنة عبر">
+                Secure Payments via
+            </p>
+            <div class="flex flex-wrap justify-center gap-8 grayscale">
+                <span class="material-symbols-outlined text-4xl">payments</span>
+                <span class="material-symbols-outlined text-4xl">credit_card</span>
+                <span class="material-symbols-outlined text-4xl">account_balance</span>
+                <span class="material-symbols-outlined text-4xl">shield</span>
+            </div>
+            <p class="text-xs text-slate-400" data-en="Encrypted 256-bit SSL transaction"
+                data-ar="معاملة SSL مشفرة 256 بت">
+                Encrypted 256-bit SSL transaction
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="mt-20 border-t border-slate-200 dark:border-slate-800 py-8 px-6 bg-white dark:bg-slate-900 relative z-10">
+        <div class="max-w-[1200px] mx-auto text-center text-sm text-slate-500">
+            <span data-en="© 2024 Dalilak Travel Assistant. All rights reserved."
+                data-ar="© 2024 دليلك - مساعد السفر. جميع الحقوق محفوظة.">
+                © 2024 Dalilak Travel Assistant. All rights reserved.
+            </span>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize from localStorage
+        const htmlTag = document.documentElement;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            htmlTag.classList.add('dark');
+        }
+
+        // Load saved language
+        let currentLang = localStorage.getItem('language') || 'en';
+        htmlTag.setAttribute('lang', currentLang);
+        htmlTag.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
+        // Apply language on page load
+        function applyLanguage() {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+        }
+        applyLanguage();
+
+        // Language Toggle
+        const langToggle = document.getElementById('lang-toggle');
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            localStorage.setItem('language', currentLang);
+            htmlTag.setAttribute('lang', currentLang);
+            htmlTag.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            applyLanguage();
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            htmlTag.classList.toggle('dark');
+            const newTheme = htmlTag.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Plan Selection Handler
+        function handlePlanSelection(plan) {
+            // Store selected plan in localStorage
+            localStorage.setItem('selectedPlan', plan);
+
+            // Navigate based on plan
+            if (plan === 'free') {
+                // Free trial - go directly to home
+                window.location.href = 'home.html';
+            } else {
+                // Paid plans (monthly or yearly) - go to payment page
+                window.location.href = 'PaymentMethods.html';
+            }
+        }
+
+        // Optional: Add smooth scroll to FAQ
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', (e) => {
+                if (e.target.open) {
+                    setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 300);
+                }
+            });
+        });
+
+
+        // بيطبق اللغة على الصفحة
+        htmlTag.setAttribute('lang', currentLang);
+        htmlTag.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        applyLanguage(); // بيطبق الترجمة
+
+        // لما تضغط على زرار اللغة
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            localStorage.setItem('language', currentLang); // بيحفظ
+            // ... بيطبق التغيير
+        });
+    </script>
+
+</body>
+
+</html>

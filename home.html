@@ -38,7 +38,25 @@
         }
     </script>
 
+    <script src="//code.tidio.co/dixb7hccwg8hdummu49y4pqorzbqyknu.js" async></script>
+
+
+    <style>
+        .nav-link.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .menu-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+    </style>
+
     <link rel="stylesheet" href="./Style file/home.css" />
+
+    
+
 
 </head>
 
@@ -52,11 +70,11 @@
             <!-- Menu Header -->
             <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-700">
                 <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div class="flex items-center gap-3">
-                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
-                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
-                </div>
-            </a>
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
             </div>
 
             <!-- Mobile Navigation Links -->
@@ -67,29 +85,33 @@
                     <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
                         data-ar="استكشف">Explore</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
                     href="Userpadge.html">
                     <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
                     <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
                         data-ar="رحلاتي">Trips</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
                     href="Budget.html">
                     <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
                     <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
                         data-ar="الميزانية">Budget</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
-                    href="#">
+                    href="Transportation.html">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                     <span class="text-base font-semibold group-hover:text-primary transition-colors"
                         data-en="Transportation" data-ar="المواصلات">Transportation</span>
                 </a>
+
                 <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
-                    href="#">
-                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
-                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Favorites"
-                        data-ar="المفضلة">Favorites</span>
+                    href="guide.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">co_present</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Guide"
+                        data-ar="المرشدين">Guide</span>
                 </a>
 
                 <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
@@ -100,6 +122,7 @@
                     </a>
                 </div>
             </nav>
+
 
             <!-- Menu Footer -->
             <div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700">
@@ -129,32 +152,37 @@
 
             <!-- Center: Main Navigation Links -->
             <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
-                <a class="nav-link active text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
                     href="Explore.html" data-en="Explore" data-ar="استكشف">
                     Explore
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
                     href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
                     Trips
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
                     href="Budget.html" data-en="Budget" data-ar="الميزانية">
                     Budget
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    href="#" data-en="Transportation" data-ar="المواصلات">
+                    href="Transportation.html" data-en="Transportation" data-ar="المواصلات">
                     Transportation
                 </a>
+
                 <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    href="#" data-en="Favorites" data-ar="المفضلة">
-                    Favorites
+                    href="guide.html" data-en="Guide" data-ar="المرشدين">
+                    Guide
                 </a>
             </nav>
+
 
             <!-- Right: Actions -->
             <div class="flex items-center gap-3">
 
-                
+
                 <!-- Notifications -->
                 <div class="relative hidden md:block">
                     <button id="notificationBtn"
@@ -248,7 +276,7 @@
                         <div class="p-4 border-b border-slate-200 dark:border-slate-700">
                             <div class="flex items-center gap-3 mb-2">
                                 <img src="https://ui-avatars.com/api/?name=أحمد+حسن&background=136dec&color=fff&bold=true&font-size=0.4"
-                            alt="Profile" class="size-9 rounded-full border-2 border-primary">
+                                    alt="Profile" class="size-9 rounded-full border-2 border-primary">
                                 <div>
                                     <p class="font-bold text-sm" data-en="Ahmed Hassan" data-ar="أحمد حسن">Ahmed Hassan
                                     </p>
@@ -315,7 +343,7 @@
         </div>
     </header>
 
-    
+
 
 
 
@@ -376,7 +404,7 @@
         <!-- Feature Section: AI Driven Recommendations -->
         <section id="explore" class="max-w-[1200px] mx-auto w-full px-6 py-20 animate-on-scroll">
             <div class="flex flex-col gap-12">
-                <div class="flex flex-col gap-4 text-center md:text-left">
+                <div class="flex flex-col gap-4 items-center text-center ">
                     <h2 class="text-primary text-sm font-extrabold uppercase tracking-widest" data-en="Smart Travel"
                         data-ar="السفر الذكي">Smart Travel</h2>
                     <h3 class="text-3xl md:text-4xl font-black dark:text-white leading-tight"
@@ -659,14 +687,16 @@
                         Receive weekly updates on hidden spots, exclusive hotel deals, and cultural festivals across
                         Egypt.</p>
                     <div class="flex gap-2">
-                        <input
+                        <input id="emailInput"
                             class="flex-1 bg-white/10 border-white/20 rounded-xl px-6 py-4 focus:ring-primary focus:border-primary text-white"
-                            data-placeholder-en="Your email address" data-placeholder-ar="بريدك الإلكتروني"
-                            placeholder="Your email address" type="email" />
-                        <button
-                            class="btn-primary bg-accent-gold text-slate-950 font-black px-8 py-4 rounded-xl hover:bg-accent-gold/90 hover:scale-105 transition-all"
-                            data-en="Subscribe" data-ar="اشترك">Subscribe</button>
+                            placeholder="Your email address" type="email" required />
+
+                        <button id="subscribeBtn"
+                            class="btn-primary bg-accent-gold text-slate-950 font-black px-8 py-4 rounded-xl hover:bg-accent-gold/90 hover:scale-105 transition-all">
+                            Subscribe
+                        </button>
                     </div>
+
                 </div>
                 <div class="newsletter-float relative w-full md:w-1/2 aspect-video rounded-[2rem] overflow-hidden border-4 border-white/5"
                     style='background-image: url("https://images.unsplash.com/photo-1539768942893-daf53e448371?w=800"); background-size: cover; background-position: center;'>
@@ -731,8 +761,21 @@
             </div>
         </div>
 
+        
+        <script src="./Script/home.js"></script>
 
-    <script src="./Script/home.js"></script>
+        <script>
+            const current = location.pathname.split("/").pop().toLowerCase();
+
+            document.querySelectorAll(".nav-link, .menu-item").forEach(link => {
+                const href = link.getAttribute("href");
+                if (!href) return;
+
+                if (href.toLowerCase() === current) {
+                    link.classList.add("active");
+                }
+            });
+        </script>
 </body>
 
 </html>

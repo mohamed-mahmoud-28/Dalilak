@@ -54,6 +54,22 @@
         }
     </script>
 
+    <script src="//code.tidio.co/dixb7hccwg8hdummu49y4pqorzbqyknu.js" async></script>
+
+    <style>
+        .nav-link.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .menu-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+    </style>
+
+
+
     <link rel="stylesheet" href="./Style file/Userpade.css">
 
 </head>
@@ -69,47 +85,59 @@
             <!-- Logo in Sidebar -->
             <div class="flex items-center gap-3 mb-8">
                 <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div class="flex items-center gap-3">
-                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
-                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
-                </div>
-            </a>
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
             </div>
 
             <!-- Sidebar Menu -->
-            <nav class="space-y-2">
-                <a href="Explore.html" class="sidebar-menu-item" onclick="closeSidebar(); ">
-                    <span class="material-symbols-outlined">explore</span>
-                    <span data-en="Explore" data-ar="استكشف">Explore</span>
+            <nav class="flex flex-col gap-2 flex-1">
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Explore.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Explore"
+                        data-ar="استكشف">Explore</span>
                 </a>
-                <a href="Userpadge.html" class="sidebar-menu-item" onclick="closeSidebar()">
-                    <span class="material-symbols-outlined">luggage</span>
-                    <span data-en="Trips" data-ar="رحلاتي">Trips</span>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Userpadge.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">luggage</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Trips"
+                        data-ar="رحلاتي">Trips</span>
                 </a>
-                <a href="Budget.html" class="sidebar-menu-item" onclick="closeSidebar(); ">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                    <span data-en="Budget" data-ar="الميزانية">Budget</span>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Budget.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Budget"
+                        data-ar="الميزانية">Budget</span>
                 </a>
-                <a href="#transport" class="sidebar-menu-item" onclick="closeSidebar(); ">
-                    <span class="material-symbols-outlined">directions_car</span>
-                    <span data-en="Transportation" data-ar="المواصلات">Transportation</span>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="Transportation.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors"
+                        data-en="Transportation" data-ar="المواصلات">Transportation</span>
                 </a>
-                <a href="#favorites" class="sidebar-menu-item" onclick="closeSidebar(); ">
-                    <span class="material-symbols-outlined">favorite</span>
-                    <span data-en="Favorites" data-ar="المفضلة">Favorites</span>
+
+                <a class="menu-item flex items-center gap-4 p-4 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                    href="guide.html">
+                    <span class="material-symbols-outlined text-primary text-2xl">co_present</span>
+                    <span class="text-base font-semibold group-hover:text-primary transition-colors" data-en="Guide"
+                        data-ar="المرشدين">Guide</span>
                 </a>
+
+                <div class="menu-item mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="Userpadge.html"
+                        class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary text-white text-base font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined">person</span>
+                        <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
+                    </a>
+                </div>
             </nav>
-
-            <!-- Profile Button -->
-            <button class="sidebar-profile-btn w-full mt-8 mx-[-8px]" onclick="closeSidebar(); window.location.href='Userpadge.html'">
-                <span class="material-symbols-outlined">person</span>
-                <span data-en="Profile" data-ar="الملف الشخصي">Profile</span>
-            </button>
-
-            <!-- Footer in Sidebar -->
-            <div class="text-center mt-12 text-slate-400 text-sm">
-                <p data-en="© 2026 Dalilak. Explore Egypt" data-ar="© 2026 Dalilak. استكشف مصر">© 2026 Dalilak. Explore Egypt</p>
-            </div>
+ 
         </div>
     </aside>
 
@@ -121,38 +149,43 @@
             <!-- Left: Logo -->
             <div class="flex items-center gap-2 shrink-0">
                 <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div class="flex items-center gap-3">
-                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
-                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
-                </div>
-            </a>
+                    <div class="flex items-center gap-3">
+                        <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
+                        <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+                    </div>
+                </a>
             </div>
 
 
 
             <!-- Center: Main Navigation Links -->
             <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
-                <a href="Explore.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    data-en="Explore" data-ar="استكشف">
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Explore.html" data-en="Explore" data-ar="استكشف">
                     Explore
                 </a>
-                <a href="Userpadge.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                     data-en="Trips" data-ar="رحلاتي">
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Userpadge.html" data-en="Trips" data-ar="الرحلات">
                     Trips
                 </a>
-                <a href="Budget.html" class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                     data-en="Budget" data-ar="الميزانية">
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Budget.html" data-en="Budget" data-ar="الميزانية">
                     Budget
                 </a>
-                <a class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                     data-en="Transportation" data-ar="المواصلات">
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="Transportation.html" data-en="Transportation" data-ar="المواصلات">
                     Transportation
                 </a>
-                <a class="text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                    data-en="Favorites" data-ar="المفضلة">
-                    Favorites
+
+                <a class="nav-link text-sm font-semibold text-[#0d131b] dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                    href="guide.html" data-en="Guide" data-ar="المرشدين">
+                    Guide
                 </a>
             </nav>
+
 
             <!-- Right: Actions -->
             <div class="flex items-center gap-3">
@@ -170,7 +203,7 @@
 
                     <!-- Notification Dropdown -->
                     <div id="notificationDropdown"
-                        class="dropdown-menu absolute right-0 mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        class="dropdown-menu absolute right-[-15px] mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
                         <div
                             class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                             <h3 class="font-bold text-sm" data-en="Notifications" data-ar="الإشعارات">Notifications</h3>
@@ -737,7 +770,8 @@
                         <p class="text-sm font-bold leading-relaxed"
                             data-en="Best time to visit Pyramids is early morning to avoid crowds and heat. Book Uber or Careem taxi in advance!"
                             data-ar="أفضل وقت لزيارة الأهرامات هو الصباح الباكر لتجنب الزحام والحرارة. احجز تاكسي أوبر أو كريم مسبقاً!">
-                            Best time to visit Pyramids is early morning to avoid crowds and heat. Book Uber or Careem taxi in advance!
+                            Best time to visit Pyramids is early morning to avoid crowds and heat. Book Uber or Careem
+                            taxi in advance!
                         </p>
                         <button onclick="bookTransport()"
                             class="mt-4 bg-white text-blue-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-50 transition-all shadow-md">
@@ -750,44 +784,51 @@
     </main>
 
     <!-- Footer -->
-    <footer
-        class="mt-12 lg:mt-16 py-8 lg:py-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark">
-        <div
-            class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-4 text-primary">
-                <a href="home.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div class="flex items-center gap-3">
-                    <img src="./Images/Logo.png" alt="Dalilak Logo" width="50" height="50">
-                    <h1 class="font-black text-2xl" data-en="Dalilak" data-ar="دليلك">Dalilak</h1>
+    <footer class="bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800 mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-12">
+            <div class="text-center py-8">
+                <p class="text-[#4c6c9a] text-sm mb-4">
+                    <span data-en="By completing this purchase, you agree to Dalilak's"
+                        data-ar="بإتمام هذا الشراء، فإنك توافق على">By completing this purchase, you agree to
+                        Dalilak's</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Terms of Service"
+                        data-ar="شروط الخدمة">Terms of Service</a>
+                    <span data-en="and" data-ar="و">and</span>
+                    <a class="text-primary hover:underline mx-1" href="#" data-en="Privacy Policy"
+                        data-ar="سياسة الخصوصية">Privacy Policy</a>.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                    </a>
+                    <a class="text-[#4c6c9a] hover:text-primary transition-colors" href="#">
+                        <span class="material-symbols-outlined">mail</span>
+                    </a>
                 </div>
-            </a>
             </div>
 
-            <div
-                class="flex flex-wrap justify-center gap-4 lg:gap-8 text-slate-600 dark:text-slate-400 text-sm font-medium">
-                <a class="hover:text-primary transition-colors" href="#" data-en="Help Center" data-ar="مركز المساعدة">
-                    Help Center
-                </a>
-                <a class="hover:text-primary transition-colors" href="#" data-en="Terms of Service"
-                    data-ar="شروط الخدمة">
-                    Terms of Service
-                </a>
-                <a class="hover:text-primary transition-colors" href="#" data-en="Privacy Policy"
-                    data-ar="سياسة الخصوصية">
-                    Privacy Policy
-                </a>
-                <a class="hover:text-primary transition-colors" href="#" data-en="Contact Us" data-ar="اتصل بنا">
-                    Contact Us
-                </a>
-            </div>
-
-            <div class="text-slate-600 dark:text-slate-400 text-sm font-medium text-center">
-                <p data-en="© 2026 Dalilak. Explore Egypt 🇪🇬" data-ar="© 2026 Dalilak. استكشف مصر 🇪🇬">
-                    © 2026 Dalilak. Explore Egypt 🇪🇬
+            <div class="pt-8 border-t border-[#e7ecf3] dark:border-slate-800">
+                <p class="text-[#4c6c9a] dark:text-slate-400 text-sm text-center">
+                    <span data-en="© 2025 Dalilak. All rights reserved." data-ar="© 2025 دليلك. جميع الحقوق محفوظة.">©
+                        2025 Dalilak. All rights reserved.</span>
                 </p>
             </div>
         </div>
     </footer>
+
+
+    <script>
+        const current = location.pathname.split("/").pop().toLowerCase();
+
+        document.querySelectorAll(".nav-link, .menu-item").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            if (href.toLowerCase() === current) {
+                link.classList.add("active");
+            }
+        });
+    </script>
 
     <script src="./Script/Userpadge.js"></script>
 </body>

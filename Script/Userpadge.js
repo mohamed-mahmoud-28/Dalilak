@@ -332,14 +332,18 @@
                 ? 'إضافة مصروف جديد - سيتم فتح نموذج الإدخال! 💰'
                 : 'Add new expense - Input form will open! 💰';
             alert(msg);
+
+                window.open('PaymentMethods.html', '_self');
         },
 
-        bookGuide() {
-            const msg = currentLang === 'ar'
-                ? 'حجز دليل سياحي - سيتم توجيهك إلى صفحة الحجز! 👨‍🏫'
-                : 'Book tour guide - You will be redirected to booking page! 👨‍🏫';
-            alert(msg);
-        },
+            bookGuide() {
+                const msg = currentLang === 'ar'
+                    ? 'حجز دليل سياحي - سيتم توجيهك إلى صفحة الحجز! 👨‍🏫'
+                    : 'Book tour guide - You will be redirected to booking page! 👨‍🏫';
+                alert(msg);
+
+                window.open('guide.html', '_self');
+            },
 
         editPlan() {
             const msg = currentLang === 'ar'
@@ -364,9 +368,11 @@
 
         bookTransport() {
             const msg = currentLang === 'ar'
-                ? 'حجز مواصلات - سيتم فتح تطبيق أوبر/كريم! 🚕'
-                : 'Book transport - Uber/Careem app will open! 🚕';
+                ? 'حجز مواصلات — سيتم فتح صفحة الحجز الآن 🚕'
+               : 'Book transport — page will open now 🚕';
             alert(msg);
+
+            window.open('Transportation.html');
         }
     };
 
