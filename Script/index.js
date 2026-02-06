@@ -192,7 +192,7 @@
         init() {
             if (elements.form) {
                 elements.form.addEventListener('submit', (e) => {
-                    // e.preventDefault();
+                    e.preventDefault();
 
                     const fullname = elements.fullnameInput?.value.trim() || '';
                     const email = elements.emailInput?.value.trim() || '';
