@@ -208,7 +208,7 @@
                         localStorage.setItem(STORAGE.USER_DATA, JSON.stringify(userData));
 
                         // Navigate to interests page
-                        window.location.href = "interests.html";
+                        window.location.href = "Interests.html";
                     }
                 });
             }
